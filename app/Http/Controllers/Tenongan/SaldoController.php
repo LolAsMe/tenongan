@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenongan;
 
-use App\Models\Tenongan\DetailTransaksi;
+use App\Http\Controllers\Controller;
+use App\Models\Tenongan\Saldo;
 use Illuminate\Http\Request;
 
-class DetailTransaksiController extends Controller
+class SaldoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class DetailTransaksiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenongan\DetailTransaksi  $detailTransaksi
+     * @param  \App\Models\Tenongan\Saldo  $saldo
      * @return \Illuminate\Http\Response
      */
-    public function show(DetailTransaksi $detailTransaksi)
+    public function show(Saldo $saldo)
     {
         //
     }
@@ -43,10 +44,10 @@ class DetailTransaksiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\DetailTransaksi  $detailTransaksi
+     * @param  \App\Models\Tenongan\Saldo  $saldo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetailTransaksi $detailTransaksi)
+    public function update(Request $request, Saldo $saldo)
     {
         //
     }
@@ -54,10 +55,10 @@ class DetailTransaksiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenongan\DetailTransaksi  $detailTransaksi
+     * @param  \App\Models\Tenongan\Saldo  $saldo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DetailTransaksi $detailTransaksi)
+    public function destroy(Saldo $saldo)
     {
         //
     }

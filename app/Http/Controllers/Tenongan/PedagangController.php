@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenongan;
 
-use App\Models\Tenongan\LogKas;
+use App\Http\Controllers\Controller;
+use App\Models\Tenongan\Pedagang;
 use Illuminate\Http\Request;
 
-class LogKasController extends Controller
+class PedagangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class LogKasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenongan\LogKas  $logKas
+     * @param  \App\Models\Tenongan\Pedagang  $pedagang
      * @return \Illuminate\Http\Response
      */
-    public function show(LogKas $logKas)
+    public function show(Pedagang $pedagang)
     {
         //
     }
@@ -43,10 +44,10 @@ class LogKasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\LogKas  $logKas
+     * @param  \App\Models\Tenongan\Pedagang  $pedagang
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LogKas $logKas)
+    public function update(Request $request, Pedagang $pedagang)
     {
         //
     }
@@ -54,10 +55,10 @@ class LogKasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenongan\LogKas  $logKas
+     * @param  \App\Models\Tenongan\Pedagang  $pedagang
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LogKas $logKas)
+    public function destroy(Pedagang $pedagang)
     {
         //
     }

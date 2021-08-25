@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenongan;
 
-use App\Models\Tenongan\Produk;
+use App\Http\Controllers\Controller;
+use App\Models\Tenongan\DetailTransaksi;
 use Illuminate\Http\Request;
 
-class ProdukController extends Controller
+class DetailTransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class ProdukController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenongan\Produk  $produk
+     * @param  \App\Models\Tenongan\DetailTransaksi  $detailTransaksi
      * @return \Illuminate\Http\Response
      */
-    public function show(Produk $produk)
+    public function show(DetailTransaksi $detailTransaksi)
     {
         //
     }
@@ -43,10 +44,10 @@ class ProdukController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\Produk  $produk
+     * @param  \App\Models\Tenongan\DetailTransaksi  $detailTransaksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produk $produk)
+    public function update(Request $request, DetailTransaksi $detailTransaksi)
     {
         //
     }
@@ -54,10 +55,10 @@ class ProdukController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenongan\Produk  $produk
+     * @param  \App\Models\Tenongan\DetailTransaksi  $detailTransaksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produk $produk)
+    public function destroy(DetailTransaksi $detailTransaksi)
     {
         //
     }

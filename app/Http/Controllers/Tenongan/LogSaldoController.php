@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenongan;
 
-use App\Models\Tenongan\Kas;
+use App\Http\Controllers\Controller;
+use App\Models\Tenongan\LogSaldo;
 use Illuminate\Http\Request;
 
-class KasController extends Controller
+class LogSaldoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +32,10 @@ class KasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenongan\Kas  $kas
+     * @param  \App\Models\Tenongan\LogSaldo  $logSaldo
      * @return \Illuminate\Http\Response
      */
-    public function show(Kas $kas)
+    public function show(LogSaldo $logSaldo)
     {
         //
     }
@@ -43,10 +44,10 @@ class KasController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\Kas  $kas
+     * @param  \App\Models\Tenongan\LogSaldo  $logSaldo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kas $kas)
+    public function update(Request $request, LogSaldo $logSaldo)
     {
         //
     }
@@ -54,10 +55,10 @@ class KasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenongan\Kas  $kas
+     * @param  \App\Models\Tenongan\LogSaldo  $logSaldo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kas $kas)
+    public function destroy(LogSaldo $logSaldo)
     {
         //
     }

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenongan;
 
-use App\Models\Tenongan\Pedagang;
+use App\Http\Controllers\Controller;
+
+use App\Models\Tenongan\LogPenjualan;
 use Illuminate\Http\Request;
 
-class PedagangController extends Controller
+class LogPenjualanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +33,10 @@ class PedagangController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenongan\Pedagang  $pedagang
+     * @param  \App\Models\Tenongan\LogPenjualan  $logPenjualan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pedagang $pedagang)
+    public function show(LogPenjualan $logPenjualan)
     {
         //
     }
@@ -43,10 +45,10 @@ class PedagangController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\Pedagang  $pedagang
+     * @param  \App\Models\Tenongan\LogPenjualan  $logPenjualan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pedagang $pedagang)
+    public function update(Request $request, LogPenjualan $logPenjualan)
     {
         //
     }
@@ -54,10 +56,10 @@ class PedagangController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenongan\Pedagang  $pedagang
+     * @param  \App\Models\Tenongan\LogPenjualan  $logPenjualan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pedagang $pedagang)
+    public function destroy(LogPenjualan $logPenjualan)
     {
         //
     }

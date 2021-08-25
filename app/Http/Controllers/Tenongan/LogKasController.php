@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tenongan;
 
-use App\Models\Tenongan\Produsen;
+use App\Http\Controllers\Controller;
+
+use App\Models\Tenongan\LogKas;
 use Illuminate\Http\Request;
 
-class ProdusenController extends Controller
+class LogKasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +33,10 @@ class ProdusenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenongan\Produsen  $produsen
+     * @param  \App\Models\Tenongan\LogKas  $logKas
      * @return \Illuminate\Http\Response
      */
-    public function show(Produsen $produsen)
+    public function show(LogKas $logKas)
     {
         //
     }
@@ -43,10 +45,10 @@ class ProdusenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\Produsen  $produsen
+     * @param  \App\Models\Tenongan\LogKas  $logKas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produsen $produsen)
+    public function update(Request $request, LogKas $logKas)
     {
         //
     }
@@ -54,10 +56,10 @@ class ProdusenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenongan\Produsen  $produsen
+     * @param  \App\Models\Tenongan\LogKas  $logKas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produsen $produsen)
+    public function destroy(LogKas $logKas)
     {
         //
     }
