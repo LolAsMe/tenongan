@@ -1,5 +1,5 @@
 <template>
-<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+<div v-if="user" class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 text-white min-vh-100">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
@@ -59,17 +59,27 @@
                     </li>
                 </ul>
                 <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1">loser</span>
-                    </a>
-                </div>
             </div>
         </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import LocaleDropdown from './LocaleDropdown'
+
+export default {
+  components: {
+    LocaleDropdown
+  },
+
+  data: () => ({
+    appName: window.config.appName
+  }),
+
+  computed: mapGetters({
+    user: 'auth/user'
+  })
+}
 </script>
 
 <style scoped>
