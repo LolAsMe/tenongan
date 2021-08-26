@@ -9,6 +9,16 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Tenongan\DetailTransaksiController;
+use App\Http\Controllers\Tenongan\KasController;
+use App\Http\Controllers\Tenongan\LogKasController;
+use App\Http\Controllers\Tenongan\LogSaldoController;
+use App\Http\Controllers\Tenongan\PedagangController;
+use App\Http\Controllers\Tenongan\PenjualanController;
+use App\Http\Controllers\Tenongan\ProdukController;
+use App\Http\Controllers\Tenongan\ProdusenController;
+use App\Http\Controllers\Tenongan\SaldoController;
+use App\Http\Controllers\Tenongan\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,4 +53,18 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
+
+    Route::post('produk', [ProdukController::class,'index']);
+    Route::post('produsen',[ProdusenController::class,'index'])->name('produsen');
+    Route::post('pedagang',[PedagangController::class,'index'])->name('pedagang');
+    Route::post('saldo',[SaldoController::class,'index'])->name('saldo');
+    Route::post('saldo/log',[LogSaldoController::class,'index'])->name('saldo.log');
+    Route::post('kas/log',[LogKasController::class,'index'])->name('kas.log');
+    Route::post('penjualan',[PenjualanController::class,'index'])->name('penjualan');
+    Route::post('pedagang',[PedagangController::class,'index'])->name('pedagang');
+    Route::post('kas',[KasController::class,'index'])->name('kas');
+    Route::post('transaksi',[TransaksiController::class,'index'])->name('transaksi');
+    Route::post('transaksi/detail',[DetailTransaksiController::class,'index'])->name('transaksi.detail');
+
+
 });
