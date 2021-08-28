@@ -16,6 +16,9 @@ class ProdusenController extends Controller
     public function index()
     {
         //
+        $produsen = Produsen::all();
+        return response()->json($produsen);
+
     }
 
     /**

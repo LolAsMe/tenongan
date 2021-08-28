@@ -15,7 +15,7 @@ class StartDatabase extends Migration
     {
         //
         Schema::create('produsen', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->string('nama');
             $table->softDeletes();
@@ -23,7 +23,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('produk', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->string('nama');
             $table->foreignId('produsen_id');
@@ -35,7 +35,7 @@ class StartDatabase extends Migration
 
 
         Schema::create('pedagang', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->string('nama');
             $table->softDeletes();
@@ -43,7 +43,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('saldo', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->decimal('saldo', 16);
             $table->foreignId('pedagang_id');
@@ -52,7 +52,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('log_saldo', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->foreignId('saldo_id');
             $table->decimal('jumlah', 16);
@@ -61,7 +61,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('kas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('nama');
             $table->string('kode')->unique();
             $table->decimal('jumlah',15);
@@ -71,7 +71,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('log_kas', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->foreignId('kas_id');
             $table->string('kode')->unique();
             $table->decimal('jumlah');
@@ -80,7 +80,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('transaksi', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->decimal('jumlah',16);
             $table->foreignId('produsen_id');
@@ -89,7 +89,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('detail_transaksi', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->string('keterangan');
             $table->decimal('jumlah',14);
@@ -99,7 +99,7 @@ class StartDatabase extends Migration
         });
 
         Schema::create('log_penjualan', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->foreignId('produk_id');
             $table->unsignedInteger('titip');

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LogSaldo extends Model
 {
     use HasFactory;
+    protected $table = 'log_saldo';
+
 }
