@@ -17,8 +17,8 @@ class ProdusenController extends Controller
     {
         //
         $produsen = Produsen::all();
-        return response()->json($produsen);
 
+        return response()->json($produsen);
     }
 
     /**
@@ -30,6 +30,8 @@ class ProdusenController extends Controller
     public function store(Request $request)
     {
         //
+        $produsen = $request->all();
+        Produsen::create($produsen);
     }
 
     /**
@@ -41,6 +43,8 @@ class ProdusenController extends Controller
     public function show(Produsen $produsen)
     {
         //
+        return response()->json($produsen);
+
     }
 
     /**
@@ -53,6 +57,8 @@ class ProdusenController extends Controller
     public function update(Request $request, Produsen $produsen)
     {
         //
+        $data = $request->all();
+        $produsen->update($data);
     }
 
     /**
@@ -64,5 +70,6 @@ class ProdusenController extends Controller
     public function destroy(Produsen $produsen)
     {
         //
+        $produsen->delete();
     }
 }

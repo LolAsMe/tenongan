@@ -55,7 +55,13 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
 
     Route::post('produk', [ProdukController::class,'index']);
-    Route::post('produsen',[ProdusenController::class,'index'])->name('produsen');
+
+    Route::get('produsen',[ProdusenController::class,'index'])->name('produsen');
+    Route::get('produsen/{produsen}',[ProdusenController::class,'show'])->name('produsen.show');
+    Route::post('produsen',[ProdusenController::class,'store'])->name('produsen.store');
+    Route::delete('produsen/{produsen}',[ProdusenController::class,'destroy'])->name('produsen.destroy');
+    Route::patch('produsen/{produsen}',[ProdusenController::class,'update'])->name('produsen.update');
+
     Route::post('pedagang',[PedagangController::class,'index'])->name('pedagang');
     Route::post('saldo',[SaldoController::class,'index'])->name('saldo');
     Route::post('saldo/log',[LogSaldoController::class,'index'])->name('saldo.log');
