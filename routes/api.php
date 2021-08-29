@@ -54,7 +54,12 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
 
-    Route::post('produk', [ProdukController::class,'index']);
+    Route::get('produk',[ProdukController::class,'index'])->name('produk');
+    Route::get('produk/{produk}',[ProdukController::class,'show'])->name('produk.show');
+    Route::post('produk',[ProdukController::class,'store'])->name('produk.store');
+    Route::delete('produk/{produk}',[ProdukController::class,'destroy'])->name('produk.destroy');
+    Route::patch('produk/{produk}',[ProdukController::class,'update'])->name('produk.update');
+
 
     Route::get('produsen',[ProdusenController::class,'index'])->name('produsen');
     Route::get('produsen/{produsen}',[ProdusenController::class,'show'])->name('produsen.show');
@@ -62,12 +67,16 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::delete('produsen/{produsen}',[ProdusenController::class,'destroy'])->name('produsen.destroy');
     Route::patch('produsen/{produsen}',[ProdusenController::class,'update'])->name('produsen.update');
 
-    Route::post('pedagang',[PedagangController::class,'index'])->name('pedagang');
+    Route::get('pedagang',[PedagangController::class,'index'])->name('pedagang');
+    Route::get('pedagang/{pedagang}',[PedagangController::class,'show'])->name('pedagang.show');
+    Route::post('pedagang',[PedagangController::class,'store'])->name('pedagang.store');
+    Route::delete('pedagang/{pedagang}',[PedagangController::class,'destroy'])->name('pedagang.destroy');
+    Route::patch('pedagang/{pedagang}',[PedagangController::class,'update'])->name('pedagang.update');
+
     Route::post('saldo',[SaldoController::class,'index'])->name('saldo');
     Route::post('saldo/log',[LogSaldoController::class,'index'])->name('saldo.log');
     Route::post('kas/log',[LogKasController::class,'index'])->name('kas.log');
     Route::post('penjualan',[PenjualanController::class,'index'])->name('penjualan');
-    Route::post('pedagang',[PedagangController::class,'index'])->name('pedagang');
     Route::post('kas',[KasController::class,'index'])->name('kas');
     Route::post('transaksi',[TransaksiController::class,'index'])->name('transaksi');
     Route::post('transaksi/detail',[DetailTransaksiController::class,'index'])->name('transaksi.detail');

@@ -16,6 +16,8 @@ class ProdukController extends Controller
     public function index()
     {
         //
+        $produk = Produk::all();
+        return response()->json($produk);
     }
 
     /**
@@ -27,6 +29,8 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         //
+        $produk = $request->all();
+        Produk::create($produk);
     }
 
     /**
@@ -38,6 +42,7 @@ class ProdukController extends Controller
     public function show(Produk $produk)
     {
         //
+        return response()->json($produk);
     }
 
     /**
@@ -50,6 +55,8 @@ class ProdukController extends Controller
     public function update(Request $request, Produk $produk)
     {
         //
+        $data = $request->all();
+        $produk->update($data);
     }
 
     /**
@@ -61,5 +68,6 @@ class ProdukController extends Controller
     public function destroy(Produk $produk)
     {
         //
+        $produk->delete();
     }
 }

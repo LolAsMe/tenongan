@@ -4,10 +4,13 @@ namespace App\Models\Tenongan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pedagang extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $table = 'pedagang';
+    protected $guarded = [];
 
 }

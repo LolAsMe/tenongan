@@ -17,7 +17,6 @@ class ProdusenController extends Controller
     {
         //
         $produsen = Produsen::all();
-
         return response()->json($produsen);
     }
 

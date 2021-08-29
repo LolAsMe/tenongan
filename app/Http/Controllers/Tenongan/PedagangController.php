@@ -16,6 +16,8 @@ class PedagangController extends Controller
     public function index()
     {
         //
+        $pedagang = Pedagang::all();
+        return response()->json($pedagang);
     }
 
     /**
@@ -27,6 +29,8 @@ class PedagangController extends Controller
     public function store(Request $request)
     {
         //
+        $pedagang = $request->all();
+        pedagang::create($pedagang);
     }
 
     /**
@@ -38,6 +42,7 @@ class PedagangController extends Controller
     public function show(Pedagang $pedagang)
     {
         //
+        return response()->json($pedagang);
     }
 
     /**
@@ -50,6 +55,8 @@ class PedagangController extends Controller
     public function update(Request $request, Pedagang $pedagang)
     {
         //
+        $data = $request->all();
+        $pedagang->update($data);
     }
 
     /**
@@ -61,5 +68,6 @@ class PedagangController extends Controller
     public function destroy(Pedagang $pedagang)
     {
         //
+        $pedagang->delete();
     }
 }
