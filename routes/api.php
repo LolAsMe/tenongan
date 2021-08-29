@@ -60,7 +60,6 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::delete('produk/{produk}',[ProdukController::class,'destroy'])->name('produk.destroy');
     Route::patch('produk/{produk}',[ProdukController::class,'update'])->name('produk.update');
 
-
     Route::get('produsen',[ProdusenController::class,'index'])->name('produsen');
     Route::get('produsen/{produsen}',[ProdusenController::class,'show'])->name('produsen.show');
     Route::post('produsen',[ProdusenController::class,'store'])->name('produsen.store');
