@@ -75,11 +75,11 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('kas',[KasController::class,'index'])->name('kas');
     Route::get('kas/{kas}',[KasController::class,'show'])->name('kas.show');
     Route::post('kas/{kas}/dec',[KasController::class,'decrease'])->name('kas.decrease');
-    Route::post('kas/{kas}/in',[KasController::class,'increase'])->name('kas.increase');
+    Route::post('kas/{kas}/inc',[KasController::class,'increase'])->name('kas.increase');
 
     Route::get('saldo',[SaldoController::class,'index'])->name('saldo');
     Route::get('saldo/{saldo}',[SaldoController::class,'show'])->name('saldo.show');
     Route::post('saldo/{saldo}/dec',[SaldoController::class,'decrease'])->name('saldo.decrease');
-    Route::post('saldo/{saldo}/in',[SaldoController::class,'increase'])->name('saldo.increase');
+    Route::post('saldo/{saldo}/inc',[SaldoController::class,'increase'])->name('saldo.increase');
 
 });

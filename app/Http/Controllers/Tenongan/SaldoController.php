@@ -5,9 +5,16 @@ namespace App\Http\Controllers\Tenongan;
 use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Saldo;
 use Illuminate\Http\Request;
+use App\Contracts\Tenongan\SaldoRepository;
 
 class SaldoController extends Controller
 {
+    protected $saldoRepository;
+
+    public function __construct(SaldoRepository $saldoRepository) {
+        $this->saldoRepository = $saldoRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +49,7 @@ class SaldoController extends Controller
      */
     public function increase(Saldo $saldo, Request $request)
     {
-
+        $this->saldoRepository->increase($saldo,$request->all());
     }
 
 
