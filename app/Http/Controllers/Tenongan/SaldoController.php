@@ -53,7 +53,7 @@ class SaldoController extends Controller
         Saldo::create($saldo);
     }
 
-    public function destroy(Produk $saldo)
+    public function destroy(Saldo $saldo)
     {
         //
         $saldo->delete();
