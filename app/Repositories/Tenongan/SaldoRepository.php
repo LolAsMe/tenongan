@@ -5,7 +5,7 @@ use App\Contracts\Tenongan\SaldoRepository as SaldoRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Saldo Repositry
+ * Saldo Repositry with eloquent
  * mengatur saldo + log saldo
  */
 class SaldoRepository implements SaldoRepositoryContract

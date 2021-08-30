@@ -41,6 +41,27 @@ class SaldoController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        $saldo = $request->all();
+        Saldo::create($saldo);
+    }
+
+    public function destroy(Produk $saldo)
+    {
+        //
+        $saldo->delete();
+    }
+
+
+
+    /**
      * Tambah saldo
      *
      * @param Saldo $saldo
