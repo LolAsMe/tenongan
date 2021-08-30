@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\Tenongan\SaldoRepository as SaldoRepositoryContract;
+use App\Contracts\Tenongan\KasRepository as KasRepositoryContract;
 use App\Repositories\Tenongan\SaldoRepository;
+use App\Repositories\Tenongan\KasRepository;
 
 class TenonganServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,7 @@ class TenonganServiceProvider extends ServiceProvider
     {
         //
         $this->app->bind(SaldoRepositoryContract::class, SaldoRepository::class);
+        $this->app->bind(KasRepositoryContract::class, KasRepository::class);
     }
 
     /**

@@ -48,4 +48,9 @@ class Produsen extends Model
         return $this->hasMany(Produk::class);
     }
 
+    public function logKas()
+    {
+        return $this->morphMany(LogKas::class,'payer');
+    }
+
 }

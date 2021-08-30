@@ -65,7 +65,6 @@ class StartDatabase extends Migration
             $table->string('nama');
             $table->string('kode')->unique();
             $table->decimal('jumlah',15);
-            $table->foreignId('pedagang_id');
             $table->softDeletes();
             $table->timestamps();
         });

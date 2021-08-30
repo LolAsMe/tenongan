@@ -23,4 +23,9 @@ class LogKas extends Model
     {
         return $this->belongsTo(Kas::class);
     }
+
+    public function payer()
+    {
+        return $this->morphTo('payer');
+    }
 }

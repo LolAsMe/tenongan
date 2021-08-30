@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Tenongan;
 
 use App\Http\Controllers\Controller;
-
+use App\Contracts\Tenongan\KasRepository;
 use App\Models\Tenongan\Kas;
 use Illuminate\Http\Request;
 
 class KasController extends Controller
 {
+
+    protected $kasRepository;
+
+    public function __construct(KasRepository $kasRepository) {
+        $this->kasRepository = $kasRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -39,6 +45,8 @@ class KasController extends Controller
     {
         //service increase
         //respond
+        $this->kasRepository->increase($kas,$request->all());
+
     }
 
 
@@ -46,5 +54,6 @@ class KasController extends Controller
     {
         //service decrease
         //respond
+        $this->kasRepository->decrease($kas,$request->all());
     }
 }

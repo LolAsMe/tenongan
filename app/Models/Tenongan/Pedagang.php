@@ -37,4 +37,9 @@ class Pedagang extends Model
     protected $table = 'pedagang';
     protected $guarded = [];
 
+    public function logKas()
+    {
+        return $this->morphMany(LogKas::class,'payer');
+    }
+
 }

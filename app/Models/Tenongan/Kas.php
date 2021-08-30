@@ -24,4 +24,7 @@ class Kas extends Model
         return $this->hasMany(LogKas::class);
     }
 
+
+
+
 }
