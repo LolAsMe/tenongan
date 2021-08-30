@@ -42,7 +42,7 @@ class ProdukController extends Controller
     public function show(Produk $produk)
     {
         //
-        return response()->json($produk);
+        return response()->json($produk->load('produsen'));
     }
 
     /**

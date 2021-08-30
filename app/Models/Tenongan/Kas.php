@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Saldo extends Model
+class Kas extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'saldo';
+    protected $table = 'kas';
     protected $guarded = [];
 
     /**
-     * Get all of the logSaldo for the Saldo
+     * Get all of the logKas for the Kas
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function logSaldo(): HasMany
+    public function logKas(): HasMany
     {
-        return $this->hasMany(LogSaldo::class);
+        return $this->hasMany(LogKas::class);
     }
+
 }

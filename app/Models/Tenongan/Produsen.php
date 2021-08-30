@@ -36,7 +36,16 @@ class Produsen extends Model
     use SoftDeletes;
 
     protected $table = 'produsen';
-
     protected $fillable = ['nama','kode'];
+
+    /**
+     * Get all of the produk for the Produsen
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function produk()
+    {
+        return $this->hasMany(Produk::class);
+    }
 
 }

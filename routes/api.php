@@ -72,13 +72,14 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::delete('pedagang/{pedagang}',[PedagangController::class,'destroy'])->name('pedagang.destroy');
     Route::patch('pedagang/{pedagang}',[PedagangController::class,'update'])->name('pedagang.update');
 
-    Route::post('saldo',[SaldoController::class,'index'])->name('saldo');
-    Route::post('saldo/log',[LogSaldoController::class,'index'])->name('saldo.log');
-    Route::post('kas/log',[LogKasController::class,'index'])->name('kas.log');
-    Route::post('penjualan',[PenjualanController::class,'index'])->name('penjualan');
-    Route::post('kas',[KasController::class,'index'])->name('kas');
-    Route::post('transaksi',[TransaksiController::class,'index'])->name('transaksi');
-    Route::post('transaksi/detail',[DetailTransaksiController::class,'index'])->name('transaksi.detail');
+    Route::get('kas',[KasController::class,'index'])->name('kas');
+    Route::get('kas/{kas}',[KasController::class,'show'])->name('kas.show');
+    Route::post('kas/{kas}/dec',[KasController::class,'decrease'])->name('kas.decrease');
+    Route::post('kas/{kas}/in',[KasController::class,'increase'])->name('kas.increase');
 
+    Route::get('saldo',[SaldoController::class,'index'])->name('saldo');
+    Route::get('saldo/{saldo}',[SaldoController::class,'show'])->name('saldo.show');
+    Route::post('saldo/{saldo}/dec',[SaldoController::class,'decrease'])->name('saldo.decrease');
+    Route::post('saldo/{saldo}/in',[SaldoController::class,'increase'])->name('saldo.increase');
 
 });

@@ -43,4 +43,14 @@ class Produk extends Model
     protected $table = 'produk';
     protected $guarded = [];
 
+    /**
+     * Get the produsen that owns the Produk
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function produsen()
+    {
+        return $this->belongsTo(Produsen::class);
+    }
+
 }

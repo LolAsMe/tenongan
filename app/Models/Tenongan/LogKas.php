@@ -4,24 +4,23 @@ namespace App\Models\Tenongan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LogSaldo extends Model
+class LogKas extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'log_saldo';
+    protected $table = 'log_kas';
     protected $guarded = [];
 
     /**
-     * Get the saldo that owns the LogSaldo
+     * Get the kas that owns the LogKas
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function saldo(): BelongsTo
+    public function kas(): BelongsTo
     {
-        return $this->belongsTo(Saldo::class);
+        return $this->belongsTo(Kas::class);
     }
-
 }

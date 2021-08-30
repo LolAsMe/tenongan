@@ -16,17 +16,8 @@ class SaldoController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $saldo = Saldo::all();
+        return response()->json($saldo);
     }
 
     /**
@@ -38,28 +29,33 @@ class SaldoController extends Controller
     public function show(Saldo $saldo)
     {
         //
+        return response()->json($saldo->load('logSaldo'));
+
     }
 
     /**
-     * Update the specified resource in storage.
+     * Tambah saldo
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenongan\Saldo  $saldo
+     * @param Saldo $saldo
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Saldo $saldo)
+    public function increase(Saldo $saldo, Request $request)
     {
-        //
+
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * Kurang Saldo
      *
-     * @param  \App\Models\Tenongan\Saldo  $saldo
+     * @param Saldo $saldo
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Saldo $saldo)
+    public function decrease(Saldo $saldo, Request $request)
     {
-        //
+
     }
+
 }

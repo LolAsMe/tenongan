@@ -17,6 +17,7 @@ class ProdusenController extends Controller
     {
         //
         $produsen = Produsen::all();
+
         return response()->json($produsen);
     }
 
@@ -42,7 +43,7 @@ class ProdusenController extends Controller
     public function show(Produsen $produsen)
     {
         //
-        return response()->json($produsen);
+        return response()->json($produsen->load('produk'));
 
     }
 
