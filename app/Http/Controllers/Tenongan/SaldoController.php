@@ -62,6 +62,7 @@ class SaldoController extends Controller
      */
     public function decrease(Saldo $saldo, Request $request)
     {
+        $this->saldoRepository->decrease($saldo,$request->all());
 
     }
 

@@ -20,5 +20,9 @@ class SaldoRepository implements SaldoRepositoryContract
     public function decrease(Model $saldo,array $attribute):void
     {
         # code...
+        $attribute['jumlah'] = -$attribute['jumlah'];
+        $saldo->increment('saldo', $attribute['jumlah']);
+        $saldo->save();
+        $saldo->logSaldo()->create($attribute);
     }
 }
