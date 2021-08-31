@@ -15,7 +15,8 @@ class AddMorphableField extends Migration
     {
         Schema::table('log_kas', function (Blueprint $table) {
             //
-            $table->morphs('payer');
+            $table->nullableMorphs('payer');
+            $table->string('keterangan')->nullable();
         });
     }
 
@@ -29,6 +30,7 @@ class AddMorphableField extends Migration
         Schema::table('log_kas', function (Blueprint $table) {
             //
             $table->dropMorphs('payer');
+            $table->dropColumn('keterangan');
         });
     }
 }

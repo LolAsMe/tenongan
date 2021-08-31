@@ -77,7 +77,8 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::delete('kas',[KasController::class,'store'])->name('kas.delete');
     Route::get('kas/{kas}',[KasController::class,'show'])->name('kas.show');
     Route::post('kas/{kas}/dec',[KasController::class,'decrease'])->name('kas.decrease');
-    Route::post('kas/{kas}/inc',[KasController::class,'increase'])->name('kas.increase');
+    Route::post('kas/{kas}/inc/{pedagang}',[KasController::class,'increase2'])->name('kas.increase');
+    Route::post('kas/{kas}/inc/produk/{produk}',[KasController::class,'increase'])->name('kas.increase');
 
     Route::get('saldo',[SaldoController::class,'index'])->name('saldo');
     Route::post('saldo',[SaldoController::class,'store'])->name('saldo.store');

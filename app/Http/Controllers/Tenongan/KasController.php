@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Tenongan;
 use App\Http\Controllers\Controller;
 use App\Contracts\Tenongan\KasRepository;
 use App\Models\Tenongan\Kas;
+use App\Models\Tenongan\Pedagang;
+use App\Models\Tenongan\Produk;
 use Illuminate\Http\Request;
 
 class KasController extends Controller
@@ -41,19 +43,25 @@ class KasController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function increase(Kas $kas, Request $request)
+    public function increase(Kas $kas,Produk $produk, Request $request)
     {
         //service increase
         //respond
-        $this->kasRepository->increase($kas,$request->all());
+        $this->kasRepository->increase($kas,$request->all(),$produk);
+
+    }
+
+    public function increase2(Kas $kas,Pedagang $pedagang, Request $request)
+    {
+        //service increase
+        //respond
+        $this->kasRepository->increase($kas,$request->all(),$pedagang);
 
     }
 
 
     public function decrease(Kas $kas, Request $request)
     {
-        //service decrease
-        //respond
         $this->kasRepository->decrease($kas,$request->all());
     }
 }
