@@ -13,6 +13,13 @@ export default [
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
   { path: '/home', name: 'home', component: page('home.vue') },
+  { path: '/dashboard', name: 'dashboard', component: page('tenongan/dashboard.vue') },
+  { path: '/produk', name: 'produk', component: page('tenongan/produk.vue') },
+  { path: '/produsen', name: 'produsen', component: page('tenongan/produsen.vue') },
+  { path: '/pedagang', name: 'pedagang', component: page('tenongan/pedagang.vue') },
+  { path: '/penjualan', name: 'penjualan', component: page('tenongan/penjualan.vue') },
+  { path: '/kas', name: 'kas', component: page('tenongan/kas.vue') },
+  { path: '/saldo', name: 'saldo', component: page('tenongan/saldo.vue') },
   {
     path: '/settings',
     component: page('settings/index.vue'),
