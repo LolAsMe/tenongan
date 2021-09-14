@@ -7,6 +7,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * App\Models\Tenongan\LogKas
+ *
+ * @property int $id
+ * @property int $kas_id
+ * @property string $kode
+ * @property string $jumlah
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $payer_type
+ * @property int|null $payer_id
+ * @property string|null $keterangan
+ * @property-read \App\Models\Tenongan\Kas $kas
+ * @property-read Model|\Eloquent $payer
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas newQuery()
+ * @method static \Illuminate\Database\Query\Builder|LogKas onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas query()
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereJumlah($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereKasId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereKeterangan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereKode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas wherePayerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas wherePayerType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|LogKas withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|LogKas withoutTrashed()
+ * @mixin \Eloquent
+ */
 class LogKas extends Model
 {
     use HasFactory;

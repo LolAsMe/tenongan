@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Pedagang withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Pedagang withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\LogKas[] $logKas
+ * @property-read int|null $log_kas_count
  */
 class Pedagang extends Model
 {

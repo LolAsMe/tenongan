@@ -10,5 +10,6 @@ use App\Models\tenongan\Penjualan;
  */
 interface PenjualanRepository
 {
-
+    public function tambah(array $attribute);
+    public function titip(array $attribute);
 }

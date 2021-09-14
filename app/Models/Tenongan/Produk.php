@@ -35,6 +35,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Produk withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Produk withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\LogKas[] $logKas
+ * @property-read int|null $log_kas_count
+ * @property-read \App\Models\Tenongan\Produsen|null $produsen
  */
 class Produk extends Model
 {

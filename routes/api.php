@@ -87,4 +87,5 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('saldo/{saldo}/dec',[SaldoController::class,'decrease'])->name('saldo.decrease');
     Route::post('saldo/{saldo}/inc',[SaldoController::class,'increase'])->name('saldo.increase');
 
+    Route::post('penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
 });

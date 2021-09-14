@@ -14,7 +14,7 @@ class CreatePenjualansTable extends Migration
     public function up()
     {
         Schema::create('penjualan', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->id();
             $table->string('kode')->unique();
             $table->foreignId('produk_id');
             $table->unsignedInteger('titip');
