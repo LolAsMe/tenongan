@@ -4,6 +4,8 @@ namespace App\Models\tenongan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tenongan\Produk;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\tenongan\Penjualan
@@ -46,4 +48,13 @@ class Penjualan extends Model
     use HasFactory;
     protected $table = 'penjualan';
 
+    /**
+     * Get the produk that owns the Penjualan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function produk(): BelongsTo
+    {
+        return $this->belongsTo(Produk::class);
+    }
 }
