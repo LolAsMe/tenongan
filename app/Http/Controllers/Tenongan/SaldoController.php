@@ -70,7 +70,7 @@ class SaldoController extends Controller
      */
     public function increase(Saldo $saldo, Request $request)
     {
-        $this->saldoRepository->increase($saldo,$request->all());
+        $this->saldoRepository->increase($saldo,$request->jumlah);
     }
 
 
@@ -83,7 +83,7 @@ class SaldoController extends Controller
      */
     public function decrease(Saldo $saldo, Request $request)
     {
-        $this->saldoRepository->decrease($saldo,$request->all());
+        $this->saldoRepository->decrease($saldo,$request->jumlah);
 
     }
 

@@ -5,6 +5,7 @@ namespace App\Models\Tenongan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -49,5 +50,15 @@ class Saldo extends Model
     public function logSaldo(): HasMany
     {
         return $this->hasMany(LogSaldo::class);
+    }
+
+    /**
+     * Get the pedagang that owns the Saldo
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function pedagang(): BelongsTo
+    {
+        return $this->belongsTo(Pedagang::class);
     }
 }

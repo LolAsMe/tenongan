@@ -87,6 +87,9 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('saldo/{saldo}/dec',[SaldoController::class,'decrease'])->name('saldo.decrease');
     Route::post('saldo/{saldo}/inc',[SaldoController::class,'increase'])->name('saldo.increase');
 
-    Route::post('penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
-    Route::post('penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
+    Route::get('transaksi/penjualan/', [PenjualanController::class, 'index'])->name('transaksi');
+    Route::get('transaksi/penjualan/{transaksi}', [PenjualanController::class, 'show2'])->name('penjualan');
+    Route::post('transaksi/penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
+    Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
+    Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
 });

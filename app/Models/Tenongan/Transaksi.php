@@ -4,6 +4,8 @@ namespace App\Models\Tenongan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\tenongan\Penjualan;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -37,5 +39,15 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
     protected $guarded = [];
+
+    /**
+     * Get all of the penjualan for the Transaksi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function penjualan(): HasMany
+    {
+        return $this->hasMany(Penjualan::class);
+    }
 
 }

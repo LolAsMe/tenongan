@@ -11,4 +11,5 @@ interface TenonganService
 {
     public function tambahPenjualan(array $attribute);
     public function transact();
+    public function pay();
 }

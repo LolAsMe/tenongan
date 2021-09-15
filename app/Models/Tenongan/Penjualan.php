@@ -2,9 +2,11 @@
 
 namespace App\Models\tenongan;
 
+use App\Models\Tenongan\Pedagang;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tenongan\Produk;
+use App\Models\Tenongan\Transaksi;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -56,5 +58,25 @@ class Penjualan extends Model
     public function produk(): BelongsTo
     {
         return $this->belongsTo(Produk::class);
+    }
+
+    /**
+     * Get the transaksi that owns the Penjualan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function transaksi(): BelongsTo
+    {
+        return $this->belongsTo(Transaksi::class,'transaksi_id','id');
+    }
+
+    /**
+     * Get the pedagang that owns the Penjualan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function pedagang(): BelongsTo
+    {
+        return $this->belongsTo(Pedagang::class);
     }
 }

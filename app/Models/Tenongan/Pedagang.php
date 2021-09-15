@@ -5,6 +5,7 @@ namespace App\Models\Tenongan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Tenongan\Pedagang
@@ -42,6 +43,16 @@ class Pedagang extends Model
     public function logKas()
     {
         return $this->morphMany(LogKas::class,'payer');
+    }
+
+    /**
+     * Get the saldo associated with the Pedagang
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function saldo(): HasOne
+    {
+        return $this->hasOne(Saldo::class);
     }
 
 }

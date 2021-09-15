@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\tenongan\Penjualan;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
+use App\Models\Tenongan\Transaksi;
 
 class PenjualanController extends Controller
 {
@@ -20,10 +21,25 @@ class PenjualanController extends Controller
         $data= json_decode($request->getContent(),true);
         $this->tenongan->tambahPenjualan($data);
     }
-
+    /**
+     * menghitung transaksi yang terjadi, status pendinng
+     *
+     * @return void
+     */
     public function transact()
     {
         $this->tenongan->transact();
+    }
+
+    /**
+     * Membayar transaksi yang masih pending. status berubah menjadi paid out
+     * skenario saldo dikurangi
+     *
+     * @return void
+     */
+    public function pay()
+    {
+        $this->tenongan->pay();
     }
 
     /**
@@ -34,6 +50,8 @@ class PenjualanController extends Controller
     public function index()
     {
         //
+        $transaksi = Transaksi::all();
+        return response()->json($transaksi);
     }
 
     /**
@@ -57,6 +75,19 @@ class PenjualanController extends Controller
         //
     }
 
+        /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\tenongan\penjualan  $penjualan
+     * @return \Illuminate\Http\Response
+     */
+    public function show2(Transaksi $transaksi)
+    {
+        //
+        return response()->json($transaksi->load('penjualan'));
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -66,6 +97,7 @@ class PenjualanController extends Controller
     public function show(penjualan $penjualan)
     {
         //
+
     }
 
     /**

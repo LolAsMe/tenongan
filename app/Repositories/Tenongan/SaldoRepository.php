@@ -10,19 +10,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SaldoRepository implements SaldoRepositoryContract
 {
-    public function increase(Model $saldo,array $attribute):void
+    public function increase(Model $saldo,int $jumlah):void
     {
-        $saldo->increment('saldo', $attribute['jumlah']);
+        $saldo->increment('saldo', $jumlah);
         $saldo->save();
-        $saldo->logSaldo()->create($attribute);
+        $saldo->logSaldo()->create(["jumlah"=>$jumlah]);
     }
 
-    public function decrease(Model $saldo,array $attribute):void
+    public function decrease(Model $saldo,int $jumlah):void
     {
-        # code...
-        $attribute['jumlah'] = -$attribute['jumlah'];
-        $saldo->increment('saldo', $attribute['jumlah']);
+        $jumlah = -$jumlah;
+        $saldo->increment('saldo', $jumlah);
         $saldo->save();
-        $saldo->logSaldo()->create($attribute);
+        $saldo->logSaldo()->create(["jumlah"=>$jumlah]);
     }
 }
