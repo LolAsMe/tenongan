@@ -5,6 +5,7 @@
   >
     <div
       class="
+      nav
         d-flex
         flex-column
         align-items-center align-items-sm-start
@@ -71,6 +72,12 @@
             <span class="ms-1 d-none d-sm-inline">Kas</span>
           </router-link>
         </li>
+        <li>
+          <router-link :to="{ name: 'user' }" href="#" class="nav-link px-0 align-middle">
+            <i class="fs-4 bi-people"></i>
+            <span class="ms-1 d-none d-sm-inline">User</span>
+          </router-link>
+        </li>
       </ul>
       <hr />
     </div>
@@ -97,4 +104,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

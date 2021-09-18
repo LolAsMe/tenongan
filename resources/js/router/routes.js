@@ -20,6 +20,8 @@ export default [
   { path: '/penjualan', name: 'penjualan', component: page('tenongan/penjualan.vue') },
   { path: '/kas', name: 'kas', component: page('tenongan/kas.vue') },
   { path: '/saldo', name: 'saldo', component: page('tenongan/saldo.vue') },
+  { path: '/user', name: 'user', component: page('tenongan/user.vue') },
+
   {
     path: '/settings',
     component: page('settings/index.vue'),

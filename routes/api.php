@@ -39,20 +39,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
-});
-
-Route::group(['middleware' => 'guest:api'], function () {
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('register', [RegisterController::class, 'register']);
-
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-    Route::post('password/reset', [ResetPasswordController::class, 'reset']);
-
-    Route::post('email/verify/{user}', [VerificationController::class, 'verify'])->name('verification.verify');
-    Route::post('email/resend', [VerificationController::class, 'resend']);
-
-    Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
-    Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
 
     Route::get('produk',[ProdukController::class,'index'])->name('produk');
     Route::get('produk/{produk}',[ProdukController::class,'show'])->name('produk.show');
@@ -92,4 +78,20 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('transaksi/penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
     Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
     Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
+
+});
+
+Route::group(['middleware' => 'guest:api'], function () {
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('register', [RegisterController::class, 'register']);
+
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::post('password/reset', [ResetPasswordController::class, 'reset']);
+
+    Route::post('email/verify/{user}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::post('email/resend', [VerificationController::class, 'resend']);
+
+    Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
+    Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
+
 });

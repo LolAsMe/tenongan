@@ -31,7 +31,8 @@ class ProdusenController extends Controller
     {
         //
         $produsen = $request->all();
-        Produsen::create($produsen);
+        $produsen = Produsen::create($produsen);
+        return response()->json($produsen);
     }
 
     /**
@@ -59,6 +60,8 @@ class ProdusenController extends Controller
         //
         $data = $request->all();
         $produsen->update($data);
+        return response()->json($produsen);
+
     }
 
     /**
