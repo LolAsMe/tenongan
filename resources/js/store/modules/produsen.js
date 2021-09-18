@@ -4,12 +4,13 @@ import Cookies from 'js-cookie'
 // state
 export const state = {
   produsens: [
-  ]
+  ],
+
 }
 
 // getters
 export const getters = {
-  produsens: state => state.produsens
+  produsens: state => state.produsens,
 }
 
 // mutations

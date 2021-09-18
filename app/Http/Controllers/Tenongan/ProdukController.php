@@ -16,7 +16,7 @@ class ProdukController extends Controller
     public function index()
     {
         //
-        $produk = Produk::all();
+        $produk = Produk::with('produsen')->get();
         return response()->json($produk);
     }
 
@@ -30,7 +30,9 @@ class ProdukController extends Controller
     {
         //
         $produk = $request->all();
-        Produk::create($produk);
+        $produk = Produk::create($produk);
+        return response()->json($produk->load('produsen'));
+
     }
 
     /**

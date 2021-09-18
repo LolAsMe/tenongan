@@ -25,10 +25,12 @@
               <td class="col-3">{{ produsen.kode }}</td>
               <td class="col-4">{{ produsen.nama }}</td>
               <td class="col-4">
-                <lihat-produsen-modal class="d-inline"
+                <lihat-produsen-modal
+                  class="d-inline"
                   :produsen="produsen"
                 ></lihat-produsen-modal>
-                <edit-produsen-modal class="d-inline"
+                <edit-produsen-modal
+                  class="d-inline"
                   :produsen="produsen"
                 ></edit-produsen-modal>
                 <button
@@ -53,9 +55,7 @@ import Modal from "~/components/Modal";
 import AddProdusenModal from "~/components/tenongan/AddProdusenModal";
 import LihatProdusenModal from "~/components/tenongan/LihatProdusenModal";
 import EditProdusenModal from "~/components/tenongan/EditProdusenModal";
-import BasicModal from "~/components/tenongan/BasicModal";
 
-import Form from "vform";
 import axios from "axios";
 
 // import axios from 'axios'
@@ -64,7 +64,6 @@ export default {
   components: {
     Modal,
     AddProdusenModal,
-    BasicModal,
     LihatProdusenModal,
     EditProdusenModal,
   },

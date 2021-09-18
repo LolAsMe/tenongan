@@ -84,7 +84,6 @@ export default {
       this.form.id = produsen.id;
       this.form.kode = produsen.kode;
       this.form.nama = produsen.nama;
-      console.log(this.form.nama)
     },
   },
 };
