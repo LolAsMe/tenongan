@@ -10,7 +10,7 @@
         <slot name="header"> Default Header </slot>
       </div>
       <div slot="body"><slot name="body"> Default Body </slot></div>
-      <div slot="footer"><slot name="footer"> Default Footer </slot></div>
+      <div slot="footer"><slot name="footer" v-bind:close="close"> Default Footer </slot></div>
 
     </modal>
   </div>
@@ -38,7 +38,7 @@ export default {
       await this.form.reset();
     },
     close(){
-      showModal = false
+      this.showModal = false
     }
   },
   props: {

@@ -4,9 +4,6 @@
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produsen</h2></div>
         <div class="p-2 bd-highlight">
-<coba><template v-slot:default="slotProps">
-    {{ slotProps.gantis() }}halisos
-  </template></coba>
           <add-produsen-modal></add-produsen-modal>
         </div>
       </div>
@@ -85,7 +82,6 @@ import { mapGetters, mapActions } from "vuex";
 import Modal from "~/components/Modal";
 import AddProdusenModal from '~/components/tenongan/AddProdusenModal'
 import BasicModal from '~/components/tenongan/BasicModal'
-import Coba from '~/components/tenongan/Coba'
 
 import Form from "vform";
 import axios from "axios";
@@ -94,7 +90,7 @@ import axios from "axios";
 export default {
   middleware: "auth",
   components: {
-    Modal,AddProdusenModal,BasicModal,Coba
+    Modal,AddProdusenModal,BasicModal
   },
   computed: mapGetters({
     produsens: "produsen/produsens",
