@@ -1,17 +1,4 @@
 <template>
-  <!-- <div class="form-check">
-    <input
-      :id="id || name"
-      :name="name"
-      :checked="internalValue"
-      type="checkbox"
-      class="form-check-input"
-      @click="handleClick"
-    >
-    <label :for="id || name" class="form-check-label">
-      <slot />
-    </label>
-  </div> -->
   <div>
     <basic-modal buttonShowName="Tambah">
       <h5 slot="header">Tambah Produsen</h5>
@@ -42,7 +29,9 @@
         </form>
       </div>
       <template v-slot:footer="slotProps">
-        <button @click="slotProps.close()" class="btn btn-secondary btn-sm">Close</button>
+        <button @click="slotProps.close()" class="btn btn-secondary btn-sm">
+          Close
+        </button>
         <input
           type="submit"
           class="btn btn-primary btn-sm"
@@ -52,12 +41,6 @@
         />
       </template>
     </basic-modal>
-    <!-- <button  type="button" class="btn btn-primary" @click="showAddModal = true">
-      Tambah
-    </button>
-    <modal v-if="showAddModal" @close="showAddModal = false">
-
-    </modal> -->
   </div>
 </template>
 
@@ -84,50 +67,5 @@ export default {
       await this.form.reset();
     },
   },
-
-  // props: {
-  //   id: { type: String, default: null },
-  //   name: { type: String, default: "checkbox" },
-  //   value: { type: Boolean, default: false },
-  //   checked: { type: Boolean, default: false },
-  // },
-
-  // data: () => ({
-  //   internalValue: false,
-  // }),
-
-  // watch: {
-  //   value(val) {
-  //     this.internalValue = val;
-  //   },
-
-  //   checked(val) {
-  //     this.internalValue = val;
-  //   },
-
-  //   internalValue(val, oldVal) {
-  //     if (val !== oldVal) {
-  //       this.$emit("input", val);
-  //     }
-  //   },
-  // },
-
-  // created() {
-  //   this.internalValue = this.value;
-
-  //   if ("checked" in this.$options.propsData) {
-  //     this.internalValue = this.checked;
-  //   }
-  // },
-
-  // methods: {
-  //   handleClick(e) {
-  //     this.$emit("click", e);
-
-  //     if (!e.isPropagationStopped) {
-  //       this.internalValue = e.target.checked;
-  //     }
-  //   },
-  // },
 };
 </script>

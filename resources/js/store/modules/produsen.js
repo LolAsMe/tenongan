@@ -3,11 +3,8 @@ import Cookies from 'js-cookie'
 
 // state
 export const state = {
-  produsens: {
-    id: 1,
-    kode: 'coba',
-    nama: 'coba'
-  }
+  produsens: [
+  ]
 }
 
 // getters

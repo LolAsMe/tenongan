@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot name="button-show">
-      <button type="button" class="btn btn-primary" @click="showModal = true">
+      <button type="button" :class="buttonShowClass" @click="showModal = true">
         {{ buttonShowName }}
       </button>
     </slot>
@@ -43,6 +43,7 @@ export default {
   },
   props: {
     buttonShowName: { type: String, default: "Show" },
+    buttonShowClass: { type: String, default: "btn btn-primary" }
   },
 };
 </script>
