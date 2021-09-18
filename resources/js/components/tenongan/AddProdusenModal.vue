@@ -1,5 +1,4 @@
 <template>
-  <div>
     <basic-modal buttonShowName="Tambah">
       <h5 slot="header">Tambah Produsen</h5>
       <div slot="body">
@@ -29,9 +28,7 @@
         </form>
       </div>
       <template v-slot:footer="slotProps">
-        <button @click="slotProps.close()" class="btn btn-secondary btn-sm">
-          Close
-        </button>
+        <button @click="slotProps.close()" class="btn btn-secondary btn-sm">Close</button>
         <input
           type="submit"
           class="btn btn-primary btn-sm"
@@ -41,7 +38,6 @@
         />
       </template>
     </basic-modal>
-  </div>
 </template>
 
 <script>

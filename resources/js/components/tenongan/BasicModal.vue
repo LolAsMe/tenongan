@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot name="button-show">
+    <slot name="button-show" v-bind:setModal="setModal">
       <button type="button" :class="buttonShowClass" @click="showModal = true">
         {{ buttonShowName }}
       </button>
@@ -10,8 +10,7 @@
         <slot name="header"> Default Header </slot>
       </div>
       <div slot="body"><slot name="body"> Default Body </slot></div>
-      <div slot="footer"><slot name="footer" v-bind:close="close"> Default Footer </slot></div>
-
+      <div slot="footer"><slot name="footer" v-bind:setModal="setModal"> Default Footer </slot></div>
     </modal>
   </div>
 </template>
@@ -37,8 +36,8 @@ export default {
       await this.$store.commit("produsen/addProdusen", data);
       await this.form.reset();
     },
-    close(){
-      this.showModal = false
+    setModal(status = false){
+      this.showModal = status
     }
   },
   props: {
