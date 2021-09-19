@@ -20,6 +20,7 @@ class PenjualanController extends Controller
     {
         $data= json_decode($request->getContent(),true);
         $this->tenongan->tambahPenjualan($data);
+        return response()->json('sukses');
     }
     /**
      * menghitung transaksi yang terjadi, status pendinng
@@ -52,6 +53,18 @@ class PenjualanController extends Controller
         //
         $transaksi = Transaksi::all();
         return response()->json($transaksi);
+    }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index2()
+    {
+        //
+        $penjualan = Penjualan::where('status','=','Pending')->orwhere('status','=','Draft')->with(['produk','pedagang'])->get();
+        return response()->json($penjualan);
     }
 
     /**

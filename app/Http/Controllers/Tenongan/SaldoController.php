@@ -24,7 +24,7 @@ class SaldoController extends Controller
     {
         //
         $saldo = Saldo::all();
-        return response()->json($saldo);
+        return response()->json($saldo->load('pedagang'));
     }
 
     /**
@@ -50,7 +50,8 @@ class SaldoController extends Controller
     {
         //
         $saldo = $request->all();
-        Saldo::create($saldo);
+        $saldo = Saldo::create($saldo);
+        return response()->json($saldo->load('pedagang'));
     }
 
     public function destroy(Saldo $saldo)
