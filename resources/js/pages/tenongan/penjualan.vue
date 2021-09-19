@@ -5,6 +5,8 @@
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Penjualan</h2></div>
         <div class="p-2 bd-highlight">
           <button class="btn btn-primary" @click="toggleAddModal">Add</button>
+          <button class="btn btn-primary" @click="transact">Transact</button>
+          <button class="btn btn-primary" @click="pay">Pay</button>
           <add-penjualan-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
@@ -143,6 +145,14 @@ export default {
     },
     togglePenjualanModal() {
       this.showPenjualanModal = !this.showPenjualanModal;
+    },
+    async transact() {
+      const { data } = await axios.post("api/transaksi/penjualan/transact");
+      this.$store.dispatch("penjualan/fetchPenjualan");
+    },
+    async pay() {
+      const { data } = await axios.post("api/transaksi/penjualan/transact/pay");
+      this.$store.dispatch("penjualan/fetchPenjualan");
     },
   },
   created() {

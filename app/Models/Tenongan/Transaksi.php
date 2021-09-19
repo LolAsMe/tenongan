@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\tenongan\Penjualan;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Models\Tenongan\Transaksi
  *
@@ -48,6 +48,16 @@ class Transaksi extends Model
     public function penjualan(): HasMany
     {
         return $this->hasMany(Penjualan::class);
+    }
+
+    /**
+     * Get the produsen that owns the Transaksi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function produsen(): BelongsTo
+    {
+        return $this->belongsTo(Produsen::class);
     }
 
 }

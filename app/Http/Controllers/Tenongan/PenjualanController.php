@@ -51,7 +51,7 @@ class PenjualanController extends Controller
     public function index()
     {
         //
-        $transaksi = Transaksi::all();
+        $transaksi = Transaksi::whereStatus('Pending')->with('produsen')->get();
         return response()->json($transaksi);
     }
 

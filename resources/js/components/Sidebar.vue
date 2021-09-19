@@ -69,6 +69,14 @@
           </router-link>
         </li>
         <li>
+          <router-link :to="{ name: 'transaksi' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-grid"></i>
+            <span class="ms-1 d-none d-sm-inline">Transaksi</span>
+          </router-link>
+        </li>
+        <li>
           <router-link :to="{ name: 'saldo' }" href="#" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">Saldo</span>
