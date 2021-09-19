@@ -1,11 +1,11 @@
 <template>
-  <basic-modal buttonShowName="Lihat" buttonShowClass="btn btn-primary btn-sm d-inline">
+  <basic-modal v-if="showModal" @close="$emit('toggle')">
     <h5 slot="header">Produk</h5>
     <div slot="body">
       {{ produk }}
     </div>
-    <template v-slot:footer="slotProps">
-      <button @click="slotProps.setModal()" class="btn btn-secondary btn-sm">
+    <template v-slot:footer>
+      <button @click="$emit('toggle')" class="btn btn-secondary btn-sm">
         Close
       </button>
     </template>
@@ -21,6 +21,7 @@ export default {
   name: "LihatProdukModal",
   props: {
     produk: { type: Object, default: [] },
+    showModal: { type: Boolean, default: true }
   },
   components: {
     Modal,
@@ -28,6 +29,7 @@ export default {
   },
   data() {
     return {
+
     };
   },
   methods: {

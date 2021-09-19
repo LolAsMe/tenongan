@@ -4,7 +4,13 @@
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produk</h2></div>
         <div class="p-2 bd-highlight">
-          <add-produk-modal></add-produk-modal>
+          <button class="btn btn-primary" @click="toggleAddModal">
+            Add
+          </button>
+          <add-produk-modal
+            :showModal="showAddModal"
+            @toggle="toggleAddModal"
+          ></add-produk-modal>
         </div>
       </div>
     </div>
@@ -29,16 +35,22 @@
               <td>
                 <dropdown name="Action">
                   <li>
-                    <lihat-produk-modal
-                      class="d-inline"
-                      :produk="produk"
-                    ></lihat-produk-modal>
+                    <a
+                      type="button"
+                      class="dropdown-item"
+                      @click="toggleProdukModal(), setDataLihat(produk)"
+                    >
+                      Lihat
+                    </a>
                   </li>
                   <li>
-                    <edit-produk-modal
-                      class="d-inline"
-                      :produk="produk"
-                    ></edit-produk-modal>
+                    <a
+                      type="button"
+                      class="dropdown-item"
+                      @click="toggleEditModal(), setDataEdit(produk)"
+                    >
+                      Edit
+                    </a>
                   </li>
                   <li>
                     <a class="dropdown-item" @click="deleteProduk(produk.id)">
@@ -51,6 +63,18 @@
           </tbody>
         </table>
       </card>
+      <lihat-produk-modal
+        ref="produkModal"
+        :produk="dataLihat"
+        :showModal="showProdukModal"
+        @toggle="toggleProdukModal"
+      ></lihat-produk-modal>
+      <edit-produk-modal
+        ref="editModal"
+        :produk="dataEdit"
+        :showModal="showEditModal"
+        @toggle="toggleEditModal"
+      ></edit-produk-modal>
     </div>
   </div>
 </template>
@@ -79,12 +103,38 @@ export default {
     produks: "produk/produks",
   }),
   data() {
-    return {};
+    return {
+      dataAdd: new Object(),
+      dataLihat: new Object(),
+      dataEdit: new Object(),
+      showAddModal: false,
+      showEditModal: false,
+      showProdukModal: false,
+    };
   },
   methods: {
     async deleteProduk(id) {
       const { data } = await axios.delete("api/produk/" + id);
       await this.$store.commit("produk/deleteProduk", id);
+    },
+    setDataAdd(obj) {
+      this.dataAdd = obj;
+    },
+    setDataLihat(obj) {
+      this.dataLihat = obj;
+    },
+    setDataEdit(obj) {
+      this.dataEdit = obj;
+      this.$refs.editModal.setProduk(obj)
+    },
+    toggleAddModal() {
+      this.showAddModal = !this.showAddModal;
+    },
+    toggleEditModal(){
+      this.showEditModal = !this.showEditModal
+    },
+    toggleProdukModal(){
+      this.showProdukModal = !this.showProdukModal
     },
   },
   created() {

@@ -39,17 +39,25 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'produk' }" class="nav-link px-0 align-middle">
-            <i class="fs-4 bi-table"></i>
-            <span class="ms-1 d-none d-sm-inline">Produk</span></router-link
-          >
-        </li>
-        <li>
           <router-link :to="{ name: 'produsen' }"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-sm-inline">Produsen</span></router-link
+          >
+        </li>
+        <li>
+          <router-link :to="{ name: 'pedagang' }"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-bootstrap"></i>
+            <span class="ms-1 d-none d-sm-inline">Pedagang</span></router-link
+          >
+        </li>
+        <li>
+          <router-link :to="{ name: 'produk' }" class="nav-link px-0 align-middle">
+            <i class="fs-4 bi-table"></i>
+            <span class="ms-1 d-none d-sm-inline">Produk</span></router-link
           >
         </li>
         <li>

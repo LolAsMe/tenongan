@@ -17,11 +17,11 @@ export const getters = {
 export const mutations = {
   setProduks: (state, produks) => (state.produks = produks),
   addProduk: (state, produk) => state.produks.push(produk),
-  editProduk(state, nproduk){
-    const oldproduk = state.produks.find( produk => produk.id === nproduk.id );
+  editProduk(state, nProduk){
+    const oldproduk = state.produks.find( produk => produk.id === nProduk.id );
     if (oldproduk) {
       // not creating a new object but modifying old object here
-      Object.assign(oldproduk, nproduk)
+      Object.assign(oldproduk, nProduk)
     }
   },
   deleteProduk: (state, id) => state.produks = state.produks.filter(produk => produk.id !== id)

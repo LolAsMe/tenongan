@@ -59,6 +59,7 @@ class ProdukController extends Controller
         //
         $data = $request->all();
         $produk->update($data);
+        return response()->json($produk->load('produsen'));
     }
 
     /**

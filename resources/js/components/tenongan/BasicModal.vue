@@ -1,17 +1,35 @@
 <template>
   <div>
-    <slot name="button-show" v-bind:setModal="setModal">
-      <button type="button" :class="buttonShowClass" @click="showModal = true">
-        {{ buttonShowName }}
-      </button>
-    </slot>
-    <modal v-if="showModal" @close="showModal = false">
-      <div slot="header" class="p-0">
-        <slot name="header"> Default Header </slot>
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container">
+            <fa
+              class="float-end"
+              @click="$emit('close')"
+              :icon="['far', 'times-circle']"
+            />
+
+            <div class="modal-header">
+              <slot name="header"> default header </slot>
+            </div>
+
+            <div class="modal-body">
+              <slot name="body"> default body </slot>
+            </div>
+
+            <div class="modal-footer">
+              <slot name="footer" v-bind:setModal="setModal">
+                default footer
+                <button class="modal-default-button" @click="$emit('close')">
+                  OK
+                </button>
+              </slot>
+            </div>
+          </div>
+        </div>
       </div>
-      <div slot="body"><slot name="body"> Default Body </slot></div>
-      <div slot="footer"><slot name="footer" v-bind:setModal="setModal"> Default Footer </slot></div>
-    </modal>
+    </transition>
   </div>
 </template>
 
@@ -26,23 +44,82 @@ export default {
   },
   data() {
     return {
-      showModal: false,
-      form: new Form({}),
     };
   },
   methods: {
-    async addProdusen() {
-      const { data } = await this.form.post("api/produsen");
-      await this.$store.commit("produsen/addProdusen", data);
-      await this.form.reset();
+    setModal(status = false) {
+      this.showModal = status;
     },
-    setModal(status = false){
-      this.showModal = status
-    }
   },
   props: {
-    buttonShowName: { type: String, default: "Show" },
-    buttonShowClass: { type: String, default: "btn btn-primary" }
+
   },
 };
 </script>
+
+
+<style scoped>
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+</style>
