@@ -4,7 +4,6 @@
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Penjualan</h2></div>
         <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" @click="titip()">Titip</button>
           <button class="btn btn-primary" @click="toggleAddModal">Add</button>
           <add-penjualan-modal
             :showModal="showAddModal"
@@ -144,19 +143,6 @@ export default {
     },
     togglePenjualanModal() {
       this.showPenjualanModal = !this.showPenjualanModal;
-    },
-    async titip() {
-      // Simple POST request with a JSON body using axios
-      const article = [
-        { produk_id: "1", titip: 2, laku: "2", pedagang_id: 1 },
-        { produk_id: "2", titip: 5, laku: "3", pedagang_id: 1 },
-        { produk_id: "3", titip: 15, laku: "10", pedagang_id: 1 },
-        { produk_id: "1", titip: 2, laku: "2", pedagang_id: 2 },
-        { produk_id: "2", titip: 5, laku: "3", pedagang_id: 2 },
-        { produk_id: "3", titip: 15, laku: "10", pedagang_id: 2 },
-      ]
-      const { data } = await axios.post("api/transaksi/penjualan/titip", article);
-      console.log(data)
     },
   },
   created() {
