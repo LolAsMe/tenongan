@@ -30,7 +30,9 @@ class PedagangController extends Controller
     {
         //
         $pedagang = $request->all();
-        pedagang::create($pedagang);
+        $pedagang= pedagang::create($pedagang);
+        return response()->json($pedagang);
+
     }
 
     /**
@@ -57,6 +59,8 @@ class PedagangController extends Controller
         //
         $data = $request->all();
         $pedagang->update($data);
+        return response()->json($pedagang);
+
     }
 
     /**
