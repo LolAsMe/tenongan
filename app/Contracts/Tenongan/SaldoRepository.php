@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 interface SaldoRepository
 {
-    public function increase(Model $Saldo, int $attributes):void;
-    public function decrease(Model $Saldo, int $attributes):void;
+    public function increase(int $attributes);
+    public function decrease(int $attributes);
 }

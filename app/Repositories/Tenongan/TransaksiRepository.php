@@ -38,7 +38,6 @@ class TransaksiRepository
                 $penjualan->save();
             }
         });
-        // dd('halo');
     }
 
     /**
@@ -65,7 +64,7 @@ class TransaksiRepository
             foreach ($penjualans as $key => $penjualan) {
                 $tanggungan = $penjualan->harga_beli*$penjualan->laku;
                 $saldo = $penjualan->pedagang->saldo;
-                $this->saldoRepository->decrease($saldo,$tanggungan);
+                $this->saldoRepository->setSaldo($saldo)->decrease($tanggungan);
                 $penjualan->status = "Ok";
                 $penjualan->save();
             }

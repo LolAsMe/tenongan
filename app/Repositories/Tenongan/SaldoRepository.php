@@ -2,6 +2,7 @@
 namespace App\Repositories\Tenongan;
 
 use App\Contracts\Tenongan\SaldoRepository as SaldoRepositoryContract;
+use App\Models\Tenongan\Saldo;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -10,18 +11,42 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SaldoRepository implements SaldoRepositoryContract
 {
-    public function increase(Model $saldo,int $jumlah):void
-    {
-        $saldo->increment('jumlah', $jumlah);
-        $saldo->save();
-        $saldo->logSaldo()->create(["jumlah"=>$jumlah,'tanggal'=>now()]);
+    protected $saldo;
+    protected $logSaldo;
+    protected $logSaldoAttribute;
+
+    public function __construct(?Saldo $saldo=null) {
+        $this->saldo = $saldo;
     }
 
-    public function decrease(Model $saldo,int $jumlah):void
+    public function setSaldo(?Saldo $saldo)
+    {
+        $this->saldo = $saldo;
+        return $this;
+    }
+
+    public function setLogSaldoAttribute($attribute)
+    {
+        $this->logSaldoAttribute['jumlah'] = $attribute['jumlah'];
+        $this->logSaldoAttribute['status'] = $attribute['status'] ?? 'Ok';
+        $this->logSaldoAttribute['tanggal'] = $attribute['tanggal'] ?? now();
+    }
+    public function getLogSaldoAttribute()
+    {
+        return $this->logSaldoAttribute;
+    }
+
+    public function increase(int $jumlah)
+    {
+        $this->saldo->increment('jumlah', $jumlah);
+        $this->saldo->save();
+        $this->setLogSaldoAttribute(['jumlah'=>$jumlah]);
+        $this->saldo->logSaldo()->create($this->getLogSaldoAttribute());
+    }
+
+    public function decrease(int $jumlah)
     {
         $jumlah = -$jumlah;
-        $saldo->increment('jumlah', $jumlah);
-        $saldo->save();
-        $saldo->logSaldo()->create(["jumlah"=>$jumlah,'tanggal'=>now()]);
+        $this->increase($jumlah);
     }
 }

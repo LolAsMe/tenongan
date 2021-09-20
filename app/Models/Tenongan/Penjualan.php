@@ -49,6 +49,7 @@ class Penjualan extends Model
 {
     use HasFactory;
     protected $table = 'penjualan';
+    protected $guarded = '';
 
     /**
      * Get the produk that owns the Penjualan

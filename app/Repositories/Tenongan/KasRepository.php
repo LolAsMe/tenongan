@@ -67,6 +67,7 @@ class KasRepository implements KasRepositoryContract
         $this->logAttribute['jumlah'] = $attribute['jumlah'] ?? 0;
         $this->logAttribute['status'] = $attribute['status'] ?? 'Ok';
         $this->logAttribute['keterangan'] = $attribute['keterangan'] ?? '-';
+        return $this;
     }
 
     public function setLogJumlah(mixed $jumlah)
