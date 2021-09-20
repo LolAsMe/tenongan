@@ -23,6 +23,7 @@
               <th scope="col">Kode</th>
               <th scope="col">Saldo</th>
               <th scope="col">Nama Pedagang</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -31,6 +32,12 @@
               <td>{{ saldo.kode }}</td>
               <td>{{ saldo.saldo }}</td>
               <td>{{ saldo.pedagang.nama }}</td>
+              <td><a
+                      class="btn btn-primary btn-sm"
+                      @click="toggleSaldoModal(), setSaldo(saldo.id)"
+                    >
+                      Lihat
+                    </a></td>
               <!-- <td>
                 <dropdown name="Action">
                   <li>
@@ -62,13 +69,13 @@
           </tbody>
         </table>
       </card>
-      <!-- <lihat-saldo-modal
+      <log-saldo-modal
         ref="saldoModal"
-        :saldo="dataLihat"
-        :showModal="showSaldoModal"
         @toggle="toggleSaldoModal"
-      ></lihat-saldo-modal>
-      <edit-saldo-modal
+        :showModal="showSaldoModal"
+        :saldo="saldo"
+      ></log-saldo-modal>
+      <!-- <edit-saldo-modal
         ref="editModal"
         :saldo="dataEdit"
         :showModal="showEditModal"
@@ -82,7 +89,7 @@
 import { mapGetters, mapActions } from "vuex";
 import Modal from "~/components/Modal";
 import AddSaldoModal from "~/components/tenongan/AddSaldoModal";
-// import LihatSaldoModal from "~/components/tenongan/LihatSaldoModal";
+import LogSaldoModal from "~/components/tenongan/LogSaldoModal";
 // import EditSaldoModal from "~/components/tenongan/EditSaldoModal";
 import Dropdown from "~/components/Dropdown";
 
@@ -94,12 +101,13 @@ export default {
   components: {
     Modal,
     AddSaldoModal,
-    // LihatSaldoModal,
+    LogSaldoModal,
     // EditSaldoModal,
     Dropdown,
   },
   computed: mapGetters({
     saldos: "saldo/saldos",
+    saldo: "saldo/saldo",
   }),
   data() {
     return {
@@ -119,8 +127,9 @@ export default {
     setDataAdd(obj) {
       this.dataAdd = obj;
     },
-    setDataLihat(obj) {
-      this.dataLihat = obj;
+    async setSaldo(id) {
+    await this.$store.dispatch("saldo/fetchSaldo",id);
+    this.$refs.saldoModal.loading=false
     },
     setDataEdit(obj) {
       this.dataEdit = obj;

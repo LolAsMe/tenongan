@@ -36,7 +36,7 @@ class SaldoController extends Controller
     public function show(Saldo $saldo)
     {
         //
-        return response()->json($saldo->load('logSaldo'));
+        return response()->json($saldo->load(['logSaldo','pedagang']));
 
     }
 
