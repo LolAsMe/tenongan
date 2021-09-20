@@ -61,4 +61,10 @@ class LogKas extends Model
     {
         return $this->morphTo();
     }
+
+    public function getPayerTypeAttribute($value)
+    {
+        $newValue =  substr($value, strpos($value, "n\\")+2);
+        return $newValue;
+    }
 }

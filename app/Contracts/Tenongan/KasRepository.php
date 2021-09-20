@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 interface KasRepository
 {
-    public function increase(Kas $kas, array $attributes,Model $model);
-    public function decrease(Kas $kas, array $attributes);
+    public function increase(?array $attribute);
+    public function decrease(?array $attribute);
+    public function findPayer(array $attribute);
+    public function getKas();
 }

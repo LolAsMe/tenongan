@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     async substractKas() {
-      const { data } = await this.form.post("api/kas/1/dec");
+      const { data } = await this.form.post("api/kas/dec");
       await this.$store.commit("kas/addLog", data);
       await this.form.reset();
       this.$store.dispatch("kas/fetchKas");

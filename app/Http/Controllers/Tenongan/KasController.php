@@ -26,7 +26,7 @@ class KasController extends Controller
     public function index()
     {
         //
-        $kas = Kas::all();
+        $kas = $this->kasRepository->getKas();
         return response()->json($kas);
     }
 
@@ -37,31 +37,29 @@ class KasController extends Controller
 
     }
 
+    public function store(Request $request)
+    {
+        //
+        $kas = $request->all();
+        $kas = Kas::create($kas);
+        return response()->json($kas);
+    }
+
     /**
      * Menambahkan jumlah kas(detail sudah termaasu)
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function increase(Kas $kas,Produk $produk, Request $request)
+    public function increase(Request $request)
     {
-        //service increase
-        //respond
-        $this->kasRepository->increase($kas,$request->all(),$produk);
-
+        $this->kasRepository->findPayer($request->all());
+        return $this->kasRepository->increase($request->all())->getLogKas();
     }
 
-    public function increase2(Kas $kas,Pedagang $pedagang, Request $request)
+    public function decrease(Request $request)
     {
-        //service increase
-        //respond
-        $this->kasRepository->increase($kas,$request->all(),$pedagang);
-
-    }
-
-
-    public function decrease(Kas $kas, Request $request)
-    {
-        $this->kasRepository->decrease($kas,$request->all());
+        $this->kasRepository->findPayer($request->all());
+        return $this->kasRepository->decrease($request->all())->getLogKas();
     }
 }

@@ -33,12 +33,8 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async fetchKass({ commit }){
-    const { data } = await axios.get('/api/kas')
-    commit('setKass',data)
-  },
   async fetchKas({ commit }){
-    const { data } = await axios.get('/api/kas/1')
+    const { data } = await axios.get('/api/kas')
     commit('setKas',data)
   }
 }

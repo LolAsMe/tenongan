@@ -40,38 +40,35 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
 
-    Route::get('produk',[ProdukController::class,'index'])->name('produk');
-    Route::get('produk/{produk}',[ProdukController::class,'show'])->name('produk.show');
-    Route::post('produk',[ProdukController::class,'store'])->name('produk.store');
-    Route::delete('produk/{produk}',[ProdukController::class,'destroy'])->name('produk.destroy');
-    Route::patch('produk/{produk}',[ProdukController::class,'update'])->name('produk.update');
+    Route::get('produk', [ProdukController::class, 'index'])->name('produk');
+    Route::get('produk/{produk}', [ProdukController::class, 'show'])->name('produk.show');
+    Route::post('produk', [ProdukController::class, 'store'])->name('produk.store');
+    Route::delete('produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+    Route::patch('produk/{produk}', [ProdukController::class, 'update'])->name('produk.update');
 
-    Route::get('produsen',[ProdusenController::class,'index'])->name('produsen');
-    Route::get('produsen/{produsen}',[ProdusenController::class,'show'])->name('produsen.show');
-    Route::post('produsen',[ProdusenController::class,'store'])->name('produsen.store');
-    Route::delete('produsen/{produsen}',[ProdusenController::class,'destroy'])->name('produsen.destroy');
-    Route::patch('produsen/{produsen}',[ProdusenController::class,'update'])->name('produsen.update');
+    Route::get('produsen', [ProdusenController::class, 'index'])->name('produsen');
+    Route::get('produsen/{produsen}', [ProdusenController::class, 'show'])->name('produsen.show');
+    Route::post('produsen', [ProdusenController::class, 'store'])->name('produsen.store');
+    Route::delete('produsen/{produsen}', [ProdusenController::class, 'destroy'])->name('produsen.destroy');
+    Route::patch('produsen/{produsen}', [ProdusenController::class, 'update'])->name('produsen.update');
 
-    Route::get('pedagang',[PedagangController::class,'index'])->name('pedagang');
-    Route::get('pedagang/{pedagang}',[PedagangController::class,'show'])->name('pedagang.show');
-    Route::post('pedagang',[PedagangController::class,'store'])->name('pedagang.store');
-    Route::delete('pedagang/{pedagang}',[PedagangController::class,'destroy'])->name('pedagang.destroy');
-    Route::patch('pedagang/{pedagang}',[PedagangController::class,'update'])->name('pedagang.update');
+    Route::get('pedagang', [PedagangController::class, 'index'])->name('pedagang');
+    Route::get('pedagang/{pedagang}', [PedagangController::class, 'show'])->name('pedagang.show');
+    Route::post('pedagang', [PedagangController::class, 'store'])->name('pedagang.store');
+    Route::delete('pedagang/{pedagang}', [PedagangController::class, 'destroy'])->name('pedagang.destroy');
+    Route::patch('pedagang/{pedagang}', [PedagangController::class, 'update'])->name('pedagang.update');
 
-    Route::get('kas',[KasController::class,'index'])->name('kas');
-    Route::post('kas',[KasController::class,'store'])->name('kas.store');
-    Route::delete('kas',[KasController::class,'store'])->name('kas.delete');
-    Route::get('kas/{kas}',[KasController::class,'show'])->name('kas.show');
-    Route::post('kas/{kas}/dec',[KasController::class,'decrease'])->name('kas.decrease');
-    Route::post('kas/{kas}/inc/{pedagang}',[KasController::class,'increase2'])->name('kas.increase');
-    Route::post('kas/{kas}/inc/produk/{produk}',[KasController::class,'increase'])->name('kas.increase');
 
-    Route::get('saldo',[SaldoController::class,'index'])->name('saldo');
-    Route::post('saldo',[SaldoController::class,'store'])->name('saldo.store');
-    Route::get('saldo/{saldo}',[SaldoController::class,'show'])->name('saldo.show');
-    Route::delete('saldo/{saldo}',[SaldoController::class,'destroy'])->name('saldo.delete');
-    Route::post('saldo/{saldo}/dec',[SaldoController::class,'decrease'])->name('saldo.decrease');
-    Route::post('saldo/{saldo}/inc',[SaldoController::class,'increase'])->name('saldo.increase');
+    Route::get('saldo', [SaldoController::class, 'index'])->name('saldo');
+    Route::post('saldo', [SaldoController::class, 'store'])->name('saldo.store');
+    Route::get('saldo/{saldo}', [SaldoController::class, 'show'])->name('saldo.show');
+    Route::delete('saldo/{saldo}', [SaldoController::class, 'destroy'])->name('saldo.delete');
+    Route::post('saldo/{saldo}/dec', [SaldoController::class, 'decrease'])->name('saldo.decrease');
+    Route::post('saldo/{saldo}/inc', [SaldoController::class, 'increase'])->name('saldo.increase');
+
+    Route::get('kas', [KasController::class, 'index'])->name('kas');
+    Route::post('kas/inc', [KasController::class, 'increase'])->name('kas.increase');
+    Route::post('kas/dec', [KasController::class, 'decrease'])->name('kas.decrease');
 
     Route::get('penjualan/', [PenjualanController::class, 'index2'])->name('transaksi');
     Route::get('transaksi/penjualan/', [PenjualanController::class, 'index'])->name('transaksi');
@@ -79,7 +76,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('transaksi/penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
     Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
     Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
-
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -94,5 +90,4 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
-
 });
