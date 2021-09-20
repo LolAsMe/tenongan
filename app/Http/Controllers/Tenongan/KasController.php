@@ -33,7 +33,7 @@ class KasController extends Controller
     public function show(Kas $kas)
     {
         //
-        return response()->json($kas->load('logKas'));
+        return response()->json($kas->load(['log', 'log.payer']));
 
     }
 

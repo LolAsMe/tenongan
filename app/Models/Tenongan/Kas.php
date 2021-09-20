@@ -46,12 +46,8 @@ class Kas extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function logKas(): HasMany
+    public function log(): HasMany
     {
         return $this->hasMany(LogKas::class);
     }
-
-
-
-
 }

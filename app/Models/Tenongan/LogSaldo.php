@@ -50,4 +50,9 @@ class LogSaldo extends Model
         return $this->belongsTo(Saldo::class);
     }
 
+    public function payer()
+    {
+        $this->morphTo();
+    }
+
 }

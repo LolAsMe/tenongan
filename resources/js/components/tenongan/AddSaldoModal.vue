@@ -21,7 +21,7 @@
             v-model="form.saldo"
             type="text"
             class="form-control"
-            placeholder="kode"
+            placeholder="saldo"
           />
           <label for="floatingInput">Saldo</label>
         </div>

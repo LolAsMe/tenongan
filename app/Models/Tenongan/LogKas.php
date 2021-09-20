@@ -59,6 +59,6 @@ class LogKas extends Model
 
     public function payer()
     {
-        return $this->morphTo('payer');
+        return $this->morphTo();
     }
 }
