@@ -20,7 +20,7 @@ export const getters = {
 export const mutations = {
   setKass: (state, kass) => (state.kass = kass),
   setKas: (state, kas) => (state.kas = kas),
-  addKas: (state, kas) => state.kass.push(kas),
+  addLog: (state, kas) => state.kas.log.push(kas),
   editKas(state, nKas){
     const oldKas = state.kass.find( kas => kas.id === nKas.id );
     if (oldKas) {

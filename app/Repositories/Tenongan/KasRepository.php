@@ -11,22 +11,25 @@ use Illuminate\Database\Eloquent\Model;
  */
 class KasRepository implements KasRepositoryContract
 {
-    public function increase(Kas $kas,array $attribute,Model $payer):void
+    public function increase(Kas $kas,array $attribute,Model $payer)
     {
         $kas->increment('jumlah', $attribute['jumlah']);
         $kas->save();
-        $log = $kas->logKas()->create($attribute);
+        $attribute['tanggal'] = now();
+        $attribute['status'] = 'Ok';
+        $log = $kas->log()->create($attribute);
         $log->payer()->associate($payer);
         $log->save();
     }
 
-    public function decrease(Kas $kas,array $attribute):void
+    public function decrease(Kas $kas,array $attribute)
     {
         # code...
         $attribute['jumlah'] = -$attribute['jumlah'];
-        $attribute['keterangan'] = $attribute['kerangang'];
-        $kas->increment('kas', $attribute['jumlah']);
+        $kas->increment('jumlah', $attribute['jumlah']);
         $kas->save();
-        $kas->logKas()->create($attribute);
+        $attribute['status'] = 'Ok';
+        $attribute['tanggal'] = now();
+        $kas->log()->create($attribute);
     }
 }

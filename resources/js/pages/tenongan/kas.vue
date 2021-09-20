@@ -4,17 +4,21 @@
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Kas {{kas.nama}}</h2></div>
         <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" @click="toggleTambahModal">Tambah</button>
-          <button class="btn btn-primary">Kurang</button>
+          <button class="btn btn-primary" @click="toggleTambahModal">
+            Tambah
+          </button>
+          <button class="btn btn-primary" @click="toggleKurangModal">Kurang</button>
           <tambah-kas-modal
             :showModal="showTambahModal"
             @toggle="toggleTambahModal"
           ></tambah-kas-modal>
+          <kurang-kas-modal
+            :showModal="showKurangModal"
+            @toggle="toggleKurangModal"
+          ></kurang-kas-modal>
         </div>
       </div>
-      <div class="col-12 p-2">
-      Jumlah Kas {{ kas.jumlah }}
-      </div>
+      <div class="col-12 p-2">Jumlah Kas {{ kas.jumlah }}</div>
     </div>
     <div class="col-12 mt-2">
       <card :title="'Log Kas'">
@@ -22,17 +26,23 @@
           <thead>
             <tr>
               <th scope="col">Kode</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Jumlah</th>
               <th scope="col">Payer</th>
               <th scope="col">Tipe</th>
-              <th scope="col">Jumlah</th>
+              <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody v-if="!loading">
             <tr v-for="log in kas.log" :key="log.id">
               <td>{{ log.kode }}</td>
-              <td>{{ log.payer.nama }}</td>
-              <td>{{ log.payer_type }}</td>
+              <td>{{ log.tanggal }}</td>
+              <td>{{ log.keterangan }}</td>
               <td>{{ log.jumlah }}</td>
+              <td>{{ log.payer ? log.payer.nama : '-' }}</td>
+              <td>{{ log.payer_type ? log.payer_type : '-' }}</td>
+              <td>{{ log.status }}</td>
             </tr>
           </tbody>
         </table>
@@ -57,6 +67,7 @@
 import { mapGetters, mapActions } from "vuex";
 import Modal from "~/components/Modal";
 import TambahKasModal from "~/components/tenongan/TambahKasModal";
+import KurangKasModal from "~/components/tenongan/KurangKasModal";
 // import LogKasModal from "~/components/tenongan/LogKasModal";
 // import EditKasModal from "~/components/tenongan/EditKasModal";
 import Dropdown from "~/components/Dropdown";
@@ -69,6 +80,7 @@ export default {
   components: {
     // Modal,
     TambahKasModal,
+    KurangKasModal,
     // LogKasModal,
     // EditKasModal,
     Dropdown,
@@ -82,9 +94,8 @@ export default {
       dataLihat: new Object(),
       dataEdit: new Object(),
       showTambahModal: false,
-      showEditModal: false,
-      showKasModal: false,
-      loading: true
+      showKurangModal: false,
+      loading: true,
     };
   },
   methods: {
@@ -106,6 +117,9 @@ export default {
     toggleTambahModal() {
       this.showTambahModal = !this.showTambahModal;
     },
+    toggleKurangModal() {
+      this.showKurangModal = !this.showKurangModal;
+    },
     toggleEditModal() {
       this.showEditModal = !this.showEditModal;
     },
@@ -115,7 +129,7 @@ export default {
   },
   created() {
     this.$store.dispatch("kas/fetchKas");
-    this.loading=false
+    this.loading = false;
   },
   metaInfo() {
     return { title: "Kas" };

@@ -1,10 +1,10 @@
 <template>
   <basic-modal v-if="showModal" @close="$emit('toggle')">
-    <h5 slot="header">Tambah Kas</h5>
+    <h5 slot="header">Kurang Kas</h5>
     <div slot="body">
       <form
-        id="addForm"
-        @submit.prevent="addKas"
+        id="substractForm"
+        @submit.prevent="substractKas"
         @keydown="form.onKeydown($event)"
       >
         <div class="form-floating mb-3">
@@ -43,8 +43,8 @@
       <input
         type="submit"
         class="btn btn-primary btn-sm"
-        form="addForm"
-        value="Tambah"
+        form="substractForm"
+        value="Kurang"
       />
     </template>
   </basic-modal>
@@ -56,7 +56,7 @@ import BasicModal from "~/components/tenongan/BasicModal";
 import Form from "vform";
 
 export default {
-  name: "AddKasModal",
+  name: "SubstractKasModal",
   components: {
     Modal,
     BasicModal,
@@ -72,8 +72,8 @@ export default {
     };
   },
   methods: {
-    async addKas() {
-      const { data } = await this.form.post("api/kas/1/inc/1");
+    async substractKas() {
+      const { data } = await this.form.post("api/kas/1/dec");
       await this.$store.commit("kas/addLog", data);
       await this.form.reset();
       this.$store.dispatch("kas/fetchKas");
