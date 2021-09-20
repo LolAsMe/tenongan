@@ -64,7 +64,7 @@ class TransaksiRepository
             foreach ($penjualans as $key => $penjualan) {
                 $tanggungan = $penjualan->harga_beli*$penjualan->laku;
                 $saldo = $penjualan->pedagang->saldo;
-                $this->saldoRepository->setSaldo($saldo)->decrease($tanggungan);
+                $this->saldoRepository->setSaldo($saldo)->decrease(['jumlah'=>$tanggungan]);
                 $penjualan->status = "Ok";
                 $penjualan->save();
             }

@@ -36,17 +36,17 @@ class SaldoRepository implements SaldoRepositoryContract
         return $this->logSaldoAttribute;
     }
 
-    public function increase(int $jumlah)
+    public function increase(array $attribute)
     {
-        $this->saldo->increment('jumlah', $jumlah);
+        $this->saldo->increment('jumlah', $attribute['jumlah']);
         $this->saldo->save();
-        $this->setLogSaldoAttribute(['jumlah'=>$jumlah]);
+        $this->setLogSaldoAttribute(['jumlah'=>$attribute['jumlah']]);
         $this->saldo->logSaldo()->create($this->getLogSaldoAttribute());
     }
 
-    public function decrease(int $jumlah)
+    public function decrease(array $attribute)
     {
-        $jumlah = -$jumlah;
-        $this->increase($jumlah);
+        $attribute['jumlah'] = -$attribute['jumlah'];
+        $this->increase($attribute);
     }
 }
