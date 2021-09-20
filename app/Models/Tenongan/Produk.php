@@ -60,4 +60,10 @@ class Produk extends Model
     {
         return $this->morphMany(LogKas::class,'payer');
     }
+
+    public function kasHarian()
+    {
+        return $this->morphMany(LogKas::class,'payer');
+    }
+
 }

@@ -45,6 +45,11 @@ class Pedagang extends Model
         return $this->morphMany(LogKas::class,'payer');
     }
 
+    public function kasHarian()
+    {
+        return $this->morphMany(LogKas::class,'payer');
+    }
+
     /**
      * Get the saldo associated with the Pedagang
      *

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Tenongan\LogKas
@@ -66,5 +67,15 @@ class LogKas extends Model
     {
         $newValue =  substr($value, strpos($value, "n\\")+2);
         return $newValue;
+    }
+
+    /**
+     * Get all of the kasHarian for the LogKas
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function kasHarian(): HasMany
+    {
+        return $this->hasMany(KasHarian::class);
     }
 }

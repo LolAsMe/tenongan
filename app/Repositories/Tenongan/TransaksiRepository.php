@@ -28,8 +28,8 @@ class TransaksiRepository
         Penjualan::whereStatus('Draft')->chunk(100,function($penjualans){
             foreach ($penjualans as $key => $penjualan) {
                 $transaksi = Transaksi::firstOrCreate([
-                    "produsen_id" => $penjualan->produk->produsen_id,"tanggal"=>date("Y-m-d"),"status"=>'Pending'
-                ],["jumlah" => 0]);
+                    "produsen_id" => $penjualan->produk->produsen_id,"status"=>'Pending'
+                ],["jumlah" => 0,"tanggal"=>date("Y-m-d")]);
                 $jumlah = $penjualan->laku * $penjualan->harga_beli;
                 $penjualan->status='pending';
                 $transaksi->jumlah += $jumlah;
