@@ -7,21 +7,13 @@
         @submit.prevent="addPedagang"
         @keydown="form.onKeydown($event)"
       >
-        <div class="form-floating mb-3">
-          <input
-            v-model="form.kode"
-            type="text"
-            class="form-control"
-            placeholder="kode"
-          />
-          <label for="floatingInput">Kode</label>
-        </div>
+
         <div class="form-floating mb-3">
           <input
             v-model="form.nama"
             type="text"
             class="form-control"
-            placeholder="kode"
+            placeholder="nama"
           />
           <label for="floatingInput">Nama</label>
         </div>
@@ -59,7 +51,6 @@ export default {
     return {
       form: new Form({
         nama: "",
-        kode: "",
       }),
     };
   },

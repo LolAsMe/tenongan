@@ -45,7 +45,7 @@ class PenjualanRepository implements PenjualanRepositoryContract
         $penjualan->titip = $attribute['titip'];
         $penjualan->laku = $attribute['laku'];
         $penjualan->pedagang_id = $attribute['pedagang_id'];
-        $penjualan->status ='draft';
+        $penjualan->status ='Draft';
         $penjualan->tanggal =now();
         $penjualan->harga_beli = $this->getHargaBeli($attribute['produk_id']);
         $penjualan->harga_jual = $this->getHargaJual($attribute['produk_id']);

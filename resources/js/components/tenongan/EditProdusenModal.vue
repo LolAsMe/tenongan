@@ -10,15 +10,6 @@
       >
         <div class="form-floating mb-3">
           <input
-            v-model="form.kode"
-            type="text"
-            class="form-control"
-            placeholder="kode"
-          />
-          <label for="floatingInput">Kode</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
             v-model="form.nama"
             type="text"
             class="form-control"
@@ -61,7 +52,6 @@ export default {
     return {
       form: new Form({
         id: "test",
-        kode: "test",
         nama: "test",
       }),
       dataProdusen: "",
@@ -76,7 +66,6 @@ export default {
     },
     setProdusen(produsen) {
       this.form.id = produsen.id;
-      this.form.kode = produsen.kode;
       this.form.nama = produsen.nama;
     },
   },

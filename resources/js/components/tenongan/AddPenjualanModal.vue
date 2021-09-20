@@ -100,7 +100,6 @@ export default {
       this.form.reset();
     },
     resetDataPenjualan(){
-      console.log('halooo')
       this.$store.commit("penjualan/resetDataPenjualan");
     }
   },

@@ -17,7 +17,7 @@
               v-model="form.nama"
               type="text"
               class="form-control"
-              placeholder="kode"
+              placeholder="nama"
             />
             <label for="floatingInput">Nama</label>
           </div>

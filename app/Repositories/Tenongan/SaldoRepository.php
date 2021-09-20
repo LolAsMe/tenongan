@@ -12,16 +12,16 @@ class SaldoRepository implements SaldoRepositoryContract
 {
     public function increase(Model $saldo,int $jumlah):void
     {
-        $saldo->increment('saldo', $jumlah);
+        $saldo->increment('jumlah', $jumlah);
         $saldo->save();
-        $saldo->logSaldo()->create(["jumlah"=>$jumlah]);
+        $saldo->logSaldo()->create(["jumlah"=>$jumlah,'tanggal'=>now()]);
     }
 
     public function decrease(Model $saldo,int $jumlah):void
     {
         $jumlah = -$jumlah;
-        $saldo->increment('saldo', $jumlah);
+        $saldo->increment('jumlah', $jumlah);
         $saldo->save();
-        $saldo->logSaldo()->create(["jumlah"=>$jumlah]);
+        $saldo->logSaldo()->create(["jumlah"=>$jumlah,'tanggal'=>now()]);
     }
 }

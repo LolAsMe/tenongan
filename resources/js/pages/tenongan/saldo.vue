@@ -20,7 +20,6 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Kode</th>
               <th scope="col">Saldo</th>
               <th scope="col">Nama Pedagang</th>
               <th scope="col">Action</th>
@@ -29,8 +28,7 @@
           <tbody>
             <tr v-for="saldo in saldos" :key="saldo.id">
               <td>{{ saldo.id }}</td>
-              <td>{{ saldo.kode }}</td>
-              <td>{{ saldo.saldo }}</td>
+              <td>{{ saldo.jumlah }}</td>
               <td>{{ saldo.pedagang.nama }}</td>
               <td><a
                       class="btn btn-primary btn-sm"

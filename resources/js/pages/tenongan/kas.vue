@@ -25,7 +25,6 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Kode</th>
               <th scope="col">Tanggal</th>
               <th scope="col">Keterangan</th>
               <th scope="col">Jumlah</th>
@@ -36,7 +35,6 @@
           </thead>
           <tbody v-if="!loading">
             <tr v-for="log in kas.log" :key="log.id">
-              <td>{{ log.kode }}</td>
               <td>{{ log.tanggal }}</td>
               <td>{{ log.keterangan }}</td>
               <td>{{ log.jumlah }}</td>

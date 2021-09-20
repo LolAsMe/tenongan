@@ -3,8 +3,7 @@
     <h5 slot="header">Log Saldo</h5>
     <div slot="body">
     <div v-if="!loading">
-      {{ saldo.kode }}
-      Kode Saldo = {{ saldo.kode }} Jumlah Saldo = {{ saldo.saldo }} Nama
+      Jumlah Saldo = {{ saldo.saldo }} Nama
       Pedagang = {{ saldo.pedagang["nama"] }}
     </div>
       <table class="table">
@@ -42,7 +41,7 @@ export default {
   props: {
     saldo: {
       type: undefined,
-      default: { kode: "test", saldo: 0, pedagang: { nama: "test" } },
+      default: { saldo: 0, pedagang: { nama: "test" } },
     },
     showModal: { type: Boolean, default: true },
   },

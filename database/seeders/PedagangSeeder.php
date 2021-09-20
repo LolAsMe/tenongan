@@ -16,19 +16,16 @@ class PedagangSeeder extends Seeder
     {
         //
         DB::table('produsen')->insert([
-            'kode'=>'001',
             'nama'=>'Ari',
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('produsen')->insert([
-            'kode'=>'002',
             'nama'=>'Pareng',
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('produsen')->insert([
-            'kode'=>'003',
             'nama'=>'Katon',
             'created_at'=>now(),
             'updated_at'=>now(),

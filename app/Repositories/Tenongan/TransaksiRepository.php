@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Tenongan;
 
+use App\Models\Tenongan\Kas;
 use App\Models\tenongan\Penjualan;
 use App\Models\Tenongan\Transaksi;
 
@@ -10,9 +11,11 @@ use App\Models\Tenongan\Transaksi;
 class TransaksiRepository
 {
     protected $saldoRepository;
+    protected $kasRepository;
 
     public function __construct() {
         $this->saldoRepository = new SaldoRepository;
+        $this->kasRepository = new KasRepository;
     }
     /**
      * Melakukan Transaksi

@@ -9,15 +9,6 @@
       >
         <div class="form-floating mb-3">
           <input
-            v-model="form.kode"
-            type="text"
-            class="form-control"
-            placeholder="kode"
-          />
-          <label for="floatingInput">Kode</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
             v-model="form.jumlah"
             type="text"
             class="form-control"
@@ -66,9 +57,7 @@ export default {
   },
   data() {
     return {
-      form: new Form({
-        kode: "",
-      }),
+      form: new Form({}),
     };
   },
   methods: {

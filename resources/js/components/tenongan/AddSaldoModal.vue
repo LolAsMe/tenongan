@@ -9,21 +9,12 @@
       >
         <div class="form-floating mb-3">
           <input
-            v-model="form.kode"
+            v-model="form.jumlah"
             type="text"
             class="form-control"
-            placeholder="kode"
+            placeholder="jumlah"
           />
-          <label for="floatingInput">Kode</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input
-            v-model="form.saldo"
-            type="text"
-            class="form-control"
-            placeholder="saldo"
-          />
-          <label for="floatingInput">Saldo</label>
+          <label for="floatingInput">Jumlah</label>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -67,8 +58,6 @@ export default {
   data() {
     return {
       form: new Form({
-        kode: "",
-        saldo: "",
         pedagang_id: "",
       }),
     };

@@ -17,25 +17,16 @@
               v-model="form.id"
               type="text"
               class="form-control"
-              placeholder="kode"
+              placeholder="id"
             />
             <label for="floatingInput">ID</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input
-              v-model="form.kode"
-              type="text"
-              class="form-control"
-              placeholder="kode"
-            />
-            <label for="floatingInput">Kode</label>
           </div>
           <div class="form-floating mb-3">
             <input
               v-model="form.nama"
               type="text"
               class="form-control"
-              placeholder="kode"
+              placeholder="nama"
             />
             <label for="floatingInput">Nama</label>
           </div>

@@ -20,7 +20,6 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Kode</th>
               <th scope="col">Nama</th>
               <th scope="col">Action</th>
             </tr>
@@ -28,7 +27,6 @@
           <tbody>
             <tr v-for="pedagang in pedagangs" :key="pedagang.id">
               <td>{{ pedagang.id }}</td>
-              <td>{{ pedagang.kode }}</td>
               <td>{{ pedagang.nama }}</td>
               <td>
                 <dropdown name="Action">
