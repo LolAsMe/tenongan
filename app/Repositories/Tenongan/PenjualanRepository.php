@@ -13,6 +13,49 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PenjualanRepository implements PenjualanRepositoryContract
 {
+    protected $penjualanAttribute;
+    protected $penjualan;
+
+    public function __construct(?Penjualan $penjualan=null) {
+        $this->penjualan = $penjualan;
+    }
+
+    public function setPenjualanAttribute(?array $attribute=null)
+    {
+        $this->penjualanAttribute['produk_id'] = $attribute['produk_id'];
+        $this->penjualanAttribute['titip'] = $attribute['titip'];
+        $this->penjualanAttribute['laku'] = $attribute['laku'] ?? null;
+        $this->penjualanAttribute['pedagang_id'] = $attribute['pedagang_id'];
+        $this->penjualanAttribute['status'] =$attribute['status'] ?? 'Draft';
+        $this->penjualanAttribute['tanggal'] = $attribute['tanggal'] ?? now();
+        $this->penjualanAttribute['harga_beli'] = $this->getHargaBeli($attribute['produk_id']);
+        $this->penjualanAttribute['harga_jual'] = $this->getHargaJual($attribute['produk_id']);
+
+        return $this;
+    }
+
+    public function getPenjualanAttribute()
+    {
+        return $this->penjualanAttribute;
+    }
+
+    public function setPenjualan(Penjualan $penjualan)
+    {
+        $this->penjualan = $penjualan;
+    }
+
+    public function createPenjualan(?array $attribute = null)
+    {
+        if (isset($attribute)) {
+            $this->setPenjualanAttribute($attribute);
+            $penjualan = Penjualan::create($this->getPenjualanAttribute());
+            $this->setPenjualan($penjualan);
+        }else{
+            $penjualan = Penjualan::create($this->getPenjualanAttribute());
+            $this->setPenjualan($penjualan);
+        }
+    }
+
     /**
      * Menambah penjualan Bulk
      *
@@ -40,15 +83,7 @@ class PenjualanRepository implements PenjualanRepositoryContract
     }
 
     public function titip(array $attribute){
-        $penjualan = new Penjualan;
-        $penjualan->produk_id = $attribute['produk_id'];
-        $penjualan->titip = $attribute['titip'];
-        $penjualan->laku = $attribute['laku'];
-        $penjualan->pedagang_id = $attribute['pedagang_id'];
-        $penjualan->status ='Draft';
-        $penjualan->tanggal =now();
-        $penjualan->harga_beli = $this->getHargaBeli($attribute['produk_id']);
-        $penjualan->harga_jual = $this->getHargaJual($attribute['produk_id']);
-        $penjualan->save();
+        $this->setPenjualanAttribute($attribute);
+        $this->createPenjualan();
     }
 }
