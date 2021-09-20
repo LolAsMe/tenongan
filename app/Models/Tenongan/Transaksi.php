@@ -4,7 +4,6 @@ namespace App\Models\Tenongan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\tenongan\Penjualan;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +38,8 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
     protected $guarded = [];
+    protected $appends = array('tipe');
+
 
     /**
      * Get all of the penjualan for the Transaksi
@@ -58,6 +59,17 @@ class Transaksi extends Model
     public function produsen(): BelongsTo
     {
         return $this->belongsTo(Produsen::class);
+    }
+
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    public function getTipeAttribute()
+    {
+        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
+        return $value;
     }
 
 }

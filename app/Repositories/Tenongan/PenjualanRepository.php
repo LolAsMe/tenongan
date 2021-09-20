@@ -65,7 +65,7 @@ class PenjualanRepository implements PenjualanRepositoryContract
     public function tambah(array $data)
     {
         foreach ($data as $key => $value) {
-            $this->titip($value);
+            $this->create($value);
         }
     }
 
@@ -82,7 +82,7 @@ class PenjualanRepository implements PenjualanRepositoryContract
         return $produk->harga_beli;
     }
 
-    public function titip(array $attribute){
+    public function create(array $attribute){
         $this->setPenjualanAttribute($attribute);
         $this->createPenjualan();
     }

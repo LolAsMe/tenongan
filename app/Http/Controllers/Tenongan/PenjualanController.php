@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenongan;
 
 use App\Http\Controllers\Controller;
 use App\Models\tenongan\Penjualan;
+use App\Models\tenongan\Produsen;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
 use App\Models\Tenongan\Transaksi;
@@ -51,7 +52,7 @@ class PenjualanController extends Controller
     public function index()
     {
         //
-        $transaksi = Transaksi::whereStatus('Pending')->with('produsen')->get();
+        $transaksi = Transaksi::whereStatus('Pending')->with('owner')->get();
         return response()->json($transaksi);
     }
 

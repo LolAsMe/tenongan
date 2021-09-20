@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Tenongan;
 
+use App\Contracts\Tenongan\SaldoRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Pedagang;
 use Illuminate\Http\Request;
 
 class PedagangController extends Controller
 {
+    protected $SaldoRepository;
+    public function __construct(SaldoRepository $SaldoRepository) {
+        $this->SaldoRepository = $SaldoRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +36,7 @@ class PedagangController extends Controller
         //
         $pedagang = $request->all();
         $pedagang= pedagang::create($pedagang);
+        $this->SaldoRepository->setOwner($pedagang)->create();
         return response()->json($pedagang);
 
     }

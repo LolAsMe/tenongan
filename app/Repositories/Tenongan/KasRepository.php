@@ -23,7 +23,7 @@ class KasRepository implements KasRepositoryContract
     protected $payer;
 
     public function __construct($id=1) {
-        $this->kas = Kas::find($id)->load('log');
+        $this->kas = Kas::find($id) ?? null;
         $this->setLogAttribute();
     }
 

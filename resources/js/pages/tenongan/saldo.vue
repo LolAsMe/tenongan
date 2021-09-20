@@ -20,16 +20,19 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Tipe</th>
               <th scope="col">Saldo</th>
-              <th scope="col">Nama Pedagang</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="!loading">
             <tr v-for="saldo in saldos" :key="saldo.id">
               <td>{{ saldo.id }}</td>
+              <td>{{ saldo.owner.nama }}</td>
+              <td>{{ saldo.tipe }}</td>
               <td>{{ saldo.jumlah }}</td>
-              <td>{{ saldo.pedagang.nama }}</td>
+              <!-- <td>{{ saldo.pedagang.nama }}</td> -->
               <td><a
                       class="btn btn-primary btn-sm"
                       @click="toggleSaldoModal(), setSaldo(saldo.id)"
@@ -115,6 +118,7 @@ export default {
       showAddModal: false,
       showEditModal: false,
       showSaldoModal: false,
+      loading: true
     };
   },
   methods: {
@@ -145,6 +149,7 @@ export default {
   },
   created() {
     this.$store.dispatch("saldo/fetchSaldos");
+    this.loading = false
   },
   metaInfo() {
     return { title: "Saldo" };

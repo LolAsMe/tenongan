@@ -20,15 +20,17 @@
           <thead>
             <tr>
               <th scope="col">Tanggal</th>
-              <th scope="col">Nama Produsen</th>
+              <th scope="col">Tipe</th>
+              <th scope="col">Nama</th>
               <th scope="col">Jumlah</th>
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="!loading">
             <tr v-for="transaksi in transaksis" :key="transaksi.id">
               <td>{{ transaksi.tanggal }}</td>
-              <td>{{ transaksi.produsen.nama }}</td>
+              <td>{{ transaksi.tipe }}</td>
+              <td>{{ transaksi.owner.nama }}</td>
               <td>{{ transaksi.jumlah }}</td>
               <td>{{ transaksi.status }}</td>
               <!-- <td>
@@ -109,6 +111,7 @@ export default {
       showAddModal: false,
       showEditModal: false,
       showTransaksiModal: false,
+      loading: true,
     };
   },
   methods: {
@@ -138,6 +141,7 @@ export default {
   },
   created() {
     this.$store.dispatch("transaksi/fetchTransaksis");
+    this.loading = false
   },
   metaInfo() {
     return { title: "Transaksi" };

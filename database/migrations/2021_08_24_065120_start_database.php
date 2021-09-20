@@ -42,7 +42,7 @@ class StartDatabase extends Migration
         Schema::create('saldo', function (Blueprint $table) {
             $table->id();
             $table->decimal('jumlah', 16);
-            $table->foreignId('pedagang_id')->constrained('pedagang');
+            $table->morphs('owner');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -82,7 +82,7 @@ class StartDatabase extends Migration
             $table->id();
             $table->date('tanggal');
             $table->decimal('jumlah',16);
-            $table->foreignId('produsen_id')->constrained('produsen');
+            $table->morphs('owner');
             $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
             $table->string('keterangan')->nullable();
             $table->softDeletes();
@@ -94,18 +94,6 @@ class StartDatabase extends Migration
             $table->string('keterangan')->nullable();
             $table->decimal('jumlah',14);
             $table->foreignId('produk_id');
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('log_penjualan', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('produk_id');
-            $table->unsignedInteger('titip');
-            $table->unsignedInteger('laku');
-            $table->unsignedDecimal('harga_jual');
-            $table->unsignedDecimal('harga_beli');
-            $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -125,6 +113,18 @@ class StartDatabase extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('kas_harian', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('log_kas_id')->nullable()->constrained('log_kas');
+            $table->date('tanggal');
+            $table->morphs('payer');
+            $table->decimal('jumlah');
+            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
+            $table->string('keterangan');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -135,6 +135,7 @@ class StartDatabase extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('kas_harian');
         Schema::dropIfExists('log_saldo');
         Schema::dropIfExists('log_penjualan');
         Schema::dropIfExists('log_kas');

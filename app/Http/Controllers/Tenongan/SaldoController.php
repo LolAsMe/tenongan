@@ -24,7 +24,7 @@ class SaldoController extends Controller
     {
         //
         $saldo = Saldo::all();
-        return response()->json($saldo->load('pedagang'));
+        return response()->json($saldo->load('owner'));
     }
 
     /**
@@ -36,7 +36,7 @@ class SaldoController extends Controller
     public function show(Saldo $saldo)
     {
         //
-        return response()->json($saldo->load(['logSaldo','pedagang']));
+        return response()->json($saldo->load(['logSaldo']));
 
     }
 
@@ -51,7 +51,7 @@ class SaldoController extends Controller
         //
         $saldo = $request->all();
         $saldo = Saldo::create($saldo);
-        return response()->json($saldo->load('pedagang'));
+        return response()->json($saldo->load('owner'));
     }
 
     public function destroy(Saldo $saldo)
@@ -69,9 +69,9 @@ class SaldoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function increase(Saldo $saldo, Request $request)
+    public function increase(Request $request)
     {
-        $this->saldoRepository->increase($saldo,$request->jumlah);
+        $this->saldoRepository->increase($request->jumlah);
     }
 
 
@@ -82,9 +82,9 @@ class SaldoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function decrease(Saldo $saldo, Request $request)
+    public function decrease( Request $request)
     {
-        $this->saldoRepository->decrease($saldo,$request->jumlah);
+        $this->saldoRepository->decrease($request->jumlah);
 
     }
 

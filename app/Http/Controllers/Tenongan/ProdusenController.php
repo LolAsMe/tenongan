@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Tenongan;
 
+use App\Contracts\Tenongan\SaldoRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Produsen;
 use Illuminate\Http\Request;
 
 class ProdusenController extends Controller
 {
+
+    protected $saldoRepository;
+     function __construct(SaldoRepository $saldoRepository) {
+        $this->saldoRepository = $saldoRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +38,7 @@ class ProdusenController extends Controller
         //
         $produsen = $request->all();
         $produsen = Produsen::create($produsen);
+        $this->saldoRepository->setOwner($produsen)->create();
         return response()->json($produsen);
     }
 

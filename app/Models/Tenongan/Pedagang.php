@@ -53,11 +53,16 @@ class Pedagang extends Model
     /**
      * Get the saldo associated with the Pedagang
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     *
      */
-    public function saldo(): HasOne
+    public function saldo()
     {
-        return $this->hasOne(Saldo::class);
+        return $this->morphOne(Saldo::class,'owner');
+    }
+
+    public function transaksi()
+    {
+        return $this->morphMany(Saldo::class,'owner');
     }
 
 }

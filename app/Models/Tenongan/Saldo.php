@@ -41,6 +41,8 @@ class Saldo extends Model
     use SoftDeletes;
     protected $table = 'saldo';
     protected $guarded = [];
+    protected $appends = array('tipe');
+
 
     /**
      * Get all of the logSaldo for the Saldo
@@ -55,10 +57,15 @@ class Saldo extends Model
     /**
      * Get the pedagang that owns the Saldo
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function pedagang(): BelongsTo
+    public function owner()
     {
-        return $this->belongsTo(Pedagang::class);
+        return $this->morphTo('owner');
+    }
+
+    public function getTipeAttribute()
+    {
+        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
+        return $value;
     }
 }

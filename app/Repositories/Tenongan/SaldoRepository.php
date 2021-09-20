@@ -12,11 +12,30 @@ use Illuminate\Database\Eloquent\Model;
 class SaldoRepository implements SaldoRepositoryContract
 {
     protected $saldo;
+    protected $saldoAttribute;
+    protected $owner;
     protected $logSaldo;
     protected $logSaldoAttribute;
 
     public function __construct(?Saldo $saldo=null) {
         $this->saldo = $saldo;
+        $this->setSaldoAttribute();
+    }
+
+    public function create()
+    {
+        $this->owner->saldo()->create($this->saldoAttribute);
+    }
+
+    public function setOwner(Model $owner){
+        $this->owner = $owner;
+        return $this;
+    }
+
+    public function setSaldoAttribute(?array $attribute=null)
+    {
+        $this->saldoAttribute['jumlah'] = $attribute['jumlah'] ?? 0;
+        return $this;
     }
 
     public function setSaldo(?Saldo $saldo)
