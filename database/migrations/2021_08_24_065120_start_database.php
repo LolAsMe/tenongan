@@ -100,7 +100,6 @@ class StartDatabase extends Migration
 
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->nullable();
             $table->foreignId('produk_id');
             $table->unsignedInteger('titip');
             $table->unsignedInteger('laku')->nullable();
@@ -125,6 +124,16 @@ class StartDatabase extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        Schema::create('penjualan_transaksi', function (Blueprint $table) {
+            $table->unsignedBigInteger('penjualan_id')->unsigned()->index();
+            $table->foreign('penjualan_id')->references('id')->on('penjualan')->onDelete('cascade');
+            $table->unsignedBigInteger('transaksi_id')->unsigned()->index();
+            $table->foreign('transaksi_id')->references('id')->on('transaksi')->onDelete('cascade');
+            $table->primary(['penjualan_id', 'transaksi_id']);
+        });
+
+
     }
 
     /**
@@ -135,6 +144,7 @@ class StartDatabase extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('penjualan_transaksi');
         Schema::dropIfExists('kas_harian');
         Schema::dropIfExists('log_saldo');
         Schema::dropIfExists('log_penjualan');

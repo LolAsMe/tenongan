@@ -106,7 +106,7 @@ class KasRepository implements KasRepositoryContract
 
     public function setLogKas(LogKas $logKas)
     {
-        $this->kas = $logKas;
+        $this->logKas = $logKas;
         return $this;
     }
 
@@ -143,7 +143,13 @@ class KasRepository implements KasRepositoryContract
     {
         $this->kas->increment('jumlah', $attribute['jumlah']);
         $this->kas->save();
-        $this->createLog($attribute);
+        return $this;
+    }
+
+    public function increaseLog(?array $attribute)
+    {
+        $this->logKas->increment('jumlah', $attribute['jumlah']);
+        $this->logKas->save();
         return $this;
     }
 
@@ -152,5 +158,32 @@ class KasRepository implements KasRepositoryContract
         $attribute['jumlah'] = -$attribute['jumlah'];
         $this->increase($attribute);
         return $this;
+    }
+
+    public function setKasHarian(KasHarian $kasHarian)
+    {
+        # code...
+        $this->kasHarian = $kasHarian;
+        return $this;
+    }
+
+    public function pay()
+    {
+        $kasHarian = $this->kasHarian;
+        $saldo = [];
+
+        if ($kasHarian->tipe == 'Pedagang') {
+            $saldo = $kasHarian->payer->saldo;
+        }else{
+            $saldo = $kasHarian->payer->produsen->saldo;
+        }
+
+        $this->increase(['jumlah' => $kasHarian->jumlah]);
+        $this->increaseLog(['jumlah' => $kasHarian->jumlah]);
+        $saldo->jumlah -= $kasHarian->jumlah;
+        $saldo->save();
+        $this->logKas->kasHarian()->save($kasHarian);
+        $this->kasHarian->status = 'Ok';
+        $this->kasHarian->save();
     }
 }

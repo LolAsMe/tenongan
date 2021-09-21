@@ -18,11 +18,13 @@ class TransaksiRepository
     protected $owner;
     protected $transaksi;
     protected $attribute;
+    protected $recipient;
 
-    public function __construct()
+    public function __construct(?array $recipient=null)
     {
         $this->saldoRepository = new SaldoRepository;
         $this->kasRepository = new KasRepository;
+        $this->recipient = $recipient ?? ['Produsen'];
     }
 
     public function setOwner($owner)
@@ -78,6 +80,7 @@ class TransaksiRepository
     public function setTransaksi(Transaksi $transaksi)
     {
         $this->transaksi = $transaksi;
+        return $this;
     }
 
     public function tambahJumlahTransaksi(int $jumlah)
@@ -133,6 +136,15 @@ class TransaksiRepository
         }
     }
 
+    // public function checkPenjualan(?Transaksi $transaksi=null)
+    // {
+    //     if (isset($transaksi)) {
+
+    //     }else{
+
+    //     }
+    // }
+
     /**
      * Menmbayar uang yang masih pending,
      *
@@ -140,6 +152,23 @@ class TransaksiRepository
      */
     public function pay()
     {
+
+        $transaksi = $this->transaksi;
+        // $this->checkPenjualan();
+        if ($this->recipient[0] == $transaksi->tipe) {
+            $saldo = $this->transaksi->owner->saldo;
+            $this->saldoRepository->setSaldo($saldo)->increase(['jumlah'=>$transaksi->jumlah]);
+        }
+        $this->transaksi->status = 'Ok';
+        $penjualans = $this->transaksi->penjualan;
+        foreach ($penjualans as $key => $penjualan) {
+            $penjualan->status = 'Ok';
+            $penjualan->save();
+        }
+        $this->transaksi->save();
+
+
+        // dd($this->transaksi->penjualan());
         // Penjualan::whereStatus('Pending')->chunkById(100, function ($penjualans) {
         //     foreach ($penjualans as $key => $penjualan) {
         //         $jumlah = $penjualan->harga_beli * $penjualan->laku;

@@ -6,6 +6,7 @@ use App\Contracts\Tenongan\TenonganService as TenonganServiceContract;
 use App\Models\Tenongan\KasHarian;
 use App\Models\tenongan\Penjualan;
 use App\Models\Tenongan\Transaksi;
+use App\Repositories\Tenongan\KasHarianRepository;
 use App\Repositories\Tenongan\KasRepository;
 use App\Repositories\Tenongan\PenjualanRepository;
 use App\Repositories\Tenongan\TransaksiRepository;
@@ -35,15 +36,15 @@ class TenonganService implements TenonganServiceContract
             foreach ($penjualans as $key => $penjualan) {
                 $jumlah = $penjualan->laku * $penjualan->harga_beli;
                 $this->transaksiRepository->setOwner($penjualan->produk->produsen)->firstOrCreate();
-                $this->transaksiRepository->tambahJumlahTransaksi($jumlah);
                 $this->transaksiRepository->tambahJumlahTransaksi($jumlah)->attachPenjualan($penjualan);
 
                 $jumlah = $penjualan->laku * ($penjualan->harga_jual-$penjualan->harga_beli);
                 $this->transaksiRepository->setOwner($penjualan->pedagang)->firstOrCreate();
                 $this->transaksiRepository->tambahJumlahTransaksi($jumlah)->attachPenjualan($penjualan);
-
                 $this->kasRepository->setPayer($penjualan->produk)->firstOrCreateHarian(['jumlah' => 1000]);
                 $this->kasRepository->setPayer($penjualan->pedagang)->firstOrCreateHarian(['jumlah' => 1000]);
+
+
                 $penjualan->status = 'Pending';
                 $penjualan->save();
             }
@@ -68,15 +69,19 @@ class TenonganService implements TenonganServiceContract
 
         Transaksi::whereStatus('Pending')->chunkById(100, function ($transaksis) {
             foreach ($transaksis as $key => $transaksi) {
-                $transaksi->status = "Ok";
-                $transaksi->save();
+                $this->transaksiRepository->setTransaksi($transaksi)->pay();
+                // dd($transaksi->penjualan);
+                // $transaksi->status = "Ok";
+                // $transaksi->save();
             }
         });
 
-        KasHarian::whereStatus('Pending')->chunkById(100, function ($transaksis) {
-            foreach ($transaksis as $key => $transaksi) {
-                $transaksi->status = "Ok";
-                $transaksi->save();
+        $this->kasRepository->createLog(['keterangan'=>'Kas Harian Produsen & Pedagang']);
+        KasHarian::whereStatus('Pending')->chunkById(100, function ($kasHarians) {
+            foreach ($kasHarians as $key => $kasHarian) {
+                $this->kasRepository->setKasHarian($kasHarian)->pay();
+                // $kasHarian->status = "Ok";
+                // $kasHarian->save();
             }
         });
     }

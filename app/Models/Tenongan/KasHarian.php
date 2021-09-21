@@ -29,6 +29,7 @@ class KasHarian extends Model
     {
         return $this->belongsTo(LogKas::class);
     }
+
     public function getTipeAttribute()
     {
         $value =  substr($this->payer_type, strpos($this->payer_type, "n\\")+2);

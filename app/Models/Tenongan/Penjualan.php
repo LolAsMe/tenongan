@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Tenongan\Produk;
 use App\Models\Tenongan\Transaksi;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\tenongan\Penjualan
@@ -62,16 +63,6 @@ class Penjualan extends Model
     }
 
     /**
-     * Get the transaksi that owns the Penjualan
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function transaksi(): BelongsTo
-    {
-        return $this->belongsTo(Transaksi::class,'transaksi_id','id');
-    }
-
-    /**
      * Get the pedagang that owns the Penjualan
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -79,5 +70,10 @@ class Penjualan extends Model
     public function pedagang(): BelongsTo
     {
         return $this->belongsTo(Pedagang::class);
+    }
+
+    public function transaksi(): BelongsToMany
+    {
+        return $this->belongsToMany(Penjualan::class);
     }
 }

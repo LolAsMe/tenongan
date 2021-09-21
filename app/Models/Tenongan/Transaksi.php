@@ -4,9 +4,10 @@ namespace App\Models\Tenongan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 /**
  * App\Models\Tenongan\Transaksi
  *
@@ -44,11 +45,11 @@ class Transaksi extends Model
     /**
      * Get all of the penjualan for the Transaksi
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function penjualan(): HasMany
+    public function penjualan(): BelongsToMany
     {
-        return $this->hasMany(Penjualan::class);
+        return $this->belongsToMany(Penjualan::class);
     }
 
     /**

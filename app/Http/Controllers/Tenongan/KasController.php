@@ -27,7 +27,7 @@ class KasController extends Controller
     public function index()
     {
         //
-        $kas = $this->kasRepository->getKas();
+        $kas = $this->kasRepository->getKas()->load('log');
         return response()->json($kas);
     }
 
