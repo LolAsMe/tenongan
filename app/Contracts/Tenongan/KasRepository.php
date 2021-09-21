@@ -14,4 +14,7 @@ interface KasRepository
     public function decrease(?array $attribute);
     public function findPayer(array $attribute);
     public function getKas();
+    public function getKasHarian();
+    public function setKasHarianAttribute(array $attribute);
+
 }

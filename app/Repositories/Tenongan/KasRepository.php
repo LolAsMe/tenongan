@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Tenongan;
 
 use App\Contracts\Tenongan\KasRepository as KasRepositoryContract;
@@ -22,27 +23,28 @@ class KasRepository implements KasRepositoryContract
     protected $kasHarianAttribute;
     protected $payer;
 
-    public function __construct($id=1) {
+    public function __construct($id = 1)
+    {
         $this->kas = Kas::find($id) ?? null;
         $this->setLogAttribute();
     }
 
     public function setKasHarianAttribute(array $attribute)
     {
-        $this->kasHarianAttribute['log_kas_id'] =$attribute['log_kas_id'] ?? null;
-        $this->kasHarianAttribute['tanggal'] =$attribute['tanggal'] ?? now();
-        $this->kasHarianAttribute['jumlah'] =$attribute['jumlah'];
-        $this->kasHarianAttribute['status'] =$attribute['status'] ?? 'Pending';
-        $this->kasHarianAttribute['keterangan'] =$attribute['keterangan'] ?? null;
+        $this->kasHarianAttribute['log_kas_id'] = $attribute['log_kas_id'] ?? null;
+        $this->kasHarianAttribute['tanggal'] = $attribute['tanggal'] ?? now();
+        $this->kasHarianAttribute['jumlah'] = $attribute['jumlah'];
+        $this->kasHarianAttribute['status'] = $attribute['status'] ?? 'Pending';
+        $this->kasHarianAttribute['keterangan'] = $attribute['keterangan'] ?? null;
         return $this;
     }
 
-    public function createKasHarian(?array $attribute=null)
+    public function createKasHarian(?array $attribute = null)
     {
         if (isset($attribute)) {
             $this->setKasHarianAttribute($attribute);
             $this->kasHarian = $this->payer->kasHarian()->create($attribute);
-        }else{
+        } else {
             $this->kasHarian = $this->payer->kasHarian()->create($attribute);
         }
         return $this;
@@ -53,19 +55,42 @@ class KasRepository implements KasRepositoryContract
         return $this->kasHarian;
     }
 
+    public function setHarian(KasHarian $harian)
+    {
+        $this->kasHarian = $harian;
+        return $this;
+    }
+
     public function setPayer(Model $payer)
     {
         $this->payer = $payer;
+        return $this;
     }
 
     public function findPayer($attribute)
     {
         if (isset($attribute['type']) && isset($attribute['payer_id'])) {
-            $attribute['type']=='Pedagang'? $payer = Pedagang::find($attribute['payer_id']):'';
-            $attribute['type']=='Produk'? $payer =  Produk::find($attribute['payer_id']):'';
+            $attribute['type'] == 'Pedagang' ? $payer = Pedagang::find($attribute['payer_id']) : '';
+            $attribute['type'] == 'Produk' ? $payer =  Produk::find($attribute['payer_id']) : '';
             isset($payer) ? $this->setPayer($payer) : '';
             return $this;
         }
+    }
+
+    public function firstOrCreateHarian(?array $attribute = null)
+    {
+        $this->setKasHarianAttribute($attribute);
+        $harian = $this->payer->KasHarian()->firstOrCreate(
+            [
+                'status' => $this->kasHarianAttribute['status']
+            ],
+            [
+                'tanggal' => $this->kasHarianAttribute['tanggal'],
+                'jumlah' => $this->kasHarianAttribute['jumlah'],
+                'keterangan' => $this->kasHarianAttribute['keterangan']
+            ]
+        );
+        $this->setHarian($harian);
     }
 
     public function setKas(Kas $kas)
@@ -90,7 +115,7 @@ class KasRepository implements KasRepositoryContract
         return $this->kas;
     }
 
-    public function setLogAttribute($attribute=[])
+    public function setLogAttribute($attribute = [])
     {
         $this->logAttribute['tanggal'] = $attribute['tanggal'] ?? now();
         $this->logAttribute['jumlah'] = $attribute['jumlah'] ?? 0;
@@ -102,7 +127,6 @@ class KasRepository implements KasRepositoryContract
     public function setLogJumlah(mixed $jumlah)
     {
         $this->logAttribute['jumlah'] = $jumlah;
-
     }
 
     public function createLog($attribute)
@@ -113,7 +137,6 @@ class KasRepository implements KasRepositoryContract
         $log->save();
         $this->setLogKas($log);
         return $this;
-
     }
 
     public function increase(?array $attribute)

@@ -62,6 +62,17 @@ class TransaksiRepository
             ]
         );
         $this->setTransaksi($transaksi);
+        return $transaksi;
+    }
+
+    public function getTransaksi()
+    {
+        return $this->transaksi;
+    }
+
+    public function attachPenjualan(Penjualan $penjualan)
+    {
+        $this->transaksi->penjualan()->save($penjualan);
     }
 
     public function setTransaksi(Transaksi $transaksi)

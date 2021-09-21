@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenongan;
 use App\Http\Controllers\Controller;
 use App\Contracts\Tenongan\KasRepository;
 use App\Models\Tenongan\Kas;
+use App\Models\Tenongan\KasHarian;
 use App\Models\Tenongan\Pedagang;
 use App\Models\Tenongan\Produk;
 use Illuminate\Http\Request;
@@ -28,6 +29,13 @@ class KasController extends Controller
         //
         $kas = $this->kasRepository->getKas();
         return response()->json($kas);
+    }
+
+    public function harian()
+    {
+        //
+        $harians = KasHarian::with('payer')->get();
+        return response()->json($harians);
     }
 
     public function show(Kas $kas)

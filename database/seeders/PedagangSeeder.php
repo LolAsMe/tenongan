@@ -15,18 +15,23 @@ class PedagangSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('produsen')->insert([
+        DB::table('pedagang')->insert([
             'nama'=>'Ari',
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
-        DB::table('produsen')->insert([
+        DB::table('pedagang')->insert([
             'nama'=>'Pareng',
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
-        DB::table('produsen')->insert([
+        DB::table('pedagang')->insert([
             'nama'=>'Katon',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ]);
+        DB::table('pedagang')->insert([
+            'nama'=>'Abdul',
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);

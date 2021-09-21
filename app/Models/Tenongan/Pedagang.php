@@ -47,7 +47,7 @@ class Pedagang extends Model
 
     public function kasHarian()
     {
-        return $this->morphMany(LogKas::class,'payer');
+        return $this->morphMany(KasHarian::class,'payer');
     }
 
     /**
@@ -62,7 +62,7 @@ class Pedagang extends Model
 
     public function transaksi()
     {
-        return $this->morphMany(Saldo::class,'owner');
+        return $this->morphMany(Transaksi::class,'owner');
     }
 
 }

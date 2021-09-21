@@ -11,14 +11,14 @@
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Jumlah</th>
-            <th scope="col">TimeStamp</th>
+            <th scope="col">Date</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="log in saldo.log_saldo" :key="log.id">
             <td>{{ log.id }}</td>
             <td>{{ log.jumlah }}</td>
-            <td>{{ log.created_at }}</td>
+            <td>{{ log.tanggal }}</td>
           </tr>
         </tbody>
       </table>

@@ -90,6 +90,12 @@
           </router-link>
         </li>
         <li>
+          <router-link :to="{ name: 'kas.harian' }" href="#" class="nav-link px-0 align-middle">
+            <i class="fs-4 bi-people"></i>
+            <span class="ms-1 d-none d-sm-inline">Kas Harian</span>
+          </router-link>
+        </li>
+        <li>
           <router-link :to="{ name: 'user' }" href="#" class="nav-link px-0 align-middle">
             <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">User</span>

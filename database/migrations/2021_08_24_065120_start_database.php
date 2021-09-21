@@ -24,7 +24,7 @@ class StartDatabase extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->foreignId('produsen_id')->nullable()->constrained('produsen');
+            $table->foreignId('produsen_id')->nullable();
             $table->unsignedDecimal('harga_jual');
             $table->unsignedDecimal('harga_beli');
             $table->softDeletes();
@@ -49,7 +49,7 @@ class StartDatabase extends Migration
 
         Schema::create('log_saldo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('saldo_id')->constrained('saldo');
+            $table->foreignId('saldo_id');
             $table->decimal('jumlah', 16);
             $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
             $table->date('tanggal');
@@ -68,7 +68,7 @@ class StartDatabase extends Migration
 
         Schema::create('log_kas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kas_id')->constrained('kas');
+            $table->foreignId('kas_id');
             $table->date('tanggal');
             $table->decimal('jumlah');
             $table->nullableMorphs('payer');
@@ -100,15 +100,15 @@ class StartDatabase extends Migration
 
         Schema::create('penjualan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaksi_id')->nullable()->constrained('transaksi');
-            $table->foreignId('produk_id')->constrained('produk');
+            $table->foreignId('transaksi_id')->nullable();
+            $table->foreignId('produk_id');
             $table->unsignedInteger('titip');
             $table->unsignedInteger('laku')->nullable();
             $table->unsignedDecimal('harga_jual');
             $table->unsignedDecimal('harga_beli');
             $table->date('tanggal');
             $table->enum('status', [ 'Pending','Ignored','Paid Out','Ok','Draft']);
-            $table->foreignId('pedagang_id')->constrained('pedagang');
+            $table->foreignId('pedagang_id');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -116,12 +116,12 @@ class StartDatabase extends Migration
 
         Schema::create('kas_harian', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('log_kas_id')->nullable()->constrained('log_kas');
+            $table->foreignId('log_kas_id')->nullable();
             $table->date('tanggal');
             $table->morphs('payer');
             $table->decimal('jumlah');
             $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

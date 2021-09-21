@@ -57,6 +57,12 @@ class Produsen extends Model
         return $this->morphMany(LogKas::class,'payer');
     }
 
+    public function kasHarian()
+    {
+        return $this->morphMany(KasHarian::class,'payer');
+    }
+
+
     public function saldo()
     {
         return $this->morphOne(Saldo::class,'owner');

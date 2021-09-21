@@ -22,6 +22,7 @@ export default [
   { path: '/saldo', name: 'saldo', component: page('tenongan/saldo.vue') },
   { path: '/user', name: 'user', component: page('tenongan/user.vue') },
   { path: '/transaksi', name: 'transaksi', component: page('tenongan/transaksi.vue') },
+  { path: '/kas/harian', name: 'kas.harian', component: page('tenongan/kas-harian.vue') },
 
   {
     path: '/settings',

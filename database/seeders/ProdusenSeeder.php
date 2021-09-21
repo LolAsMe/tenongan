@@ -35,15 +35,5 @@ class ProdusenSeeder extends Seeder
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
-        DB::table('produsen')->insert([
-            'nama'=>'Jenifer',
-            'created_at'=>now(),
-            'updated_at'=>now(),
-        ]);
-        DB::table('produsen')->insert([
-            'nama'=>'Jef',
-            'created_at'=>now(),
-            'updated_at'=>now(),
-        ]);
     }
 }

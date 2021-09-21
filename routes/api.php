@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('saldo/{saldo}/inc', [SaldoController::class, 'increase'])->name('saldo.increase');
 
     Route::get('kas', [KasController::class, 'index'])->name('kas');
+    Route::get('kas/harian', [KasController::class, 'harian'])->name('kas');
     Route::post('kas/inc', [KasController::class, 'increase'])->name('kas.increase');
     Route::post('kas/dec', [KasController::class, 'decrease'])->name('kas.decrease');
 
