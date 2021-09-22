@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Saldo;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\SaldoRepository;
+use App\Models\Tenongan\Pedagang;
 
 class SaldoController extends Controller
 {
@@ -36,7 +37,7 @@ class SaldoController extends Controller
     public function show(Saldo $saldo)
     {
         //
-        return response()->json($saldo->load(['logSaldo']));
+        return response()->json($saldo->load(['owner','logSaldo']));
 
     }
 
@@ -69,9 +70,9 @@ class SaldoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function increase(Request $request)
+    public function increase(Request $request,Pedagang $pedagang)
     {
-        $this->saldoRepository->increase($request->jumlah);
+        $this->saldoRepository->setSaldo($pedagang->saldo)->increase($request->all());
     }
 
 
@@ -82,9 +83,9 @@ class SaldoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function decrease( Request $request)
+    public function decrease( Request $request, Pedagang $pedagang)
     {
-        $this->saldoRepository->decrease($request->jumlah);
+        $this->saldoRepository->setSaldo($pedagang->saldo)->decrease($request->all());
 
     }
 

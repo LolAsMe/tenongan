@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Tenongan;
 
+use App\Models\Tenongan\Saldo;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -13,4 +14,5 @@ interface SaldoRepository
     public function decrease(array $attribute);
     public function create();
     public function setOwner(Model $owner);
+    public function setSaldo(Saldo $saldo);
 }

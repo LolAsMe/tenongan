@@ -170,18 +170,8 @@ class KasRepository implements KasRepositoryContract
     public function pay()
     {
         $kasHarian = $this->kasHarian;
-        $saldo = [];
-
-        if ($kasHarian->tipe == 'Pedagang') {
-            $saldo = $kasHarian->payer->saldo;
-        }else{
-            $saldo = $kasHarian->payer->produsen->saldo;
-        }
-
         $this->increase(['jumlah' => $kasHarian->jumlah]);
         $this->increaseLog(['jumlah' => $kasHarian->jumlah]);
-        $saldo->jumlah -= $kasHarian->jumlah;
-        $saldo->save();
         $this->logKas->kasHarian()->save($kasHarian);
         $this->kasHarian->status = 'Ok';
         $this->kasHarian->save();

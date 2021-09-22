@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     async addSaldo() {
-      const { data } = await this.form.post("api/saldo");
-      await this.$store.commit("saldo/addSaldo", data);
+      const { data } = await this.form.post("api/saldo/inc/"+this.form.pedagang_id);
+      await this.$store.dispatch("saldo/fetchSaldos");
       await this.form.reset();
       this.$emit("toggle");
     },

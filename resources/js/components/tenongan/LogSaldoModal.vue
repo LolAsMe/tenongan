@@ -2,14 +2,15 @@
   <basic-modal v-if="showModal" @close="$emit('toggle')">
     <h5 slot="header">Log Saldo</h5>
     <div slot="body">
-    <div v-if="!loading">
-      Jumlah Saldo = {{ saldo.saldo }} Nama
-      Pedagang = {{ saldo.pedagang["nama"] }}
-    </div>
+      <!-- {{ saldo }} -->
+      <div v-if="!loading">
+        Jumlah Saldo = {{ saldo.saldo }} Nama Pedagang = {{ saldo.owner.nama }}
+      </div>
       <table class="table">
         <thead>
           <tr>
             <th scope="col">ID</th>
+            <th scope="col">Keterangan</th>
             <th scope="col">Jumlah</th>
             <th scope="col">Date</th>
           </tr>
@@ -17,6 +18,7 @@
         <tbody>
           <tr v-for="log in saldo.log_saldo" :key="log.id">
             <td>{{ log.id }}</td>
+            <td>{{ log.keterangan }}</td>
             <td>{{ log.jumlah }}</td>
             <td>{{ log.tanggal }}</td>
           </tr>
@@ -41,7 +43,7 @@ export default {
   props: {
     saldo: {
       type: undefined,
-      default: { saldo: 0, pedagang: { nama: "test" } },
+      default: { saldo: 0, payer: { nama: "test" } },
     },
     showModal: { type: Boolean, default: true },
   },
@@ -51,7 +53,7 @@ export default {
   },
   data() {
     return {
-      loading:true
+      loading: true,
     };
   },
   methods: {},

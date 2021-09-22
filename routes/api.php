@@ -63,8 +63,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('saldo', [SaldoController::class, 'store'])->name('saldo.store');
     Route::get('saldo/{saldo}', [SaldoController::class, 'show'])->name('saldo.show');
     Route::delete('saldo/{saldo}', [SaldoController::class, 'destroy'])->name('saldo.delete');
-    Route::post('saldo/{saldo}/dec', [SaldoController::class, 'decrease'])->name('saldo.decrease');
-    Route::post('saldo/{saldo}/inc', [SaldoController::class, 'increase'])->name('saldo.increase');
+    Route::post('saldo/dec/{pedagang}', [SaldoController::class, 'decrease'])->name('saldo.decrease');
+    Route::post('saldo/inc/{pedagang}', [SaldoController::class, 'increase'])->name('saldo.increase');
 
     Route::get('kas', [KasController::class, 'index'])->name('kas');
     Route::get('kas/harian', [KasController::class, 'harian'])->name('kas');
@@ -91,6 +91,4 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
-
-
 });

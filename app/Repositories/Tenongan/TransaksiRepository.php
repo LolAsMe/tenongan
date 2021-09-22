@@ -157,7 +157,7 @@ class TransaksiRepository
         // $this->checkPenjualan();
         if ($this->recipient[0] == $transaksi->tipe) {
             $saldo = $this->transaksi->owner->saldo;
-            $this->saldoRepository->setSaldo($saldo)->increase(['jumlah'=>$transaksi->jumlah]);
+            $this->saldoRepository->setSaldo($saldo)->increase(['jumlah'=>$transaksi->jumlah,'keterangan'=>'Hasil Penjualan Harian']);
         }
         $this->transaksi->status = 'Ok';
         $penjualans = $this->transaksi->penjualan;

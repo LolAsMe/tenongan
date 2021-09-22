@@ -5,8 +5,7 @@ import Cookies from 'js-cookie'
 export const state = {
   saldos: [
   ],
-  saldo: [
-  ],
+  saldo: {id:1, owner:{nama:'dump'}},
 
 }
 

@@ -5,6 +5,7 @@ namespace App\Services\Tenongan;
 use App\Contracts\Tenongan\TenonganService as TenonganServiceContract;
 use App\Models\Tenongan\KasHarian;
 use App\Models\tenongan\Penjualan;
+use App\Models\Tenongan\Saldo;
 use App\Models\Tenongan\Transaksi;
 use App\Repositories\Tenongan\KasHarianRepository;
 use App\Repositories\Tenongan\KasRepository;
@@ -80,6 +81,19 @@ class TenonganService implements TenonganServiceContract
         KasHarian::whereStatus('Pending')->chunkById(100, function ($kasHarians) {
             foreach ($kasHarians as $key => $kasHarian) {
                 $this->kasRepository->setKasHarian($kasHarian)->pay();
+                $saldo = new Saldo();
+                if ($kasHarian->tipe == 'Pedagang') {
+                    $saldo = $kasHarian->payer->saldo;
+                }else{
+                    $saldo = $kasHarian->payer->produsen->saldo;
+                }
+
+                $saldo->jumlah -= $kasHarian->jumlah;
+                $saldo->save;
+
+                $this->saldoRepository
+                ->setSaldo($saldo)
+                ->decrease(['jumlah'=>$kasHarian->jumlah, 'keterangan'=>'Kurang dari potongan harian']);
                 // $kasHarian->status = "Ok";
                 // $kasHarian->save();
             }
