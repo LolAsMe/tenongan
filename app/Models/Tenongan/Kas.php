@@ -9,18 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 
-
-
-
-
-
-
-
-
-
-
-    @@ -40,6 +41,7 @@ class Kas extends Model
-
 use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Models\Tenongan\Kas
@@ -60,15 +48,6 @@ class Kas extends Model
     protected $guarded = [];
     protected $lastLog;
 
-
-
-
-
-
-
-
-    @@ -54,17 +56,6 @@ public function log(): HasMany
-
     /**
      * Get all of the logKas for the Kas
      *
@@ -82,21 +61,6 @@ class Kas extends Model
     /**
      * Menambah Kas
      *
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @@ -94,9 +85,4 @@ public function decrease(int $jumlah , array $extra = [])
-
      * @param integer $jumlah
      * @param array $extra
      * @return void

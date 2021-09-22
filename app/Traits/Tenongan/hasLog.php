@@ -7,9 +7,9 @@ trait HasLog
     protected $last_log;
 
 
-    public function createLog()
+    public function createLog(array $attribute=[])
     {
-        $this->last_log = $this->log()->create();
+        $this->last_log = $this->log()->create($attribute);
         return $this;
     }
 

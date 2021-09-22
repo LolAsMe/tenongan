@@ -107,7 +107,7 @@ class TenonganService implements TenonganServiceContract
             }
         });
 
-        $this->kas->createLog();
+        $this->kas->createLog(['keterangan'=>'Penambahan dari Penjualan Harian']);
         KasHarian::whereStatus('Pending')->chunkById(100, function ($kasHarians) {
             foreach ($kasHarians as $kasHarian) {
                 $this->kas->increment('jumlah', $kasHarian->jumlah);
