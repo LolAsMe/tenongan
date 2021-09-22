@@ -1,30 +1,35 @@
 <?php
-
 namespace App\Http\Controllers\Tenongan;
-
 use App\Http\Controllers\Controller;
 use App\Models\tenongan\Penjualan;
 use App\Models\tenongan\Produsen;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
 use App\Models\Tenongan\Transaksi;
-
 class PenjualanController extends Controller
 {
     protected $tenongan;
-
     public function __construct(TenonganService $tenongan) {
         $this->tenongan = $tenongan;
     }
 
     public function titip(Request $request)
     {
-        $data= json_decode($request->getContent(),true);
-        $this->tenongan->tambahPenjualan($data);
-        return response()->json('sukses');
+        $penjualans = $this->tenongan->createPenjualans(json_decode($request->getContent(),true));
+        return response()->json($penjualans);
     }
     /**
      * menghitung transaksi yang terjadi, status pendinng
+
+
+
+
+
+
+
+
+
+
      *
      * @return void
      */
@@ -32,7 +37,6 @@ class PenjualanController extends Controller
     {
         $this->tenongan->transact();
     }
-
     /**
      * Membayar transaksi yang masih pending. status berubah menjadi paid out
      * skenario saldo dikurangi
@@ -43,7 +47,6 @@ class PenjualanController extends Controller
     {
         $this->tenongan->pay();
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +58,6 @@ class PenjualanController extends Controller
         $transaksi = Transaksi::whereStatus('Pending')->with('owner')->get();
         return response()->json($transaksi);
     }
-
         /**
      * Display a listing of the resource.
      *
@@ -67,7 +69,6 @@ class PenjualanController extends Controller
         $penjualan = Penjualan::where('status','=','Pending')->orwhere('status','=','Draft')->with(['produk','pedagang'])->get();
         return response()->json($penjualan);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -77,7 +78,6 @@ class PenjualanController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -88,7 +88,6 @@ class PenjualanController extends Controller
     {
         //
     }
-
         /**
      * Display the specified resource.
      *
@@ -99,9 +98,7 @@ class PenjualanController extends Controller
     {
         //
         return response()->json($transaksi->load('penjualan'));
-
     }
-
     /**
      * Display the specified resource.
      *
@@ -111,9 +108,7 @@ class PenjualanController extends Controller
     public function show(penjualan $penjualan)
     {
         //
-
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -124,7 +119,6 @@ class PenjualanController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -136,7 +130,6 @@ class PenjualanController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *

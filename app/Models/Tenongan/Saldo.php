@@ -2,12 +2,13 @@
 
 namespace App\Models\Tenongan;
 
+use App\Traits\Tenongan\HasLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 /**
  * App\Models\Tenongan\Saldo
  *
@@ -34,26 +35,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Saldo withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Saldo withoutTrashed()
  * @mixin \Eloquent
+ * @property string $jumlah
+ * @property string $owner_type
+ * @property int $owner_id
+ * @property-read mixed $tipe
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\LogSaldo[] $log
+ * @property-read int|null $log_count
+ * @property-read Model|\Eloquent $owner
+ * @method static \Illuminate\Database\Eloquent\Builder|Saldo whereJumlah($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Saldo whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Saldo whereOwnerType($value)
  */
 class Saldo extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasLog;
+
     protected $table = 'saldo';
     protected $guarded = [];
     protected $appends = array('tipe');
-
 
     /**
      * Get all of the logSaldo for the Saldo
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function logSaldo(): HasMany
+    public function log(): HasMany
     {
         return $this->hasMany(LogSaldo::class);
     }
-
     /**
      * Get the pedagang that owns the Saldo
      *
@@ -62,10 +73,49 @@ class Saldo extends Model
     {
         return $this->morphTo('owner');
     }
-
     public function getTipeAttribute()
     {
         $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
         return $value;
+    }
+
+    /**
+     * Menambah Kas
+     *
+
+
+
+
+
+
+
+
+
+
+     * @param integer $jumlah
+     * @param array $extra
+     * @return void
+     */
+    public function increase(int $jumlah , array $extra = [])
+    {
+        $attributes = array_merge(['jumlah'=>$jumlah,'tanggal'=>now()], $extra);
+        $this->increment('jumlah',$jumlah);
+        $this->log()->create($attributes);
+        return $this;
+    }
+    /**
+     * Mengurangi Kas
+     *
+     * @param integer $jumlah
+     * @param array $extra
+     * @return void
+     */
+    public function decrease(int $jumlah , array $extra = [])
+    {
+        $extra['jumlah']=-$extra['jumlah'];
+        $attributes = array_merge(['jumlah'=>-$jumlah,'tanggal'=>now()], $extra);
+        $this->decrement('jumlah',$jumlah);
+        $this->log()->create($attributes);
+        return $this;
     }
 }

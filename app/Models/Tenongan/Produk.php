@@ -38,6 +38,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\LogKas[] $logKas
  * @property-read int|null $log_kas_count
  * @property-read \App\Models\Tenongan\Produsen|null $produsen
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\KasHarian[] $kasHarian
+ * @property-read int|null $kas_harian_count
  */
 class Produk extends Model
 {
@@ -66,5 +68,6 @@ class Produk extends Model
         return $this->morphMany(KasHarian::class,'payer');
     }
 
-
 }
+
+

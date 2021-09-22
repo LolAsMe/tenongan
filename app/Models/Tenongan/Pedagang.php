@@ -2,13 +2,28 @@
 
 namespace App\Models\Tenongan;
 
+use App\Traits\Tenongan\HasSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Tenongan\Pedagang
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @@ -41,7 +40,7 @@
+
  *
  * @property int $id
  * @property string $kode
@@ -32,24 +47,38 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\LogKas[] $logKas
  * @property-read int|null $log_kas_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\KasHarian[] $kasHarian
+ * @property-read int|null $kas_harian_count
+ * @property-read \App\Models\Tenongan\Saldo|null $saldo
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\Transaksi[] $transaksi
+ * @property-read int|null $transaksi_count
  */
 class Pedagang extends Model
 {
+    use HasSaldo;
     use HasFactory;
     use SoftDeletes;
+
+
+
+
+
+
+
+
+
+
+
     protected $table = 'pedagang';
     protected $guarded = [];
-
     public function logKas()
     {
         return $this->morphMany(LogKas::class,'payer');
     }
-
     public function kasHarian()
     {
         return $this->morphMany(KasHarian::class,'payer');
     }
-
     /**
      * Get the saldo associated with the Pedagang
      *
@@ -59,10 +88,8 @@ class Pedagang extends Model
     {
         return $this->morphOne(Saldo::class,'owner');
     }
-
     public function transaksi()
     {
         return $this->morphMany(Transaksi::class,'owner');
     }
-
 }

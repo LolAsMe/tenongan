@@ -2,11 +2,26 @@
 
 namespace App\Models\Tenongan;
 
+use App\Traits\Tenongan\HasLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
+
+
+
+
+
+
+
+
+
+
+
+
+    @@ -40,6 +41,7 @@ class Kas extends Model
+
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * App\Models\Tenongan\Kas
  *
@@ -33,13 +48,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Kas withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Kas withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\LogKas[] $log
+ * @property-read int|null $log_count
  */
 class Kas extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasLog;
     protected $table = 'kas';
     protected $guarded = [];
+    protected $lastLog;
+
+
+
+
+
+
+
+
+    @@ -54,17 +56,6 @@ public function log(): HasMany
 
     /**
      * Get all of the logKas for the Kas
@@ -49,5 +77,49 @@ class Kas extends Model
     public function log(): HasMany
     {
         return $this->hasMany(LogKas::class);
+    }
+
+    /**
+     * Menambah Kas
+     *
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @@ -94,9 +85,4 @@ public function decrease(int $jumlah , array $extra = [])
+
+     * @param integer $jumlah
+     * @param array $extra
+     * @return void
+     */
+    public function increase(int $jumlah , array $extra = [])
+    {
+        $attributes = array_merge(['jumlah'=>$jumlah,'tanggal'=>now()], $extra);
+        $this->increment('jumlah',$jumlah);
+        $this->lastLog = $this->log()->create($attributes);
+        return $this;
+    }
+    /**
+     * Mengurang Kas
+     *
+     * @param integer $jumlah
+     * @param array $extra
+     * @return void
+     */
+    public function decrease(int $jumlah , array $extra = [])
+    {
+        $attributes = array_merge(['jumlah'=>$jumlah,'tanggal'=>now()], $extra);
+        $this->decrement('jumlah',$jumlah);
+        $this->lastLog = $this->log()->create($attributes);
+        return $this;
     }
 }

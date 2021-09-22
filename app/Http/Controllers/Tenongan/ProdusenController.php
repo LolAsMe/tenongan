@@ -2,20 +2,39 @@
 
 namespace App\Http\Controllers\Tenongan;
 
-use App\Contracts\Tenongan\SaldoRepository;
+use App\Contracts\Tenongan\TenonganService;
 use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Produsen;
-use Illuminate\Http\Request;
 
+
+
+
+
+
+
+
+    @@ -11,11 +10,9 @@
+
+use Illuminate\Http\Request;
 class ProdusenController extends Controller
 {
 
-    protected $saldoRepository;
-     function __construct(SaldoRepository $saldoRepository) {
-        $this->saldoRepository = $saldoRepository;
+    protected $tenonganService;
+     function __construct(TenonganService $tenonganService) {
+        $this->tenonganService = $tenonganService;
     }
     /**
      * Display a listing of the resource.
+
+
+
+
+
+
+
+
+
+
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,10 +42,8 @@ class ProdusenController extends Controller
     {
         //
         $produsen = Produsen::all();
-
         return response()->json($produsen);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -36,12 +53,9 @@ class ProdusenController extends Controller
     public function store(Request $request)
     {
         //
-        $produsen = $request->all();
-        $produsen = Produsen::create($produsen);
-        $this->saldoRepository->setOwner($produsen)->create();
+        $produsen = $this->tenonganService->createProdusen($request->all());
         return response()->json($produsen);
     }
-
     /**
      * Display the specified resource.
      *
@@ -52,9 +66,7 @@ class ProdusenController extends Controller
     {
         //
         return response()->json($produsen->load('produk'));
-
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -68,9 +80,7 @@ class ProdusenController extends Controller
         $data = $request->all();
         $produsen->update($data);
         return response()->json($produsen);
-
     }
-
     /**
      * Remove the specified resource from storage.
      *

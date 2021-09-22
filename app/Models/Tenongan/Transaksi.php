@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Models\Tenongan;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
 /**
  * App\Models\Tenongan\Transaksi
  *
@@ -31,17 +28,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereTanggal($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $owner_type
+ * @property int $owner_id
+ * @property string $status
+ * @property string|null $keterangan
+ * @property-read mixed $tipe
+ * @property-read Model|\Eloquent $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\tenongan\Penjualan[] $penjualan
+ * @property-read int|null $penjualan_count
+ * @property-read \App\Models\Tenongan\Produsen $produsen
+ * @method static \Illuminate\Database\Query\Builder|Transaksi onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereKeterangan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereOwnerType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaksi whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|Transaksi withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Transaksi withoutTrashed()
  */
 class Transaksi extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
     protected $table = 'transaksi';
     protected $guarded = [];
     protected $appends = array('tipe');
-
-
     /**
      * Get all of the penjualan for the Transaksi
      *
@@ -52,25 +62,23 @@ class Transaksi extends Model
         return $this->belongsToMany(Penjualan::class);
     }
 
-    /**
-     * Get the produsen that owns the Transaksi
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function produsen(): BelongsTo
-    {
-        return $this->belongsTo(Produsen::class);
-    }
-
     public function owner()
     {
         return $this->morphTo();
-    }
 
+
+
+
+
+
+
+
+
+
+    }
     public function getTipeAttribute()
     {
         $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
         return $value;
     }
-
 }

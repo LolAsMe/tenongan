@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenongan;
 
+use App\Traits\Tenongan\HasSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,14 +34,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $log_kas_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\Produk[] $produk
  * @property-read int|null $produk_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\KasHarian[] $kasHarian
+ * @property-read int|null $kas_harian_count
+ * @property-read \App\Models\Tenongan\Saldo|null $saldo
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\Transaksi[] $transaksi
+ * @property-read int|null $transaksi_count
  */
 class Produsen extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasSaldo;
 
     protected $table = 'produsen';
-    protected $fillable = ['nama','kode'];
+    protected $fillable = ['nama', 'kode'];
+
+
+
+
+
+
+
+
+
 
     /**
      * Get all of the produk for the Produsen
@@ -51,26 +67,20 @@ class Produsen extends Model
     {
         return $this->hasMany(Produk::class);
     }
-
     public function logKas()
     {
-        return $this->morphMany(LogKas::class,'payer');
+        return $this->morphMany(LogKas::class, 'payer');
     }
-
     public function kasHarian()
     {
-        return $this->morphMany(KasHarian::class,'payer');
+        return $this->morphMany(KasHarian::class, 'payer');
     }
-
-
     public function saldo()
     {
-        return $this->morphOne(Saldo::class,'owner');
+        return $this->morphOne(Saldo::class, 'owner');
     }
-
     public function transaksi()
     {
-        return $this->morphMany(Transaksi::class,'owner');
+        return $this->morphMany(Transaksi::class, 'owner');
     }
-
 }

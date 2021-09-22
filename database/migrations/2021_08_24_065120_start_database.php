@@ -41,7 +41,7 @@ class StartDatabase extends Migration
 
         Schema::create('saldo', function (Blueprint $table) {
             $table->id();
-            $table->decimal('jumlah', 16);
+            $table->decimal('jumlah', 16)->default(0);
             $table->morphs('owner');
             $table->softDeletes();
             $table->timestamps();
@@ -50,9 +50,9 @@ class StartDatabase extends Migration
         Schema::create('log_saldo', function (Blueprint $table) {
             $table->id();
             $table->foreignId('saldo_id');
-            $table->decimal('jumlah', 16);
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
-            $table->date('tanggal');
+            $table->decimal('jumlah', 16)->default(0);
+            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Ok');
+            $table->dateTime('tanggal')->useCurrent();
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -61,7 +61,7 @@ class StartDatabase extends Migration
         Schema::create('kas', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->decimal('jumlah',15);
+            $table->decimal('jumlah',15)->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -69,10 +69,10 @@ class StartDatabase extends Migration
         Schema::create('log_kas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kas_id');
-            $table->date('tanggal');
-            $table->decimal('jumlah');
+            $table->dateTime('tanggal')->useCurrent();
+            $table->decimal('jumlah')->default(0);
             $table->nullableMorphs('payer');
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
+            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default(0);
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -80,7 +80,7 @@ class StartDatabase extends Migration
 
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
+            $table->dateTime('tanggal')->useCurrent();
             $table->decimal('jumlah',16);
             $table->morphs('owner');
             $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
@@ -105,7 +105,7 @@ class StartDatabase extends Migration
             $table->unsignedInteger('laku')->nullable();
             $table->unsignedDecimal('harga_jual');
             $table->unsignedDecimal('harga_beli');
-            $table->date('tanggal');
+            $table->dateTime('tanggal')->useCurrent();
             $table->enum('status', [ 'Pending','Ignored','Paid Out','Ok','Draft']);
             $table->foreignId('pedagang_id');
             $table->string('keterangan')->nullable();
@@ -116,10 +116,10 @@ class StartDatabase extends Migration
         Schema::create('kas_harian', function (Blueprint $table) {
             $table->id();
             $table->foreignId('log_kas_id')->nullable();
-            $table->date('tanggal');
+            $table->dateTime('tanggal')->useCurrent();
             $table->morphs('payer');
-            $table->decimal('jumlah');
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
+            $table->decimal('jumlah')->default(0);
+            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Draft');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
