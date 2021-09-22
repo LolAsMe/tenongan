@@ -10,10 +10,6 @@ use App\Models\Tenongan\KasHarian;
 use App\Models\tenongan\Penjualan;
 use App\Models\Tenongan\Saldo;
 use App\Models\Tenongan\Transaksi;
-use App\Repositories\Tenongan\KasRepository;
-use App\Repositories\Tenongan\PenjualanRepository;
-use App\Repositories\Tenongan\TransaksiRepository;
-use App\Repositories\Tenongan\SaldoRepository;
 use App\Traits\Tenongan\PedagangServiceTrait;
 use App\Traits\Tenongan\PenjualanServiceTrait;
 use App\Traits\Tenongan\ProdusenServiceTrait;
@@ -25,18 +21,9 @@ class TenonganService implements TenonganServiceContract
     use ProdusenServiceTrait;
     use PenjualanServiceTrait;
 
-    protected $penjualanRepository;
-    protected $transaksiRepository;
-    protected $kasRepository;
-    protected $saldoRepository;
-
-    public function __construct($kas = 1)
+    public function __construct()
     {
-        $this->penjualanRepository = new PenjualanRepository;
-        $this->saldoRepository = new SaldoRepository;
-        $this->transaksiRepository = new TransaksiRepository;
-        $this->kasRepository = new KasRepository;
-        $this->kas = Kas::find(1);
+        $this->kas = new Kas();
     }
 
     public function test()
@@ -107,6 +94,7 @@ class TenonganService implements TenonganServiceContract
             }
         });
 
+        $this->setKas();
         $this->kas->createLog(['keterangan'=>'Penambahan dari Penjualan Harian']);
         KasHarian::whereStatus('Pending')->chunkById(100, function ($kasHarians) {
             foreach ($kasHarians as $kasHarian) {

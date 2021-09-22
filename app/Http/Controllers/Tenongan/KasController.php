@@ -1,22 +1,20 @@
 <?php
-
 namespace App\Http\Controllers\Tenongan;
 
 use App\Http\Controllers\Controller;
-use App\Contracts\Tenongan\KasRepository;
+use App\Contracts\Tenongan\TenonganService;
 use App\Models\Tenongan\Kas;
 use App\Models\Tenongan\KasHarian;
-use App\Models\Tenongan\Pedagang;
-use App\Models\Tenongan\Produk;
 use Illuminate\Http\Request;
 
 class KasController extends Controller
 {
 
-    protected $kasRepository;
 
-    public function __construct(KasRepository $kasRepository) {
-        $this->kasRepository = $kasRepository;
+    protected $tenonganService;
+
+    public function __construct(TenonganService $tenonganService) {
+        $this->tenonganService = $tenonganService;
     }
 
     /**
@@ -27,7 +25,7 @@ class KasController extends Controller
     public function index()
     {
         //
-        $kas = $this->kasRepository->getKas()->load('log');
+        $kas = $this->tenonganService->setKas()->getKas()->load('log');
         return response()->json($kas);
     }
 
@@ -37,14 +35,11 @@ class KasController extends Controller
         $harians = KasHarian::with('payer')->get();
         return response()->json($harians);
     }
-
     public function show(Kas $kas)
     {
         //
         return response()->json($kas->load(['log', 'log.payer']));
-
     }
-
     public function store(Request $request)
     {
         //
@@ -52,7 +47,6 @@ class KasController extends Controller
         $kas = Kas::create($kas);
         return response()->json($kas);
     }
-
     /**
      * Menambahkan jumlah kas(detail sudah termaasu)
      *
@@ -61,13 +55,13 @@ class KasController extends Controller
      */
     public function increase(Request $request)
     {
-        $this->kasRepository->findPayer($request->all());
-        return $this->kasRepository->increase($request->all())->getLogKas();
+        $this->tenonganService->setKas()->increaseKas($request->all());
+        return $this->tenonganService->getLogKas();
     }
 
     public function decrease(Request $request)
     {
-        $this->kasRepository->findPayer($request->all());
-        return $this->kasRepository->decrease($request->all())->getLogKas();
+        $this->tenonganService->setKas()->decreaseKas($request->all());
+        return $this->tenonganService->getLogKas();
     }
 }

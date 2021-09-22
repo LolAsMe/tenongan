@@ -22,12 +22,8 @@ trait PenjualanServiceTrait
 
     public function createPenjualans(array $dataPenjualan)
 	{
-		// $this->penjualanRepository->tambah($dataPenjualan);
         $ids = array_column($dataPenjualan,'produk_id');
         $produk = Produk::findMany($ids);
-
-        // dd($produk->find(2));
-
         foreach ($dataPenjualan as $key => $data) {
             $data['harga_beli'] =$produk->find($data['produk_id'])->harga_beli;
             $data['harga_jual'] =$produk->find($data['produk_id'])->harga_jual;

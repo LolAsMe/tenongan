@@ -58,7 +58,6 @@ export default {
   data() {
     return {
       form: new Form({
-        pedagang_id: "",
       }),
     };
   },

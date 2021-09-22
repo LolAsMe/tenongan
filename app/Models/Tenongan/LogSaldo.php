@@ -32,6 +32,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|LogSaldo withTrashed()
  * @method static \Illuminate\Database\Query\Builder|LogSaldo withoutTrashed()
  * @mixin \Eloquent
+ * @property string $status
+ * @property string $tanggal
+ * @property string|null $keterangan
+ * @method static \Illuminate\Database\Eloquent\Builder|LogSaldo whereKeterangan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogSaldo whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogSaldo whereTanggal($value)
  */
 class LogSaldo extends Model
 {

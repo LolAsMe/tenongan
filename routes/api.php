@@ -19,6 +19,7 @@ use App\Http\Controllers\Tenongan\ProdukController;
 use App\Http\Controllers\Tenongan\ProdusenController;
 use App\Http\Controllers\Tenongan\SaldoController;
 use App\Http\Controllers\Tenongan\TransaksiController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -91,4 +92,9 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
+
+    Route::get('test', [TestController::class, 'index'])->name('test');
+
+    Route::post('saldo/inc2/{pedagang}', [SaldoController::class, 'increase'])->name('saldo.increase');
+
 });

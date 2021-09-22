@@ -15,6 +15,8 @@ interface TenonganService
     public function pay();
     public function test();
 
+
+    public function setKas();
     public function getKas();
     public function getLogKas();
     public function increaseKas(array $attribute);

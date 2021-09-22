@@ -1,21 +1,19 @@
 <?php
-
 namespace App\Http\Controllers\Tenongan;
-
 use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Saldo;
 use Illuminate\Http\Request;
-use App\Contracts\Tenongan\SaldoRepository;
+use App\Contracts\Tenongan\TenonganService;
+use App\Http\Requests\SaldoIncreaseRequest;
 use App\Models\Tenongan\Pedagang;
 
 class SaldoController extends Controller
 {
-    protected $saldoRepository;
+    protected $tenonganService;
 
-    public function __construct(SaldoRepository $saldoRepository) {
-        $this->saldoRepository = $saldoRepository;
+    public function __construct(TenonganService $tenonganService) {
+        $this->tenonganService = $tenonganService;
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +25,6 @@ class SaldoController extends Controller
         $saldo = Saldo::all();
         return response()->json($saldo->load('owner'));
     }
-
     /**
      * Display the specified resource.
      *
@@ -38,9 +35,7 @@ class SaldoController extends Controller
     {
         //
         return response()->json($saldo->load(['owner','logSaldo']));
-
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,15 +49,11 @@ class SaldoController extends Controller
         $saldo = Saldo::create($saldo);
         return response()->json($saldo->load('owner'));
     }
-
     public function destroy(Saldo $saldo)
     {
         //
         $saldo->delete();
     }
-
-
-
     /**
      * Tambah saldo
      *
@@ -70,11 +61,11 @@ class SaldoController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function increase(Request $request,Pedagang $pedagang)
+    public function increase(SaldoIncreaseRequest $request,Pedagang $pedagang)
     {
-        $this->saldoRepository->setSaldo($pedagang->saldo)->increase($request->all());
+        $test = $pedagang->saldo->increase($request->jumlah,$request->validated());
+        return $test;
     }
-
 
     /**
      * Kurang Saldo
@@ -85,8 +76,7 @@ class SaldoController extends Controller
      */
     public function decrease( Request $request, Pedagang $pedagang)
     {
-        $this->saldoRepository->setSaldo($pedagang->saldo)->decrease($request->all());
-
+        $test = $pedagang->saldo->decrease($request->jumlah,$request->all());
     }
 
 }

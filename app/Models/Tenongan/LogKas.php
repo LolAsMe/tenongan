@@ -40,6 +40,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Query\Builder|LogKas withTrashed()
  * @method static \Illuminate\Database\Query\Builder|LogKas withoutTrashed()
  * @mixin \Eloquent
+ * @property string $tanggal
+ * @property string $status
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\KasHarian[] $kasHarian
+ * @property-read int|null $kas_harian_count
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|LogKas whereTanggal($value)
  */
 class LogKas extends Model
 {

@@ -3,7 +3,14 @@ namespace App\Traits\Tenongan;
 use App\Models\Tenongan\Kas;
 trait KasServiceTrait
 {
-    protected Kas $kas;
+    protected $kas;
+
+    public function setKas(int $id=1)
+    {
+        $this->kas = Kas::find($id);
+        return $this;
+    }
+
     public function getKas()
     {
         return $this->kas;

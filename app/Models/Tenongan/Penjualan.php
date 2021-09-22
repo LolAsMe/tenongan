@@ -45,6 +45,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Penjualan whereTransaksiId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Penjualan whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $status
+ * @property int $pedagang_id
+ * @property-read Pedagang $pedagang
+ * @property-read Produk $produk
+ * @property-read \Illuminate\Database\Eloquent\Collection|Penjualan[] $transaksi
+ * @property-read int|null $transaksi_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Penjualan wherePedagangId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Penjualan whereStatus($value)
  */
 class Penjualan extends Model
 {

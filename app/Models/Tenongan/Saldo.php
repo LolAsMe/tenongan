@@ -82,16 +82,6 @@ class Saldo extends Model
     /**
      * Menambah Kas
      *
-
-
-
-
-
-
-
-
-
-
      * @param integer $jumlah
      * @param array $extra
      * @return void

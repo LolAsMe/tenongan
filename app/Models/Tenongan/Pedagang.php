@@ -9,21 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Tenongan\Pedagang
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @@ -41,7 +40,7 @@
-
+ * 
+ * @@ -41,7 +40,7 @@
  *
  * @property int $id
  * @property string $kode

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Tenongan;
 
-use App\Contracts\Tenongan\SaldoRepository;
+use App\Contracts\Tenongan\TenonganService;
 use App\Http\Controllers\Controller;
 use App\Models\Tenongan\Pedagang;
 use Illuminate\Http\Request;
 
 class PedagangController extends Controller
 {
-    protected $SaldoRepository;
-    public function __construct(SaldoRepository $SaldoRepository) {
-        $this->SaldoRepository = $SaldoRepository;
+    protected $tenonganService;
+    public function __construct(TenonganService $tenonganService) {
+        $this->tenonganService = $tenonganService;
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +24,6 @@ class PedagangController extends Controller
         $pedagang = Pedagang::all();
         return response()->json($pedagang);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -34,9 +33,7 @@ class PedagangController extends Controller
     public function store(Request $request)
     {
         //
-        $pedagang = $request->all();
-        $pedagang= pedagang::create($pedagang);
-        $this->SaldoRepository->setOwner($pedagang)->create();
+        $pedagang = $this->tenonganService->createPedagang($request->all());
         return response()->json($pedagang);
 
     }
@@ -52,7 +49,6 @@ class PedagangController extends Controller
         //
         return response()->json($pedagang);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -66,9 +62,7 @@ class PedagangController extends Controller
         $data = $request->all();
         $pedagang->update($data);
         return response()->json($pedagang);
-
     }
-
     /**
      * Remove the specified resource from storage.
      *
