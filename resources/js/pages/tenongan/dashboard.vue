@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col" v-role="'Admin'">
+    <div class="col">
       <card :title="'Dashboard'">
         {{ "ini halaman Dashboard" }}
       </card>
@@ -13,7 +13,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  middleware: "admin",
+  middleware: "auth",
 
   // async asyncData () {
   //   const { data: projects } = await axios.get('/api/projects')

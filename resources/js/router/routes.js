@@ -24,6 +24,7 @@ export default [
   { path: '/transaksi', name: 'transaksi', component: page('tenongan/transaksi.vue') },
   { path: '/kas/harian', name: 'kas.harian', component: page('tenongan/kas-harian.vue') },
 
+  { path: '/test', name: 'test', component: page('test.vue') },
   {
     path: '/settings',
     component: page('settings/index.vue'),

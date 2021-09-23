@@ -3,10 +3,8 @@
     <div class="col-12">
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produk</h2></div>
-        <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" @click="toggleAddModal">
-            Add
-          </button>
+        <div class="p-2 bd-highlight" v-role="'admin'">
+          <button class="btn btn-primary" @click="toggleAddModal">Add</button>
           <add-produk-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
@@ -20,20 +18,20 @@
           <thead>
             <tr>
               <th scope="col">Nama</th>
-              <th scope="col">Nama Produsen</th>
+              <th scope="col" v-role="'Admin'">Nama Produsen</th>
               <th scope="col">Harga Jual</th>
               <th scope="col">Harga Beli</th>
-              <th scope="col">Action</th>
+              <th scope="col" v-if="isRole('Admin')">Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="produk in produks" :key="produk.id">
+          <tbody v-if="!loading">
+            <tr v-for="produk in filterProduk" :key="produk.id">
               <td>{{ produk.nama }}</td>
-              <td>{{ produk.produsen.nama }}</td>
+              <td v-if="isRole('Admin')">{{ produk.produsen.nama }}</td>
               <td>{{ produk.harga_jual }}</td>
               <td>{{ produk.harga_beli }}</td>
               <td>
-                <dropdown name="Action">
+                <dropdown name="Action" v-if="isRole('Admin')">
                   <li>
                     <a
                       type="button"
@@ -99,9 +97,20 @@ export default {
     EditProdukModal,
     Dropdown,
   },
-  computed: mapGetters({
-    produks: "produk/produks",
-  }),
+  computed: {
+    ...mapGetters({
+      produks: "produk/produks",
+    }),
+    filterProduk: function () {
+      if(this.isRole('Admin')){
+        return this.produks.filter(produk => produk.produsen)
+      }else{
+        return this.produks
+
+      }
+    }
+
+  },
   data() {
     return {
       dataAdd: new Object(),
@@ -110,6 +119,8 @@ export default {
       showAddModal: false,
       showEditModal: false,
       showProdukModal: false,
+      loading: true,
+      role: null,
     };
   },
   methods: {
@@ -125,20 +136,22 @@ export default {
     },
     setDataEdit(obj) {
       this.dataEdit = obj;
-      this.$refs.editModal.setProduk(obj)
+      this.$refs.editModal.setProduk(obj);
     },
     toggleAddModal() {
       this.showAddModal = !this.showAddModal;
     },
-    toggleEditModal(){
-      this.showEditModal = !this.showEditModal
+    toggleEditModal() {
+      this.showEditModal = !this.showEditModal;
     },
-    toggleProdukModal(){
-      this.showProdukModal = !this.showProdukModal
+    toggleProdukModal() {
+      this.showProdukModal = !this.showProdukModal;
     },
   },
   created() {
     this.$store.dispatch("produk/fetchProduks");
+    this.role = this.$store.getters["auth/user"].tipe;
+    this.loading = false;
   },
   metaInfo() {
     return { title: "Produk" };

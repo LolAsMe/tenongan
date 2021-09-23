@@ -4,9 +4,9 @@
     class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white shadow"
   >
     <div
-    style="position:sticky"
+      style="position: sticky"
       class="
-      nav
+        nav
         d-flex
         flex-column
         align-items-center align-items-sm-start
@@ -25,7 +25,11 @@
         id="menu"
       >
         <li class="nav-item mt-2">
-          <router-link :to="{ name:'home' }" href="#" class="nav-link align-middle px-0">
+          <router-link
+            :to="{ name: 'home' }"
+            href="#"
+            class="nav-link align-middle px-0"
+          >
             <i class="fs-4 bi-house"></i>
             <span class="ms-1 d-none d-sm-inline">Home</span>
           </router-link>
@@ -39,16 +43,20 @@
             <span class="ms-1 d-none d-sm-inline">Dashboard</span>
           </router-link>
         </li>
-        <li v-role=produsen>
-          <router-link :to="{ name: 'produsen' }"
+        <li>
+          <router-link
+            :to="{ name: 'produsen' }"
             class="nav-link px-0 align-middle"
+            v-role="'admin'"
           >
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-sm-inline">Produsen</span></router-link
           >
         </li>
         <li>
-          <router-link :to="{ name: 'pedagang' }"
+          <router-link
+            :to="{ name: 'pedagang' }"
+            v-role="'admin'"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
@@ -56,13 +64,17 @@
           >
         </li>
         <li>
-          <router-link :to="{ name: 'produk' }" class="nav-link px-0 align-middle">
+          <router-link
+            :to="{ name: 'produk' }"
+            class="nav-link px-0 align-middle"
+          >
             <i class="fs-4 bi-table"></i>
             <span class="ms-1 d-none d-sm-inline">Produk</span></router-link
           >
         </li>
         <li>
-          <router-link :to="{ name: 'penjualan' }"
+          <router-link
+            :to="{ name: 'penjualan' }"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-grid"></i>
@@ -70,7 +82,8 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'transaksi' }"
+          <router-link
+            :to="{ name: 'transaksi' }"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-grid"></i>
@@ -78,25 +91,44 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'saldo' }" href="#" class="nav-link px-0 align-middle">
+          <router-link
+            :to="{ name: 'saldo' }"
+            href="#"
+            class="nav-link px-0 align-middle"
+          >
             <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">Saldo</span>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'kas' }" href="#" class="nav-link px-0 align-middle">
+          <router-link
+            :to="{ name: 'kas' }"
+            v-role="'admin'"
+            href="#"
+            class="nav-link px-0 align-middle"
+          >
             <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">Kas</span>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'kas.harian' }" href="#" class="nav-link px-0 align-middle">
+          <router-link
+            :to="{ name: 'kas.harian' }"
+            v-role="'admin'"
+            href="#"
+            class="nav-link px-0 align-middle"
+          >
             <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">Kas Harian</span>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'user' }" href="#" class="nav-link px-0 align-middle">
+          <router-link
+            :to="{ name: 'user' }"
+            v-role="'admin'"
+            href="#"
+            class="nav-link px-0 align-middle"
+          >
             <i class="fs-4 bi-people"></i>
             <span class="ms-1 d-none d-sm-inline">User</span>
           </router-link>
@@ -127,5 +159,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

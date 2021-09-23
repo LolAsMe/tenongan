@@ -90,6 +90,8 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 
+      await this.$store.dispatch('auth/setUserType')
+
       // Redirect home.
       this.redirect()
     },

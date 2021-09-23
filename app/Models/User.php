@@ -65,6 +65,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'owner_type',
     ];
 
     /**
@@ -90,7 +91,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      *
      * @var array
      */
-    protected $with = ['owner'];
+    protected $with = [];
 
     /**
      * Get the profile photo URL attribute.

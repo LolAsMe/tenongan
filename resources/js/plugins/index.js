@@ -1,4 +1,5 @@
 import './axios'
 import './fontawesome'
 import './role'
+import './mixin'
 import 'bootstrap'
