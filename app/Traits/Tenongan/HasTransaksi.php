@@ -4,7 +4,7 @@ namespace App\Traits\Tenongan;
 
 use App\Models\Tenongan\Transaksi;
 
-trait HasTransaksiTrait
+trait HasTransaksi
 {
     protected Transaksi $transaksi;
 

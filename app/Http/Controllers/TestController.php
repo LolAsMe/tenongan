@@ -12,8 +12,8 @@ class TestController extends Controller
     public function __construct(TenonganService $tenonganService) {
         $this->tenonganService = $tenonganService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        dd($this->tenonganService->setKas()->load('log'));
+        dd($request->user());
     }
 }

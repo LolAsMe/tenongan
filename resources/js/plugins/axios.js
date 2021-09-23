@@ -48,7 +48,7 @@ axios.interceptors.response.use(response => response, error => {
 })
 
 let serverErrorModalShown = false
-async function serverError (response) {
+async function serverError(response) {
   if (serverErrorModalShown) {
     return
   }

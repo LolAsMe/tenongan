@@ -78,6 +78,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('transaksi/penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
     Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
     Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
+
+    Route::post('test', [TestController::class, 'index'])->name('test');
+
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
@@ -92,9 +95,5 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', [OAuthController::class, 'redirect']);
     Route::get('oauth/{driver}/callback', [OAuthController::class, 'handleCallback'])->name('oauth.callback');
-
-    Route::get('test', [TestController::class, 'index'])->name('test');
-
-    Route::post('saldo/inc2/{pedagang}', [SaldoController::class, 'increase'])->name('saldo.increase');
 
 });
