@@ -9,11 +9,16 @@ class TestController extends Controller
 {
     //
     protected $tenonganService;
+
     public function __construct(TenonganService $tenonganService) {
         $this->tenonganService = $tenonganService;
     }
     public function index(Request $request)
     {
-        dd($request->user());
+        return response('test');
+    }
+    public function test(Request $request)
+    {
+        return response()->json('test');
     }
 }

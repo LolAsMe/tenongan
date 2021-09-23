@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             KasSeeder::class,
             ProdusenSeeder::class,
             PedagangSeeder::class,
+            AdminSeeder::class,
             ProdukSeeder::class,
             SaldoSeeder::class,
             UserSeeder::class

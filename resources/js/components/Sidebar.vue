@@ -39,7 +39,7 @@
             <span class="ms-1 d-none d-sm-inline">Dashboard</span>
           </router-link>
         </li>
-        <li>
+        <li v-role=produsen>
           <router-link :to="{ name: 'produsen' }"
             class="nav-link px-0 align-middle"
           >

@@ -79,8 +79,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
     Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
 
-    Route::post('test', [TestController::class, 'index'])->name('test');
 
+    Route::post('test1', [TestController::class, 'test'])->name('test')->middleware('role');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenongan;
 
+use App\Models\User;
 use App\Traits\Tenongan\HasSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -82,5 +83,9 @@ class Produsen extends Model
     public function transaksi()
     {
         return $this->morphMany(Transaksi::class, 'owner');
+    }
+    public function user()
+    {
+        return $this->morphOne(User::class, 'owner');
     }
 }

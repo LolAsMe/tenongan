@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
+use App\Traits\Tenongan\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -42,7 +43,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
-    use Notifiable,
+    use Notifiable,HasOwner,
         HasFactory;
 
     /**
@@ -81,8 +82,15 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $appends = [
-        'photo_url',
+        'photo_url','tipe'
     ];
+
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['owner'];
 
     /**
      * Get the profile photo URL attribute.
@@ -100,7 +108,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     /**
      * Get the oauth providers.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+    * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function oauthProviders()
     {

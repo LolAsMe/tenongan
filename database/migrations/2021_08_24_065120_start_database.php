@@ -72,7 +72,7 @@ class StartDatabase extends Migration
             $table->dateTime('tanggal')->useCurrent();
             $table->decimal('jumlah')->default(0);
             $table->nullableMorphs('payer');
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default(0);
+            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Ok');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -133,6 +133,13 @@ class StartDatabase extends Migration
             $table->primary(['penjualan_id', 'transaksi_id']);
         });
 
+        Schema::create('admin', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
 
     }
 
@@ -156,6 +163,7 @@ class StartDatabase extends Migration
         Schema::dropIfExists('detail_transaksi');
         Schema::dropIfExists('produk');
         Schema::dropIfExists('produsen');
+        Schema::dropIfExists('admin');
         Schema::dropIfExists('pedagang');
 
     }

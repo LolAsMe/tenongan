@@ -28,7 +28,6 @@ class TenonganService implements TenonganServiceContract
 
     public function test()
     {
-        dd('test');
     }
 
     public function transact()

@@ -1,8 +1,8 @@
 <template>
   <div class="row">
-    <div class="col">
+    <div class="col" v-role="'Admin'">
       <card :title="'Dashboard'">
-        {{ 'ini halaman Dashboard' }}
+        {{ "ini halaman Dashboard" }}
       </card>
     </div>
   </div>
@@ -10,8 +10,10 @@
 
 <script>
 // import axios from 'axios'
+import { mapGetters } from "vuex";
+
 export default {
-  middleware: 'auth',
+  middleware: "admin",
 
   // async asyncData () {
   //   const { data: projects } = await axios.get('/api/projects')
@@ -20,9 +22,40 @@ export default {
   //     projects
   //   }
   // },
+  computed: mapGetters({
+    user: "auth/user",
+  }),
+  // directives: {
+  //   role: {
+  //     // directive definition
+  //     bind: function (el, binding, vnode) {
+  //       if (true) {
+  //         // replace HTMLElement with comment node
+  //         const comment = document.createComment(" ");
+  //         Object.defineProperty(comment, "setAttribute", {
+  //           value: () => undefined,
+  //         });
+  //         vnode.elm = comment;
+  //         vnode.text = "test";
+  //         vnode.isComment = true;
+  //         vnode.context = undefined;
+  //         vnode.tag = undefined;
+  //         vnode.data.directives = undefined;
 
-  metaInfo () {
-    return { title: "Dashboard" }
-  }
-}
+  //         if (vnode.componentInstance) {
+  //           vnode.componentInstance.$el = comment;
+  //         }
+
+  //         if (el.parentNode) {
+  //           el.parentNode.replaceChild(comment, el);
+  //         }
+  //       }
+  //     },
+  //   },
+  // },
+
+  metaInfo() {
+    return { title: "Dashboard" };
+  },
+};
 </script>

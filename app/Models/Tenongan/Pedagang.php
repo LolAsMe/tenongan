@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Tenongan\Pedagang
- * 
+ *
  * @@ -41,7 +40,7 @@
  *
  * @property int $id
@@ -46,16 +46,6 @@ class Pedagang extends Model
     use HasFactory;
     use SoftDeletes;
 
-
-
-
-
-
-
-
-
-
-
     protected $table = 'pedagang';
     protected $guarded = [];
     public function logKas()
@@ -78,5 +68,20 @@ class Pedagang extends Model
     public function transaksi()
     {
         return $this->morphMany(Transaksi::class,'owner');
+    }
+
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    public function getTipeAttribute()
+    {
+        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
+        return $value;
+    }
+    public function user()
+    {
+        return $this->morphOne(User::class, 'owner');
     }
 }
