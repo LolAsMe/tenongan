@@ -52,6 +52,9 @@ class Transaksi extends Model
     protected $table = 'transaksi';
     protected $guarded = [];
     protected $appends = array('tipe');
+    protected $hidden = [
+        'owner_type',
+    ];
     /**
      * Get all of the penjualan for the Transaksi
      *

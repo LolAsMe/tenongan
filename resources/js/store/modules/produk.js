@@ -33,13 +33,8 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async fetchProduks({ commit, state }) {
-    if(state.produsenId == 0){
+  async fetchProduks({ commit }) {
       const { data } = await axios.get('/api/produk')
       commit('setProduks', data)
-    }else{
-      const { data } = await axios.get('/api/produsen/'+state.produsenId)
-      commit('setProduks', data.produk)
-    }
   },
 }

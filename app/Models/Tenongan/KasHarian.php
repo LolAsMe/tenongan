@@ -47,20 +47,11 @@ class KasHarian extends Model
     protected $table = 'kas_harian';
     protected $guarded = [];
     protected $appends = array('tipe');
+    protected $hidden = ['payer_type'];
 
     public function payer()
     {
         return $this->morphTo();
-
-
-
-
-
-
-
-
-
-
     }
     /**
      * Get the logKas that owns the KasHarian

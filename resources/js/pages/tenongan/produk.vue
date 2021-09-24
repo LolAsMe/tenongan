@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produk</h2></div>
-        <div class="p-2 bd-highlight" v-role="'admin'">
+        <div class="p-2 bd-highlight" v-role="'Admin'">
           <button class="btn btn-primary" @click="toggleAddModal">Add</button>
           <add-produk-modal
             :showModal="showAddModal"
@@ -13,53 +13,46 @@
       </div>
     </div>
     <div class="col-12 mt-2">
-      <card :title="'Daftar produk'">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Nama</th>
-              <th scope="col" v-role="'Admin'">Nama Produsen</th>
-              <th scope="col">Harga Jual</th>
-              <th scope="col">Harga Beli</th>
-              <th scope="col" v-if="isRole('Admin')">Action</th>
-            </tr>
-          </thead>
-          <tbody v-if="!loading">
-            <tr v-for="produk in filterProduk" :key="produk.id">
-              <td>{{ produk.nama }}</td>
-              <td v-if="isRole('Admin')">{{ produk.produsen.nama }}</td>
-              <td>{{ produk.harga_jual }}</td>
-              <td>{{ produk.harga_beli }}</td>
-              <td>
-                <dropdown name="Action" v-if="isRole('Admin')">
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="toggleProdukModal(), setDataLihat(produk)"
-                    >
-                      Lihat
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="toggleEditModal(), setDataEdit(produk)"
-                    >
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" @click="deleteProduk(produk.id)">
-                      Hapus
-                    </a>
-                  </li>
-                </dropdown>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <card :title="'Daftar Produk'">
+        <v-table
+          :items="items"
+          :itemsTitle="itemsTitle"
+          :isAction="isRole('Admin')"
+        >
+          <template v-slot:action="action">
+            <td>
+              <dropdown name="Action">
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="toggleProdukModal(), setDataLihat(action.data)"
+                  >
+                    Lihat
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="toggleEditModal(), setDataEdit(action.data)"
+                  >
+                    Edit
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="deleteProduk(action.data.id)"
+                  >
+                    Hapus
+                  </a>
+                </li>
+              </dropdown>
+            </td>
+          </template>
+        </v-table>
       </card>
       <lihat-produk-modal
         ref="produkModal"
@@ -83,6 +76,7 @@ import Modal from "~/components/Modal";
 import AddProdukModal from "~/components/tenongan/AddProdukModal";
 import LihatProdukModal from "~/components/tenongan/LihatProdukModal";
 import EditProdukModal from "~/components/tenongan/EditProdukModal";
+import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
 import axios from "axios";
@@ -95,20 +89,23 @@ export default {
     AddProdukModal,
     LihatProdukModal,
     EditProdukModal,
+    VTable,
     Dropdown,
   },
   computed: {
     ...mapGetters({
       produks: "produk/produks",
     }),
-    filterProduk: function () {
-      if(this.isRole('Admin')){
-        return this.produks.filter(produk => produk.produsen)
-      }else{
-        return this.produks
-
+    items: function () {
+      if (!this.loading && this.produks) {
+        return this.produks.map(({ id, nama, harga_jual,harga_beli }) => {
+          return { id, nama, harga_jual,harga_beli };
+        });
       }
-    }
+    },
+    itemsTitle: function () {
+      return ["ID", "Nama", "harga_jual","harga_jual"];
+    },
 
   },
   data() {

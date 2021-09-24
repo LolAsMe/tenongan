@@ -22,6 +22,9 @@ interface TenonganService
     public function increaseKas(array $attribute);
     public function decreaseKas(array $attribute);
 
+    public function increaseSaldo(array $attribute);
+    public function decreaseSaldo(array $attribute);
+
     public function createPedagang(array $attribute);
     public function createProdusen(array $attribute);
 

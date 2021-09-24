@@ -10,24 +10,12 @@ Vue.mixin({
         return false
       }
     },
-    objectToArray(objs,index) {
-      let arr=[];
-
-      for (let k = 0; k < objs.length; k++) {
-        let arrObj=[];
-
-        for (let i = 0; i < index.length; i++) {
-          // Get the name and value of the old objsect
-          let value = objs[k][index[i]];
-
-          // Push the new objs[k]ect into the array of objs[k]ects
-          arrObj.push(value);
-        }
-        arr.push(arrObj);
-
+    getOwnerId(){
+      if (store.getters['auth/check']) {
+        return store.getters['auth/user'].owner_id
+      } else {
+        return null
       }
-
-      return arr
     }
   }
 })

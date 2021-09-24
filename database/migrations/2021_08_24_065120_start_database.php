@@ -83,7 +83,7 @@ class StartDatabase extends Migration
             $table->dateTime('tanggal')->useCurrent();
             $table->decimal('jumlah',16);
             $table->morphs('owner');
-            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft']);
+            $table->enum('status', [ 'Pending','Canceled','Paid Out','Ok','Draft'])->default('Ok');
             $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
@@ -106,7 +106,7 @@ class StartDatabase extends Migration
             $table->unsignedDecimal('harga_jual');
             $table->unsignedDecimal('harga_beli');
             $table->dateTime('tanggal')->useCurrent();
-            $table->enum('status', [ 'Pending','Ignored','Paid Out','Ok','Draft']);
+            $table->enum('status', [ 'Pending','Ignored','Paid Out','Ok','Draft'])->default('Draft');
             $table->foreignId('pedagang_id');
             $table->string('keterangan')->nullable();
             $table->softDeletes();

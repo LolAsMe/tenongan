@@ -2,10 +2,12 @@
 
 namespace App\Models\Tenongan;
 
+use App\Models\tenongan\Penjualan;
 use App\Models\User;
 use App\Traits\Tenongan\HasSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -72,10 +74,6 @@ class Produsen extends Model
     {
         return $this->morphMany(LogKas::class, 'payer');
     }
-    public function kasHarian()
-    {
-        return $this->morphMany(KasHarian::class, 'payer');
-    }
     public function saldo()
     {
         return $this->morphOne(Saldo::class, 'owner');
@@ -87,5 +85,23 @@ class Produsen extends Model
     public function user()
     {
         return $this->morphOne(User::class, 'owner');
+    }
+
+    public function penjualan()
+    {
+        return $this->hasManyThrough(Penjualan::class, Produk::class);
+    }
+
+    // public function kasHarian()
+    // {
+    //     return $this->hasManyThrough(KasHarian::class, Produk::class);
+    // }
+    public function kasHarian()
+    {
+        return $this->hasManyThrough(KasHarian::class, Produk::class, 'produsen_id', 'payer_id', 'id', 'id')
+            ->where(
+                'payer_type',
+                'App\Models\Tenongan\Produk'
+            );
     }
 }

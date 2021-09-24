@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Tenongan;
 use App\Http\Controllers\Controller;
 use App\Models\tenongan\Penjualan;
-use App\Models\tenongan\Produsen;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
 use App\Models\Tenongan\Transaksi;
@@ -20,22 +19,13 @@ class PenjualanController extends Controller
     }
     /**
      * menghitung transaksi yang terjadi, status pendinng
-
-
-
-
-
-
-
-
-
-
      *
      * @return void
      */
     public function transact()
     {
         $this->tenongan->transact();
+        return response()->json("kosf");
     }
     /**
      * Membayar transaksi yang masih pending. status berubah menjadi paid out
@@ -55,7 +45,7 @@ class PenjualanController extends Controller
     public function index()
     {
         //
-        $transaksi = Transaksi::whereStatus('Pending')->with('owner')->get();
+        $transaksi = Transaksi::with('owner:id,nama')->latest()->get();
         return response()->json($transaksi);
     }
         /**
@@ -66,7 +56,7 @@ class PenjualanController extends Controller
     public function index2()
     {
         //
-        $penjualan = Penjualan::where('status','=','Pending')->orwhere('status','=','Draft')->with(['produk','pedagang'])->get();
+        $penjualan = Penjualan::with(['produk:id,nama','pedagang:id,nama'])->latest()->get();
         return response()->json($penjualan);
     }
     /**

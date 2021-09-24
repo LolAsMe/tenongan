@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenongan;
 
+use App\Models\tenongan\Penjualan;
 use App\Traits\Tenongan\HasSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -83,5 +84,9 @@ class Pedagang extends Model
     public function user()
     {
         return $this->morphOne(User::class, 'owner');
+    }
+
+    public function penjualan(){
+        return $this->hasMany(Penjualan::class);
     }
 }

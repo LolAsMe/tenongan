@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '~/store'
 import Cookies from 'js-cookie'
 
 // state
@@ -7,7 +8,7 @@ export const state = {
   ],
   kas: [
   ],
-  harians: [{ "id": 1, payer:{nama:'default'}}]
+  harians: [{ "id": 1, payer: { nama: 'default' } }]
 }
 
 // getters
@@ -40,7 +41,18 @@ export const actions = {
     commit('setKas', data)
   },
   async fetchHarians({ commit }) {
-    const { data } = await axios.get('/api/kas/harian')
+    let id = store.getters['auth/user'].owner_id
+    let role = store.getters['auth/user'].tipe
+    let data = []
+    if (role == 'Admin') {
+      data = (await axios.get('/api/kas/harian')).data
+    }
+    if (role == 'Produsen') {
+      data = (await axios.get('/api/produsen/harian/' + id)).data
+    }
+    if (role == 'Pedagang') {
+      data = (await axios.get('/api/pedagang/harian/' + id)).data
+    }
     commit('setHarians', data)
   }
 }

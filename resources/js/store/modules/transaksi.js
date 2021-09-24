@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import store from '~/store'
 
 // state
 export const state = {
@@ -30,7 +30,19 @@ export const mutations = {
 // actions
 export const actions = {
   async fetchTransaksis({ commit }){
-    const { data } = await axios.get('/api/transaksi/penjualan')
+
+    let id = store.getters['auth/user'].owner_id
+    let role = store.getters['auth/user'].tipe
+    let data = []
+    if(role == 'Admin'){
+      data =  (await axios.get('/api/transaksi')).data
+    }
+    if(role == 'Produsen'){
+      data =  (await axios.get('/api/produsen/transaksi/'+id)).data
+    }
+    if(role == 'Pedagang'){
+      data =  (await axios.get('/api/pedagang/transaksi/'+id)).data
+    }
     commit('setTransaksi',data)
   }
 }

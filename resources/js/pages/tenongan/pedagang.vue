@@ -4,9 +4,7 @@
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Pedagang</h2></div>
         <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" @click="toggleAddModal">
-            Add
-          </button>
+          <button class="btn btn-primary" v-if="isRole('Admin')" @click="toggleAddModal">Add</button>
           <add-pedagang-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
@@ -15,62 +13,59 @@
       </div>
     </div>
     <div class="col-12 mt-2">
-      <card :title="'Daftar pedagang'">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nama</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="pedagang in pedagangs" :key="pedagang.id">
-              <td>{{ pedagang.id }}</td>
-              <td>{{ pedagang.nama }}</td>
-              <td>
-                <dropdown name="Action">
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="togglePedagangModal(), setDataLihat(pedagang)"
-                    >
-                      Lihat
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="toggleEditModal(), setDataEdit(pedagang)"
-                    >
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" @click="deletePedagang(pedagang.id)">
-                      Hapus
-                    </a>
-                  </li>
-                </dropdown>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <card :title="'Daftar Pedagang'">
+        <v-table
+          :items="items"
+          :itemsTitle="itemsTitle"
+          :isAction="isRole('Admin')"
+        >
+          <template v-slot:action="action">
+            <td>
+              <dropdown name="Action">
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="togglePedagangModal(), setDataLihat(action.data)"
+                  >
+                    Lihat
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="toggleEditModal(), setDataEdit(action.data)"
+                  >
+                    Edit
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="deletePedagang(action.data.id)"
+                  >
+                    Hapus
+                  </a>
+                </li>
+              </dropdown>
+            </td>
+          </template>
+        </v-table>
+        <lihat-pedagang-modal
+          ref="pedagangModal"
+          :pedagang="dataLihat"
+          :showModal="showPedagangModal"
+          @toggle="togglePedagangModal"
+        ></lihat-pedagang-modal>
+        <edit-pedagang-modal
+          ref="editModal"
+          :pedagang="dataEdit"
+          :showModal="showEditModal"
+          @toggle="toggleEditModal"
+        ></edit-pedagang-modal>
       </card>
-      <lihat-pedagang-modal
-        ref="pedagangModal"
-        :pedagang="dataLihat"
-        :showModal="showPedagangModal"
-        @toggle="togglePedagangModal"
-      ></lihat-pedagang-modal>
-      <edit-pedagang-modal
-        ref="editModal"
-        :pedagang="dataEdit"
-        :showModal="showEditModal"
-        @toggle="toggleEditModal"
-      ></edit-pedagang-modal>
     </div>
   </div>
 </template>
@@ -81,6 +76,7 @@ import Modal from "~/components/Modal";
 import AddPedagangModal from "~/components/tenongan/AddPedagangModal";
 import LihatPedagangModal from "~/components/tenongan/LihatPedagangModal";
 import EditPedagangModal from "~/components/tenongan/EditPedagangModal";
+import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
 import axios from "axios";
@@ -94,18 +90,31 @@ export default {
     LihatPedagangModal,
     EditPedagangModal,
     Dropdown,
+    VTable,
   },
-  computed: mapGetters({
-    pedagangs: "pedagang/pedagangs",
-  }),
+  computed: {
+    ...mapGetters({
+      pedagangs: "pedagang/pedagangs",
+    }),
+    items: function () {
+      if (!this.loading && this.pedagangs) {
+        return this.pedagangs.map(({ id, nama }) => {
+          return { id, nama };
+        });
+      }
+    },
+    itemsTitle: function () {
+      return ["ID", "Nama"];
+    },
+  },
   data() {
     return {
-      dataAdd: new Object(),
-      dataLihat: new Object(),
-      dataEdit: new Object(),
+      dataLihat: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
+      dataEdit: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
       showAddModal: false,
       showEditModal: false,
       showPedagangModal: false,
+      loading: true,
     };
   },
   methods: {
@@ -113,28 +122,26 @@ export default {
       const { data } = await axios.delete("api/pedagang/" + id);
       await this.$store.commit("pedagang/deletePedagang", id);
     },
-    setDataAdd(obj) {
-      this.dataAdd = obj;
-    },
     setDataLihat(obj) {
       this.dataLihat = obj;
     },
     setDataEdit(obj) {
       this.dataEdit = obj;
-      this.$refs.editModal.setPedagang(obj)
+      this.$refs.editModal.setPedagang(obj);
     },
     toggleAddModal() {
       this.showAddModal = !this.showAddModal;
     },
-    toggleEditModal(){
-      this.showEditModal = !this.showEditModal
+    toggleEditModal() {
+      this.showEditModal = !this.showEditModal;
     },
-    togglePedagangModal(){
-      this.showPedagangModal = !this.showPedagangModal
+    togglePedagangModal() {
+      this.showPedagangModal = !this.showPedagangModal;
     },
   },
   created() {
     this.$store.dispatch("pedagang/fetchPedagangs");
+    this.loading = false;
   },
   metaInfo() {
     return { title: "Pedagang" };

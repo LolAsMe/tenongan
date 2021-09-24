@@ -1,12 +1,13 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import store from '~/store'
+
 
 // state
 export const state = {
   penjualans: [
   ],
   dataPenjualans: [
-  ],
+  ]
 
 }
 
@@ -14,6 +15,7 @@ export const state = {
 export const getters = {
   penjualans: state => state.penjualans,
   dataPenjualans: state => state.dataPenjualans,
+  check: state => state.id !== null
 }
 
 // mutations
@@ -35,7 +37,18 @@ export const mutations = {
 // actions
 export const actions = {
   async fetchPenjualan({ commit }){
-    const { data } = await axios.get('/api/penjualan')
+    let id = store.getters['auth/user'].owner_id
+    let role = store.getters['auth/user'].tipe
+    let data = []
+    if(role == 'Admin'){
+      data =  (await axios.get('/api/penjualan')).data
+    }
+    if(role == 'Produsen'){
+      data =  (await axios.get('/api/produsen/penjualan/'+id)).data
+    }
+    if(role == 'Pedagang'){
+      data =  (await axios.get('/api/pedagang/penjualan/'+id)).data
+    }
     commit('setPenjualans',data)
   },
   async titip({ commit, state }){

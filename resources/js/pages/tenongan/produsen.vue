@@ -1,11 +1,10 @@
 <template>
   <div class="row">
-    {{ dataLihat }}
     <div class="col-12">
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produsen</h2></div>
         <div class="p-2 bd-highlight">
-          <button class="btn btn-primary" @click="toggleAddModal">Add</button>
+          <button class="btn btn-primary" v-if="isRole('Admin')" @click="toggleAddModal">Add</button>
           <add-produsen-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
@@ -27,7 +26,7 @@
                   <a
                     type="button"
                     class="dropdown-item"
-                    @click="toggleProdusenModal(), setDataLihat(action.produsen)"
+                    @click="toggleProdusenModal(), setDataLihat(action.data)"
                   >
                     Lihat
                   </a>
@@ -36,7 +35,7 @@
                   <a
                     type="button"
                     class="dropdown-item"
-                    @click="toggleEditModal(), setDataEdit(action.produsen)"
+                    @click="toggleEditModal(), setDataEdit(action.data)"
                   >
                     Edit
                   </a>
@@ -45,7 +44,7 @@
                   <a
                     type="button"
                     class="dropdown-item"
-                    @click="deleteProdusen(action.produsen.id)"
+                    @click="deleteProdusen(action.data.id)"
                   >
                     Hapus
                   </a>
@@ -99,19 +98,19 @@ export default {
     }),
     items: function () {
       if (!this.loading && this.produsens) {
-        return this.produsens.map(({ id, nama, created_at, updated_at }) => {
-          return { id, nama, created_at, updated_at };
+        return this.produsens.map(({ id, nama }) => {
+          return { id, nama };
         });
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "Created", "Updated"];
+      return ["ID", "Nama"];
     },
   },
   data() {
     return {
       dataLihat: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
-      dataEdit: new Object(),
+      dataEdit: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
       showAddModal: false,
       showEditModal: false,
       showProdusenModal: false,

@@ -32,7 +32,7 @@ class KasController extends Controller
     public function harian()
     {
         //
-        $harians = KasHarian::with('payer')->get();
+        $harians = KasHarian::with('payer')->latest()->get();
         return response()->json($harians);
     }
     public function show(Kas $kas)

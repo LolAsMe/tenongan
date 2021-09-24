@@ -4,7 +4,7 @@
     <div slot="body">
       <!-- {{ saldo }} -->
       <div v-if="!loading">
-        Jumlah Saldo = {{ saldo.saldo }} Nama Pedagang = {{ saldo.owner.nama }}
+        Jumlah Saldo = {{ saldo.jumlah }} Nama Pedagang = {{ saldo.owner.nama }}
       </div>
       <table class="table">
         <thead>
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="log in saldo.log_saldo" :key="log.id">
+          <tr v-for="log in saldo.log" :key="log.id">
             <td>{{ log.id }}</td>
             <td>{{ log.keterangan }}</td>
             <td>{{ log.jumlah }}</td>
@@ -42,8 +42,10 @@ export default {
   name: "LogSaldoModal",
   props: {
     saldo: {
-      type: undefined,
-      default: { saldo: 0, payer: { nama: "test" } },
+      type: Object,
+      default: function(){
+        return { saldo: 0, payer: { nama: "test" } }
+      }
     },
     showModal: { type: Boolean, default: true },
   },

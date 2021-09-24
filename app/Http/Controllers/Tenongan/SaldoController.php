@@ -23,7 +23,7 @@ class SaldoController extends Controller
     {
         //
         $saldo = Saldo::all();
-        return response()->json($saldo->load('owner'));
+        return response()->json($saldo->load('owner:id,nama'));
     }
     /**
      * Display the specified resource.
@@ -34,7 +34,7 @@ class SaldoController extends Controller
     public function show(Saldo $saldo)
     {
         //
-        return response()->json($saldo->load(['owner','logSaldo']));
+        return response()->json($saldo->load(['owner:id,nama','log']));
     }
     /**
      * Store a newly created resource in storage.
@@ -54,6 +54,7 @@ class SaldoController extends Controller
         //
         $saldo->delete();
     }
+
     /**
      * Tambah saldo
      *
@@ -63,7 +64,7 @@ class SaldoController extends Controller
      */
     public function increase(SaldoIncreaseRequest $request,Pedagang $pedagang)
     {
-        $test = $pedagang->saldo->increase($request->jumlah,$request->validated());
+        $test = $this->tenonganService->increaseSaldo($request->jumlah,$request->validated());
         return $test;
     }
 
@@ -76,7 +77,7 @@ class SaldoController extends Controller
      */
     public function decrease( Request $request, Pedagang $pedagang)
     {
-        $test = $pedagang->saldo->decrease($request->jumlah,$request->all());
+        $test = $this->tenonganService->decreaseSaldo($request->jumlah,$request->all());
     }
 
 }

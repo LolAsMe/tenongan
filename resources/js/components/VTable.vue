@@ -16,7 +16,7 @@
     <tbody v-else>
       <tr v-for="(datas, index) in items" :key="index">
         <td v-for="(data, index) in datas" :key="index">{{ data }}</td>
-        <slot name="action" :produsen="datas">
+        <slot name="action" :data="datas">
           <td>test</td>
         </slot>
       </tr>

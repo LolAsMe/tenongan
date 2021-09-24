@@ -26,12 +26,25 @@ class TenonganService implements TenonganServiceContract
         $this->kas = new Kas();
     }
 
+    public function increaseSaldo(array $attribute)
+    {
+
+    }
+
+    public function decreaseSaldo(array $attribute)
+    {
+
+    }
+
     public function test()
     {
+        # code...
     }
+
 
     public function transact()
     {
+
         Penjualan::whereStatus('Draft')->chunk(100, function ($penjualans) {
             foreach ($penjualans as $key => $penjualan) {
                 $jumlah = $penjualan->laku * $penjualan->harga_beli;
@@ -86,7 +99,7 @@ class TenonganService implements TenonganServiceContract
             }
         });
 
-        Penjualan::whereStatus('Pending')->chunkById(100, function($penjualans){
+        Penjualan::whereStatus('Pending')->chunkById(100, function ($penjualans) {
             foreach ($penjualans as $penjualan) {
                 $penjualan->status = 'Ok';
                 $penjualan->save();
@@ -94,7 +107,7 @@ class TenonganService implements TenonganServiceContract
         });
 
         $this->setKas();
-        $this->kas->createLog(['keterangan'=>'Penambahan dari Penjualan Harian']);
+        $this->kas->createLog(['keterangan' => 'Penambahan dari Penjualan Harian']);
         KasHarian::whereStatus('Pending')->chunkById(100, function ($kasHarians) {
             foreach ($kasHarians as $kasHarian) {
                 $this->kas->increment('jumlah', $kasHarian->jumlah);
@@ -108,7 +121,7 @@ class TenonganService implements TenonganServiceContract
                 } else {
                     $saldo = $kasHarian->payer->produsen->saldo;
                 }
-                $saldo->increase($kasHarian->jumlah, ['keterangan' => 'Kurang dari potongan harian']);
+                $saldo->decrease($kasHarian->jumlah, ['keterangan' => 'Kurang dari potongan harian']);
 
                 $kasHarian->status = 'Ok';
                 $kasHarian->save();

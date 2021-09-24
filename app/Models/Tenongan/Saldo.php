@@ -102,7 +102,7 @@ class Saldo extends Model
      */
     public function decrease(int $jumlah , array $extra = [])
     {
-        $extra['jumlah']=-$extra['jumlah'];
+        $extra['jumlah']=-$jumlah;
         $attributes = array_merge(['jumlah'=>-$jumlah,'tanggal'=>now()], $extra);
         $this->decrement('jumlah',$jumlah);
         $this->log()->create($attributes);
