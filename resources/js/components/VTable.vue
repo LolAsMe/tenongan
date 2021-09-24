@@ -1,17 +1,24 @@
-<template>
-  <table class="table">
+  <template>
+  <table class="table" v-if="items">
     <thead>
       <tr>
-        <th scope="col">Nama</th>
-        <th scope="col">Harga Jual</th>
-        <th scope="col">Harga Beli</th>
+        <th scope="col" v-for="(item, index) in itemsTitle" :key="index">
+          {{ item }}
+        </th>
+        <th v-if="isAction">Action</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>{{ "produk.nama" }}</td>
-        <td>{{ "produk.harga_jual" }}</td>
-        <td>{{ "produk.harga_beli" }}</td>
+    <tbody v-if="!isAction">
+        <tr v-for="(datas, index) in items" :key="index">
+          <td v-for="(data, index) in datas" :key="index">{{ data }}</td>
+        </tr>
+    </tbody>
+    <tbody v-else>
+      <tr v-for="(datas, index) in items" :key="index">
+        <td v-for="(data, index) in datas" :key="index">{{ data }}</td>
+        <slot name="action" :produsen="datas">
+          <td>test</td>
+        </slot>
       </tr>
     </tbody>
   </table>
@@ -23,24 +30,21 @@ export default {
   render: function (createElement) {
     return createElement("h1", "coba render");
   },
-  data(){
+  data() {
     return {
-      item: [[1,2,3],[1,2,3]]
-    }
+      action: false,
+    };
   },
 
   props: {
     title: { type: String, default: null },
-    // item: { type: String, default: null },
-    // itemTitle: { type: String, default: null },
+    itemsTitle: { type: Array, default: null },
+    items: { type: Array, default: null },
+    isAction: { type: Boolean, default: false },
   },
-  methods:{
-    test(){
-
-    }
+  methods: {
   },
-  created(){
-    this.$vnode
-  }
+  created() {
+  },
 };
 </script>

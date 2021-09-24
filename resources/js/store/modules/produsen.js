@@ -3,8 +3,7 @@ import Cookies from 'js-cookie'
 
 // state
 export const state = {
-  produsens: [
-  ],
+  produsens: [{nama:'a'}],
 
 }
 

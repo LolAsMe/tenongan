@@ -19,7 +19,7 @@ import BasicModal from "~/components/tenongan/BasicModal";
 export default {
   name: "LihatProdusenModal",
   props: {
-    produsen: { type: Object, default: [] },
+    produsen: { type: Object, default: null },
     showModal: { type: Boolean, default: true },
   },
   components: {

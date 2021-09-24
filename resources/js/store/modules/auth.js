@@ -88,10 +88,8 @@ export const actions = {
   setUserType({ commit, state }) {
     if (state.user.tipe == 'Admin') {
 
-      console.log('dari Admin store')
     }
     if (state.user.tipe == 'Produsen') {
-      console.log('dari produsen store')
       store.commit('produk/setProdusenId', state.user.owner_id)
 
     }

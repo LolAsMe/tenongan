@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    {{ dataLihat }}
     <div class="col-12">
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produsen</h2></div>
@@ -14,54 +15,57 @@
     </div>
     <div class="col-12 mt-2">
       <card :title="'Daftar Produsen'">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nama</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="produsen in produsens" :key="produsen.id">
-              <td class="col-1">{{ produsen.id }}</td>
-              <td class="col-4">{{ produsen.nama }}</td>
-              <td class="col-4">
-                <dropdown name="Action">
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="toggleProdusenModal(), setDataLihat(produsen)"
-                    >
-                      Lihat
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="toggleEditModal(), setDataEdit(produsen)"
-                    >
-                      Edit
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      type="button"
-                      class="dropdown-item"
-                      @click="deleteProdusen(produsen.id)"
-                    >
-                      Hapus
-                    </a>
-                  </li>
-                </dropdown>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <lihat-produsen-modal ref="produsenModal" :produsen="dataLihat" :showModal="showProdusenModal" @toggle="toggleProdusenModal"></lihat-produsen-modal>
-        <edit-produsen-modal ref="editModal" :produsen="dataEdit" :showModal="showEditModal" @toggle="toggleEditModal"></edit-produsen-modal>
+        <v-table
+          :items="items"
+          :itemsTitle="itemsTitle"
+          :isAction="isRole('Admin')"
+        >
+          <template v-slot:action="action">
+            <td>
+              <dropdown name="Action">
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="toggleProdusenModal(), setDataLihat(action.produsen)"
+                  >
+                    Lihat
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="toggleEditModal(), setDataEdit(action.produsen)"
+                  >
+                    Edit
+                  </a>
+                </li>
+                <li>
+                  <a
+                    type="button"
+                    class="dropdown-item"
+                    @click="deleteProdusen(action.produsen.id)"
+                  >
+                    Hapus
+                  </a>
+                </li>
+              </dropdown>
+            </td>
+          </template>
+        </v-table>
+        <lihat-produsen-modal
+          ref="produsenModal"
+          :produsen="dataLihat"
+          :showModal="showProdusenModal"
+          @toggle="toggleProdusenModal"
+        ></lihat-produsen-modal>
+        <edit-produsen-modal
+          ref="editModal"
+          :produsen="dataEdit"
+          :showModal="showEditModal"
+          @toggle="toggleEditModal"
+        ></edit-produsen-modal>
       </card>
     </div>
   </div>
@@ -73,6 +77,7 @@ import Modal from "~/components/Modal";
 import AddProdusenModal from "~/components/tenongan/AddProdusenModal";
 import LihatProdusenModal from "~/components/tenongan/LihatProdusenModal";
 import EditProdusenModal from "~/components/tenongan/EditProdusenModal";
+import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
 import axios from "axios";
@@ -86,18 +91,31 @@ export default {
     LihatProdusenModal,
     EditProdusenModal,
     Dropdown,
+    VTable,
   },
-  computed: mapGetters({
-    produsens: "produsen/produsens",
-  }),
+  computed: {
+    ...mapGetters({
+      produsens: "produsen/produsens",
+    }),
+    items: function () {
+      if (!this.loading && this.produsens) {
+        return this.produsens.map(({ id, nama, created_at, updated_at }) => {
+          return { id, nama, created_at, updated_at };
+        });
+      }
+    },
+    itemsTitle: function () {
+      return ["ID", "Nama", "Created", "Updated"];
+    },
+  },
   data() {
     return {
-      dataAdd: new Object(),
-      dataLihat: new Object(),
+      dataLihat: { id: 0, nama: "null", created_at: "tet", updated_at: "tet" },
       dataEdit: new Object(),
       showAddModal: false,
       showEditModal: false,
       showProdusenModal: false,
+      loading: true,
     };
   },
   methods: {
@@ -105,28 +123,26 @@ export default {
       const { data } = await axios.delete("api/produsen/" + id);
       await this.$store.commit("produsen/deleteProdusen", id);
     },
-    setDataAdd(obj) {
-      this.dataAdd = obj;
-    },
     setDataLihat(obj) {
       this.dataLihat = obj;
     },
     setDataEdit(obj) {
       this.dataEdit = obj;
-      this.$refs.editModal.setProdusen(obj)
+      this.$refs.editModal.setProdusen(obj);
     },
     toggleAddModal() {
       this.showAddModal = !this.showAddModal;
     },
-    toggleEditModal(){
-      this.showEditModal = !this.showEditModal
+    toggleEditModal() {
+      this.showEditModal = !this.showEditModal;
     },
-    toggleProdusenModal(){
-      this.showProdusenModal = !this.showProdusenModal
+    toggleProdusenModal() {
+      this.showProdusenModal = !this.showProdusenModal;
     },
   },
   created() {
     this.$store.dispatch("produsen/fetchProdusen");
+    this.loading = false;
   },
   metaInfo() {
     return { title: "Produsen" };

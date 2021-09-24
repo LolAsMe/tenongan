@@ -47,7 +47,7 @@
           <router-link
             :to="{ name: 'produsen' }"
             class="nav-link px-0 align-middle"
-            v-role="'admin'"
+            v-role="'Admin'"
           >
             <i class="fs-4 bi-bootstrap"></i>
             <span class="ms-1 d-none d-sm-inline">Produsen</span></router-link
@@ -56,7 +56,7 @@
         <li>
           <router-link
             :to="{ name: 'pedagang' }"
-            v-role="'admin'"
+            v-role="'Admin'"
             class="nav-link px-0 align-middle"
           >
             <i class="fs-4 bi-bootstrap"></i>
@@ -103,7 +103,7 @@
         <li>
           <router-link
             :to="{ name: 'kas' }"
-            v-role="'admin'"
+            v-role="'Admin'"
             href="#"
             class="nav-link px-0 align-middle"
           >
@@ -114,7 +114,7 @@
         <li>
           <router-link
             :to="{ name: 'kas.harian' }"
-            v-role="'admin'"
+            v-role="'Admin'"
             href="#"
             class="nav-link px-0 align-middle"
           >
@@ -125,7 +125,7 @@
         <li>
           <router-link
             :to="{ name: 'user' }"
-            v-role="'admin'"
+            v-role="'Admin'"
             href="#"
             class="nav-link px-0 align-middle"
           >
