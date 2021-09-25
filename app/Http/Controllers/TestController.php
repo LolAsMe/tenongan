@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Tenongan\TenonganService;
+use App\Exports\PenjualanExport;
 use Illuminate\Http\Request;
+use Excel;
 
 class TestController extends Controller
 {
     //
     protected $tenonganService;
 
-    public function __construct(TenonganService $tenonganService) {
+    public function __construct(TenonganService $tenonganService)
+    {
         $this->tenonganService = $tenonganService;
     }
     public function index(Request $request)
@@ -19,6 +22,6 @@ class TestController extends Controller
     }
     public function test(Request $request)
     {
-        return response()->json('test');
+        return Excel::download(new PenjualanExport,'coba.xlsx');
     }
 }

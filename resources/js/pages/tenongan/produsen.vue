@@ -5,10 +5,15 @@
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Produsen</h2></div>
         <div class="p-2 bd-highlight">
           <button class="btn btn-primary" v-if="isRole('Admin')" @click="toggleAddModal">Add</button>
+          <button class="btn btn-primary" v-if="isRole('Admin')" @click="showModal">Import</button>
           <add-produsen-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
           ></add-produsen-modal>
+          <upload-modal
+          :url="'produsen'"
+          ref="uploadModal"
+          ></upload-modal>
         </div>
       </div>
     </div>
@@ -75,6 +80,7 @@ import { mapGetters, mapActions } from "vuex";
 import Modal from "~/components/Modal";
 import AddProdusenModal from "~/components/tenongan/AddProdusenModal";
 import LihatProdusenModal from "~/components/tenongan/LihatProdusenModal";
+import UploadModal from "~/components/tenongan/UploadModal";
 import EditProdusenModal from "~/components/tenongan/EditProdusenModal";
 import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
@@ -89,6 +95,7 @@ export default {
     AddProdusenModal,
     LihatProdusenModal,
     EditProdusenModal,
+    UploadModal,
     Dropdown,
     VTable,
   },
@@ -138,6 +145,9 @@ export default {
     toggleProdusenModal() {
       this.showProdusenModal = !this.showProdusenModal;
     },
+    showModal(){
+      this.$refs.uploadModal.$data.showModal = true
+    }
   },
   created() {
     this.$store.dispatch("produsen/fetchProdusen");

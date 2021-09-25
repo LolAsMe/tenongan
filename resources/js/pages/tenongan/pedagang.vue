@@ -5,10 +5,16 @@
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Pedagang</h2></div>
         <div class="p-2 bd-highlight">
           <button class="btn btn-primary" v-if="isRole('Admin')" @click="toggleAddModal">Add</button>
+          <button class="btn btn-primary" v-if="isRole('Admin')" @click="showModal">Import</button>
           <add-pedagang-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
           ></add-pedagang-modal>
+          <upload-modal
+          v-if="isRole('Admin')"
+          ref="uploadModal"
+          :url="'pedagang'"
+          ></upload-modal>
         </div>
       </div>
     </div>
@@ -76,6 +82,7 @@ import Modal from "~/components/Modal";
 import AddPedagangModal from "~/components/tenongan/AddPedagangModal";
 import LihatPedagangModal from "~/components/tenongan/LihatPedagangModal";
 import EditPedagangModal from "~/components/tenongan/EditPedagangModal";
+import UploadModal from "~/components/tenongan/UploadModal";
 import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
@@ -88,6 +95,7 @@ export default {
     Modal,
     AddPedagangModal,
     LihatPedagangModal,
+    UploadModal,
     EditPedagangModal,
     Dropdown,
     VTable,
@@ -105,7 +113,7 @@ export default {
     },
     itemsTitle: function () {
       return ["ID", "Nama"];
-    },
+    }
   },
   data() {
     return {
@@ -138,6 +146,9 @@ export default {
     togglePedagangModal() {
       this.showPedagangModal = !this.showPedagangModal;
     },
+    showModal(){
+      this.$refs.uploadModal.$data.showModal = true
+    }
   },
   created() {
     this.$store.dispatch("pedagang/fetchPedagangs");

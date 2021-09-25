@@ -7,8 +7,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\SpreadsheetController;
 use App\Http\Controllers\Tenongan\DetailTransaksiController;
 use App\Http\Controllers\Tenongan\KasController;
 use App\Http\Controllers\Tenongan\LogKasController;
@@ -40,6 +42,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
+
+    Route::post('import/produsen', [ImportController::class, 'produsen'])->name('import.produsen');
+    Route::post('import/pedagang', [ImportController::class, 'pedagang'])->name('import.pedagang');
+    Route::post('import/penjualan', [ImportController::class, 'penjualan'])->name('import.penjualan');
 
     Route::get('produk', [ProdukController::class, 'index'])->name('produk');
     Route::get('produk/{produk}', [ProdukController::class, 'show'])->name('produk.show');
@@ -94,7 +100,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
 
 
-    Route::post('test1', [TestController::class, 'test'])->name('test')->middleware('role');
+    Route::post('excel/make', [SpreadsheetController::class, 'make']);
+    Route::post('excel/read', [SpreadsheetController::class, 'read']);
 });
 
 Route::group(['middleware' => 'guest:api'], function () {

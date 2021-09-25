@@ -3,6 +3,7 @@
 namespace App\Models\Tenongan;
 
 use App\Models\tenongan\Penjualan;
+use App\Models\User;
 use App\Traits\Tenongan\HasSaldo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Tenongan\Pedagang
- *
+ * 
  * @@ -41,7 +40,7 @@
  *
  * @property int $id
@@ -40,6 +41,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\Tenongan\Saldo|null $saldo
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\Transaksi[] $transaksi
  * @property-read int|null $transaksi_count
+ * @property-read mixed $tipe
+ * @property-read Model|\Eloquent $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection|Penjualan[] $penjualan
+ * @property-read int|null $penjualan_count
+ * @property-read User|null $user
  */
 class Pedagang extends Model
 {

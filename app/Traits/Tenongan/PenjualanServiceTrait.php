@@ -25,8 +25,8 @@ trait PenjualanServiceTrait
         $ids = array_column($dataPenjualan,'produk_id');
         $produk = Produk::findMany($ids);
         foreach ($dataPenjualan as $key => $data) {
-            $data['harga_beli'] =$produk->find($data['produk_id'])->harga_beli;
-            $data['harga_jual'] =$produk->find($data['produk_id'])->harga_jual;
+            $data['harga_beli'] = $produk->find($data['produk_id'])->harga_beli;
+            $data['harga_jual'] = $produk->find($data['produk_id'])->harga_jual;
             $penjualan = Penjualan::create($data);
             array_push($this->penjualans, $penjualan);
         }

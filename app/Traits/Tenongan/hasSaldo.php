@@ -7,16 +7,6 @@ trait HasSaldo
 {
     protected Saldo $saldo;
 
-
-
-
-
-
-
-
-
-
-
     public function getSaldo()
     {
         return $this->saldo;

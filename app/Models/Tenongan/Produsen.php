@@ -42,6 +42,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read \App\Models\Tenongan\Saldo|null $saldo
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tenongan\Transaksi[] $transaksi
  * @property-read int|null $transaksi_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Penjualan[] $penjualan
+ * @property-read int|null $penjualan_count
+ * @property-read User|null $user
  */
 class Produsen extends Model
 {

@@ -40,6 +40,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $owner_type
+ * @property int|null $owner_id
+ * @property-read mixed $tipe
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereOwnerType($value)
  */
 class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
