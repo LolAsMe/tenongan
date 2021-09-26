@@ -24,8 +24,9 @@ class SpreadsheetController extends Controller
     public function read()
     {
         try {
-            $this->spreedsheetService->readSpreedsheet();
-            return 'berhasi';
+            $this->spreedsheetService->readSpreedsheet('penjualan.xls');
+            $data = $this->spreedsheetService->getData('penjualans');
+            return $data;
         } catch (\Throwable $th) {
             return $th;
         }

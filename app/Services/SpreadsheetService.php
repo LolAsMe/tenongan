@@ -6,77 +6,170 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Storage;
+use Str;
 
 class SpreadsheetService
 {
-    public function makeSpreedsheet()
-    {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
-        $sheet->setCellValue('A2', 'Hello W22orld !');
-        $sheet->setCellValue('A5', 'Hello W55orld !');
+    protected $spreadsheet;
+    protected $filename;
+    protected $path;
+    protected $storagePath;
 
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('hello world.xlsx');
-
-        ob_start();
-        $writer->save('php://output');
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        Storage::disk('local')->put("public/myfile.xlsx", $content);
+    public function __construct(
+        $filename = '',
+        $path='storage/',
+        $storagePath = 'public/',
+        $defaultExtension = 'Xlsx'
+        )
+        {
+        $this->spreadsheet = new Spreadsheet();
+        $this->filename = $filename;
+        $this->path = $path;
+        $this->storagePath = $storagePath;
+        $this->defaultExtension = $defaultExtension;
     }
 
-    public function readSpreedsheet()
+    public function getSpreadsheet()
     {
-        $inputFileName = 'storage/penjualan.xls';
+        return $this->spreadsheet;
+    }
+
+    public function setSpreadsheet(Spreadsheet $spreadsheet)
+    {
+        $this->spreadsheet = $spreadsheet;
+        return $this;
+    }
+
+    public function makeSpreedsheet()
+    {
+        $this->spreadsheet = new Spreadsheet();
+        // $sheet = $this->spreadsheet->getActiveSheet();
+        // $sheet->setCellValue('A1', 'Hello World !');
+        // $sheet->setCellValue('A2', 'Hello W22orld !');
+        // $sheet->setCellValue('A5', 'Hello W55orld !');
+
+        // $writer = new Xlsx($this->spreadsheet);
+        // $file = $this->readFile($this->spreadsheet);
+        // $this->store('fi2lebaru.xlsx',$file);
+        return $this->spreadsheet;
+        // $writer->save('hello world.xlsx');
+    }
+
+    public function makeFile($filename, Spreadsheet $spreadsheet)
+    {
+        $writer = new $this->defaultExtension($spreadsheet);
+        $writer->save($filename);
+
+        return $spreadsheet;
+    }
+    public function readFile($data)
+    {
+        $file = new Xlsx($data);
+
+        ob_start();
+        $file->save('php://output');
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
+    }
+
+    public function store($name, $file)
+    {
+
+        Storage::disk('local')->put("file/".$name, $file);
+    }
+
+    public function readSpreedsheet($name)
+    {
+        $inputFileName = 'storage/'.$name;
         $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
         $spreadsheet = $reader->load($inputFileName);
+        $this->spreadsheet = $spreadsheet;
+
+        return $spreadsheet;
+
         $worksheet = $spreadsheet->getActiveSheet();
         $head = [];
         $prev = null;
         $values = [];
         $cellCollection = $worksheet->getCellCollection();
         $cords = $cellCollection->getCoordinates();
+        $highestRow = $cellCollection->getHighestRow();
+        $firstCell = '';
         foreach ($cords as $cord) {
             $value = $cellCollection->get($cord)->getValue();
             $outputString = preg_replace('/[^0-9]/', '', $cord);
+            $outputCol = preg_replace('/[^A-Z]/', '', $cord);
             if ($prev) {
                 if ($prev != $outputString) {
+                    $firstCell = $outputString;
                     break;
                 } else {
-                    array_push($head, $value);
+                    $head[$outputCol] = $value;
                 }
             } else {
                 $prev = $outputString;
-                array_push($head, $value);
+                $head[$outputCol] = $value;
             }
         }
-        $cursor_limit = count($head);
-        $cursor = 0;
-        $row = [];
+
+        $outputString = preg_replace('/[^0-9]/', '', $cord);
+        for ($i=$firstCell; $i <= $highestRow; $i++) {
+            $obj= [];
+            foreach ($head as $key => $value) {
+                $obj[$value] = $cellCollection->get($key.$i) ? $cellCollection->get($key.$i)->getValue(): '';
+            }
+            array_push($values, $obj);
+        }
+    }
+
+    public function toArray(?Spreadsheet $spreadsheet=null)
+    {
+        $worksheet = $spreadsheet ? $spreadsheet->getActiveSheet() : $this->spreadsheet->getActiveSheet();
+        $head = [];
+        $prev = null;
+        $values = [];
+        $cellCollection = $worksheet->getCellCollection();
+        $cords = $cellCollection->getCoordinates();
+        $highestRow = $cellCollection->getHighestRow();
+        $firstCell = '';
         foreach ($cords as $cord) {
             $value = $cellCollection->get($cord)->getValue();
-            $row[$head[$cursor]] = $value;
-            if ($cursor == $cursor_limit-1) {
-                array_push($values, $row);
-                $cursor = 0;
-                $row = [];
+            $outputString = preg_replace('/[^0-9]/', '', $cord);
+            $outputCol = preg_replace('/[^A-Z]/', '', $cord);
+            if ($prev) {
+                if ($prev != $outputString) {
+                    $firstCell = $outputString;
+                    break;
+                } else {
+                    $head[$outputCol] = $value;
+                }
             } else {
-
-                $cursor++;
+                $prev = $outputString;
+                $head[$outputCol] = $value;
             }
         }
-        array_shift($values);
-        dd($values);
-        // dd($worksheet->getCellCollection());
-        // if ('' > 'B2') {
-        //     dd('besar a');
-        // } else {
-        //     dd('besar b');
-        // }
 
+        $outputString = preg_replace('/[^0-9]/', '', $cord);
+        for ($i=$firstCell; $i <= $highestRow; $i++) {
+            $obj= [];
+            foreach ($head as $key => $value) {
+                $obj[$value] = $cellCollection->get($key.$i) ? $cellCollection->get($key.$i)->getValue(): '';
+            }
+            array_push($values, $obj);
+        }
+        return $values;
+
+    }
+    public function getData($title)
+    {
+        $worksheetName=$this->spreadsheet->getActiveSheet()->getTitle();
+        $id = preg_replace('/[^0-9]/', '', $worksheetName);
+        // $outputCol = preg_replace('/[^A-Z]/', '', $worksheetName);
+        $words = preg_replace('/\d+/u', '', $worksheetName);
+        $field = Str::lower($words);
+        $data = [$field=>$id, $title=>$this->toArray()];
+        return $data;
     }
 }
