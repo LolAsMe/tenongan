@@ -5,7 +5,7 @@ use App\Models\tenongan\Penjualan;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-class PenjualanExport implements FromCollection
+class ProdusenExport implements FromCollection
 {
     use Exportable;
 

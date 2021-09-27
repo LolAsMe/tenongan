@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\tenongan;
+namespace App\Models\Tenongan;
 
 use App\Models\Tenongan\Pedagang;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
