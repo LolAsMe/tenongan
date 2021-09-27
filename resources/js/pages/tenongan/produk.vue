@@ -9,6 +9,15 @@
             :showModal="showAddModal"
             @toggle="toggleAddModal"
           ></add-produk-modal>
+          <button
+            class="btn btn-primary"
+            @click="$refs.uploadModal.$data.showModal = true"
+            v-if="isRole('Admin')"
+          >
+            Import
+          </button>
+
+          <upload-modal v-if="isRole('Admin')" ref="uploadModal" :url="'produk'"></upload-modal>>
         </div>
       </div>
     </div>
@@ -76,6 +85,7 @@ import Modal from "~/components/Modal";
 import AddProdukModal from "~/components/tenongan/AddProdukModal";
 import LihatProdukModal from "~/components/tenongan/LihatProdukModal";
 import EditProdukModal from "~/components/tenongan/EditProdukModal";
+import UploadModal from "~/components/tenongan/UploadModal";
 import VTable from "~/components/VTable";
 import Dropdown from "~/components/Dropdown";
 
@@ -90,6 +100,7 @@ export default {
     LihatProdukModal,
     EditProdukModal,
     VTable,
+    UploadModal,
     Dropdown,
   },
   computed: {
@@ -98,15 +109,14 @@ export default {
     }),
     items: function () {
       if (!this.loading && this.produks) {
-        return this.produks.map(({ id, nama, harga_jual,harga_beli }) => {
-          return { id, nama, harga_jual,harga_beli };
+        return this.produks.map(({ id, nama, harga_jual, harga_beli }) => {
+          return { id, nama, harga_jual, harga_beli };
         });
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "harga_jual","harga_jual"];
+      return ["ID", "Nama", "harga_jual", "harga_jual"];
     },
-
   },
   data() {
     return {

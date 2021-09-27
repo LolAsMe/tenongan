@@ -34,11 +34,11 @@ class SpreadsheetService
         return $this->spreadsheet;
     }
 
-    public function setSpreadsheet(Spreadsheet $spreadsheet)
-    {
-        $this->spreadsheet = $spreadsheet;
-        return $this;
-    }
+    // public function setSpreadsheet(Spreadsheet $spreadsheet)
+    // {
+    //     $this->spreadsheet = $spreadsheet;
+    //     return $this;
+    // }
 
     public function makeSpreedsheet()
     {
@@ -57,15 +57,13 @@ class SpreadsheetService
 
     public function makeFile($filename, Spreadsheet $spreadsheet)
     {
-        $writer = new $this->defaultExtension($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         $writer->save($filename);
 
         return $spreadsheet;
     }
-    public function readFile($data)
+    public function readSpreedsheet($file)
     {
-        $file = new Xlsx($data);
-
         ob_start();
         $file->save('php://output');
         $content = ob_get_contents();
@@ -76,10 +74,10 @@ class SpreadsheetService
     public function store($name, $file)
     {
 
-        Storage::disk('local')->put("file/".$name, $file);
+        Storage::disk('local')->put("public/".$name, $file);
     }
 
-    public function readSpreedsheet($name)
+    public function setSpreadsheet($name)
     {
         $inputFileName = 'storage/'.$name;
         $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
@@ -87,41 +85,7 @@ class SpreadsheetService
         $spreadsheet = $reader->load($inputFileName);
         $this->spreadsheet = $spreadsheet;
 
-        return $spreadsheet;
-
-        $worksheet = $spreadsheet->getActiveSheet();
-        $head = [];
-        $prev = null;
-        $values = [];
-        $cellCollection = $worksheet->getCellCollection();
-        $cords = $cellCollection->getCoordinates();
-        $highestRow = $cellCollection->getHighestRow();
-        $firstCell = '';
-        foreach ($cords as $cord) {
-            $value = $cellCollection->get($cord)->getValue();
-            $outputString = preg_replace('/[^0-9]/', '', $cord);
-            $outputCol = preg_replace('/[^A-Z]/', '', $cord);
-            if ($prev) {
-                if ($prev != $outputString) {
-                    $firstCell = $outputString;
-                    break;
-                } else {
-                    $head[$outputCol] = $value;
-                }
-            } else {
-                $prev = $outputString;
-                $head[$outputCol] = $value;
-            }
-        }
-
-        $outputString = preg_replace('/[^0-9]/', '', $cord);
-        for ($i=$firstCell; $i <= $highestRow; $i++) {
-            $obj= [];
-            foreach ($head as $key => $value) {
-                $obj[$value] = $cellCollection->get($key.$i) ? $cellCollection->get($key.$i)->getValue(): '';
-            }
-            array_push($values, $obj);
-        }
+        return $this;
     }
 
     public function toArray(?Spreadsheet $spreadsheet=null)
@@ -155,14 +119,14 @@ class SpreadsheetService
         for ($i=$firstCell; $i <= $highestRow; $i++) {
             $obj= [];
             foreach ($head as $key => $value) {
-                $obj[$value] = $cellCollection->get($key.$i) ? $cellCollection->get($key.$i)->getValue(): '';
+                $obj[$value] = $cellCollection->get($key.$i) ? $cellCollection->get($key.$i)->getValue(): null;
             }
             array_push($values, $obj);
         }
         return $values;
 
     }
-    public function getData($title)
+    public function getData($title='data')
     {
         $worksheetName=$this->spreadsheet->getActiveSheet()->getTitle();
         $id = preg_replace('/[^0-9]/', '', $worksheetName);

@@ -11,6 +11,15 @@
             :showModal="showAddModal"
             @toggle="toggleAddModal"
           ></add-penjualan-modal>
+          <button
+            class="btn btn-primary"
+            @click="$refs.uploadModal.$data.showModal = true"
+            v-if="isRole('Admin')"
+          >
+            Import
+          </button>
+
+          <upload-modal v-if="isRole('Admin')" ref="uploadModal" :url="'penjualan'"></upload-modal>
         </div>
       </div>
     </div>
@@ -75,6 +84,7 @@
 import { mapGetters, mapActions } from "vuex";
 import Modal from "~/components/Modal";
 import AddPenjualanModal from "~/components/tenongan/AddPenjualanModal";
+import UploadModal from "~/components/tenongan/UploadModal";
 import Dropdown from "~/components/Dropdown";
 import axios from "axios";
 
@@ -84,6 +94,7 @@ export default {
   components: {
     Modal,
     AddPenjualanModal,
+    UploadModal,
     Dropdown,
   },
   computed: mapGetters({

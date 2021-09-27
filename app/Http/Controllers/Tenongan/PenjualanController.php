@@ -14,8 +14,9 @@ class PenjualanController extends Controller
 
     public function titip(Request $request)
     {
+        return response()->json(json_decode($request->getContent(),true));
         $penjualans = $this->tenongan->createPenjualans(json_decode($request->getContent(),true));
-        return response()->json($penjualans);
+        dd($penjualans);
     }
     /**
      * menghitung transaksi yang terjadi, status pendinng

@@ -11,17 +11,12 @@ use App\Http\Controllers\ImportController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\SpreadsheetController;
-use App\Http\Controllers\Tenongan\DetailTransaksiController;
 use App\Http\Controllers\Tenongan\KasController;
-use App\Http\Controllers\Tenongan\LogKasController;
-use App\Http\Controllers\Tenongan\LogSaldoController;
 use App\Http\Controllers\Tenongan\PedagangController;
 use App\Http\Controllers\Tenongan\PenjualanController;
 use App\Http\Controllers\Tenongan\ProdukController;
 use App\Http\Controllers\Tenongan\ProdusenController;
 use App\Http\Controllers\Tenongan\SaldoController;
-use App\Http\Controllers\Tenongan\TransaksiController;
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +41,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('import/produsen', [ImportController::class, 'produsen'])->name('import.produsen');
     Route::post('import/pedagang', [ImportController::class, 'pedagang'])->name('import.pedagang');
     Route::post('import/penjualan', [ImportController::class, 'penjualan'])->name('import.penjualan');
+    Route::post('import/produk', [ImportController::class, 'produk'])->name('import.produk');
 
     Route::get('produk', [ProdukController::class, 'index'])->name('produk');
     Route::get('produk/{produk}', [ProdukController::class, 'show'])->name('produk.show');
