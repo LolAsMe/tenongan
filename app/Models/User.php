@@ -49,8 +49,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
-    use Notifiable,HasOwner,
+    use Notifiable,
         HasFactory;
+    use HasOwner;
 
     /**
      * The attributes that are mass assignable.
@@ -89,7 +90,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $appends = [
-        'photo_url','tipe'
+        'photo_url', 'tipe'
     ];
 
     /**
@@ -115,7 +116,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     /**
      * Get the oauth providers.
      *
-    * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function oauthProviders()
     {
