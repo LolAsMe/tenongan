@@ -50,7 +50,6 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
     use Notifiable,
         HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -156,5 +155,26 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+    public function createOwner()
+    {
+        $this->owner = $this->owner()->create();
+        return $this;
+    }
+
+    public function owner()
+    {
+        return $this->morphTo();
+    }
+
+    public function getTipeAttribute()
+    {
+        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\") + 2);
+        return $value;
     }
 }
