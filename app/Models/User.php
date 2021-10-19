@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
-use App\Traits\Tenongan\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -51,7 +50,6 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
     use Notifiable,
         HasFactory;
-    use HasOwner;
 
     /**
      * The attributes that are mass assignable.
