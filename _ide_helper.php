@@ -15314,7 +15314,18 @@
      
 }
 
-        namespace Maatwebsite\Excel\Facades { 
+        namespace App\Services\Tenongan { 
+            /**
+     * 
+     *
+     */ 
+        class TenonganService {
+         
+    }
+     
+}
+
+    namespace Maatwebsite\Excel\Facades { 
             /**
      * 
      *
@@ -20374,6 +20385,7 @@ namespace  {
             class Session extends \Illuminate\Support\Facades\Session {}
             class Storage extends \Illuminate\Support\Facades\Storage {}
             class Str extends \Illuminate\Support\Str {}
+            class Tenongan extends \App\Services\Tenongan\TenonganService {}
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}

@@ -72,7 +72,8 @@ export const mutations = {
 export const actions = {
   async fetchSaldos({ commit }){
     const { data } = await axios.get('/api/saldo')
-    commit('setSaldos',data)
+    console.log(data)
+    commit('setSaldos',data.data)
   },
   async fetchSaldo({ commit }, id){
     let owner_id = store.getters['auth/user'].owner_id

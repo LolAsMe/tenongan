@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenongan;
 use App\Contracts\Tenongan\TenonganService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaldoIncreaseRequest;
+use App\Http\Resources\ProdusenResource;
 use App\Models\Tenongan\Produsen;
 
 use Illuminate\Http\Request;
@@ -23,8 +24,8 @@ class ProdusenController extends Controller
     public function index()
     {
         //
-        $produsen = Produsen::all();
-        return response()->json($produsen);
+        $produsen = Produsen::with(['saldo:id,jumlah,owner_type,owner_id','produk:id,nama,produsen_id'])->get();
+        return ProdusenResource::collection($produsen);
     }
     /**
      * Store a newly created resource in storage.

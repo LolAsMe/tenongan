@@ -38,7 +38,7 @@ export const mutations = {
 export const actions = {
   async fetchKas({ commit }) {
     const { data } = await axios.get('/api/kas')
-    commit('setKas', data)
+    commit('setKas', data.data)
   },
   async fetchHarians({ commit }) {
     let id = store.getters['auth/user'].owner_id
@@ -53,6 +53,6 @@ export const actions = {
     if (role == 'Pedagang') {
       data = (await axios.get('/api/pedagang/harian/' + id)).data
     }
-    commit('setHarians', data)
+    commit('setHarians', data.data)
   }
 }

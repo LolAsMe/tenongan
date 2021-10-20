@@ -106,13 +106,13 @@ export default {
     }),
     items: function () {
       if (!this.loading && this.pedagangs) {
-        return this.pedagangs.map(({ id, nama }) => {
-          return { id, nama };
+        return this.pedagangs.map(({ id, nama, saldo }) => {
+          return { id, nama, saldo };
         });
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama"];
+      return ["ID", "Nama", "Saldo"];
     }
   },
   data() {

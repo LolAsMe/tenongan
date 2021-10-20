@@ -3,6 +3,7 @@
 namespace App\Models\Tenongan;
 
 use App\Traits\Tenongan\HasLog;
+use App\Traits\Tenongan\JumlahResolver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -108,4 +109,6 @@ class Saldo extends Model
         $this->log()->create($attributes);
         return $this;
     }
+
+
 }

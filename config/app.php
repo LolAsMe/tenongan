@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\Tenongan\TenonganService;
+
 return [
 
     /*
@@ -233,6 +235,7 @@ return [
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
         'Str' => Illuminate\Support\Str::class,
+        'Tenongan' => TenonganService::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,

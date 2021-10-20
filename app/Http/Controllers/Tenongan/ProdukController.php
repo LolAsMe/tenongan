@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenongan;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProdukResource;
 use App\Models\Tenongan\Produk;
 use Illuminate\Http\Request;
 use App\Services\SpreadsheetService;
@@ -19,7 +20,7 @@ class ProdukController extends Controller
     {
         //
         $produk = Produk::with('produsen')->get();
-        return response()->json($produk);
+        return ProdukResource::collection($produk);
     }
 
     /**

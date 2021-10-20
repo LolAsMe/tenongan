@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenongan;
 use App\Contracts\Tenongan\TenonganService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaldoIncreaseRequest;
+use App\Http\Resources\PedagangResource;
 use App\Models\Tenongan\Pedagang;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,8 @@ class PedagangController extends Controller
     public function index()
     {
         //
-        $pedagang = Pedagang::all();
-        return response()->json($pedagang);
+        $pedagang = Pedagang::with('saldo')->get();
+        return PedagangResource::collection($pedagang);
     }
     /**
      * Store a newly created resource in storage.

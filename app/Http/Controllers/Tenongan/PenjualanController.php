@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 use App\Models\tenongan\Penjualan;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
+use App\Http\Resources\PenjualanResource;
+use App\Http\Resources\TransaksiResource;
 use App\Models\Tenongan\Transaksi;
 class PenjualanController extends Controller
 {
@@ -47,7 +49,7 @@ class PenjualanController extends Controller
     {
         //
         $transaksi = Transaksi::with('owner:id,nama')->latest()->get();
-        return response()->json($transaksi);
+        return TransaksiResource::collection($transaksi);
     }
         /**
      * Display a listing of the resource.
@@ -58,6 +60,7 @@ class PenjualanController extends Controller
     {
         //
         $penjualan = Penjualan::with(['produk:id,nama','pedagang:id,nama'])->latest()->get();
+        return PenjualanResource::collection($penjualan);
         return response()->json($penjualan);
     }
     /**

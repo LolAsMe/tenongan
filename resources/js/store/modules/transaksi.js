@@ -43,6 +43,6 @@ export const actions = {
     if(role == 'Pedagang'){
       data =  (await axios.get('/api/pedagang/transaksi/'+id)).data
     }
-    commit('setTransaksi',data)
+    commit('setTransaksi',data.data)
   }
 }

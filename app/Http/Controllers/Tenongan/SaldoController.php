@@ -5,6 +5,7 @@ use App\Models\Tenongan\Saldo;
 use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
 use App\Http\Requests\SaldoIncreaseRequest;
+use App\Http\Resources\SaldoResource;
 use App\Models\Tenongan\Pedagang;
 
 class SaldoController extends Controller
@@ -22,7 +23,8 @@ class SaldoController extends Controller
     public function index()
     {
         //
-        $saldo = Saldo::all();
+        $saldo = Saldo::with('owner')->get();
+        return SaldoResource::collection($saldo);
         return response()->json($saldo->load('owner:id,nama'));
     }
     /**

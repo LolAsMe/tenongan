@@ -22,7 +22,7 @@
             <tr v-for="kasHarian in kasHarians" :key="kasHarian.id">
               <td>{{ kasHarian.tanggal }}</td>
               <td>{{ kasHarian.tipe }}</td>
-              <td>{{ kasHarian.payer.nama }}</td>
+              <td>{{ kasHarian.payer }}</td>
               <td>{{ kasHarian.jumlah }}</td>
               <td>{{ kasHarian.status }}</td>
             </tr>

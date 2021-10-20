@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Tenongan;
 
 use App\Http\Controllers\Controller;
 use App\Contracts\Tenongan\TenonganService;
+use App\Http\Resources\KasHarianResource;
+use App\Http\Resources\KasResource;
 use App\Models\Tenongan\Kas;
 use App\Models\Tenongan\KasHarian;
 use Illuminate\Http\Request;
@@ -25,15 +27,15 @@ class KasController extends Controller
     public function index()
     {
         //
-        $kas = $this->tenonganService->setKas()->getKas()->load('log');
-        return response()->json($kas);
+        $kas = Kas::whereId(1)->with('log')->first();
+        return new KasResource($kas);
     }
 
     public function harian()
     {
         //
         $harians = KasHarian::with('payer')->latest()->get();
-        return response()->json($harians);
+        return KasHarianResource::collection($harians);
     }
     public function show(Kas $kas)
     {

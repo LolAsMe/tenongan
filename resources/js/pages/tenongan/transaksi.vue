@@ -22,7 +22,7 @@
             <tr v-for="transaksi in transaksis" :key="transaksi.id">
               <td>{{ transaksi.tanggal }}</td>
               <td>{{ transaksi.tipe }}</td>
-              <td>{{ transaksi.owner.nama }}</td>
+              <td>{{ transaksi.owner }}</td>
               <td>{{ transaksi.jumlah }}</td>
               <td>{{ transaksi.status }}</td>
             </tr>

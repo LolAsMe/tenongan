@@ -49,7 +49,7 @@ export const actions = {
     if(role == 'Pedagang'){
       data =  (await axios.get('/api/pedagang/penjualan/'+id)).data
     }
-    commit('setPenjualans',data)
+    commit('setPenjualans',data.data)
   },
   async titip({ commit, state }){
     const { data } = await axios.post('/api/transaksi/penjualan/titip', state.dataPenjualans)

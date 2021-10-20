@@ -3,7 +3,6 @@
     <div class="col-12">
       <div class="d-flex bd-highlight">
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Saldo</h2></div>
-
         <div class="p-2 bd-highlight">
           <button class="btn btn-primary" @click="toggleAddModal">Add</button>
           <add-saldo-modal

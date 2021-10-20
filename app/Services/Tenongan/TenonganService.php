@@ -128,4 +128,7 @@ class TenonganService implements TenonganServiceContract
             }
         });
     }
+    public static function toCurrency($value){
+        return "Rp " . number_format($value,2,',','.');
+    }
 }
