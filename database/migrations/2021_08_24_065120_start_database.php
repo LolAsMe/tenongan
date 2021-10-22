@@ -91,6 +91,7 @@ class StartDatabase extends Migration
 
         Schema::create('detail_transaksi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaksi');
             $table->string('keterangan')->nullable();
             $table->decimal('jumlah',14);
             $table->foreignId('produk_id');

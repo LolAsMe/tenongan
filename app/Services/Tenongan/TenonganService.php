@@ -45,15 +45,21 @@ class TenonganService implements TenonganServiceContract
     public function transact()
     {
 
-        Penjualan::whereStatus('Draft')->chunk(100, function ($penjualans) {
+        Penjualan::whereStatus('Draft')->with(['produk','pedagang'])->chunk(100, function ($penjualans) {
             foreach ($penjualans as $key => $penjualan) {
+                try {
+                    $penjualan->pedagang->nama;
+                    $penjualan->produk->nama;
+                } catch (\Throwable $th) {
+                    throw $th;
+                }
                 $jumlah = $penjualan->laku * $penjualan->harga_beli;
                 $transaksi = $penjualan->produk->produsen->transaksi()->firstOrCreate(
                     [
                         'status' => 'Pending'
                     ],
                     [
-                        'jumlah' => $jumlah,
+                        'jumlah' =>0,
                         'keterangan' => $penjualan->keterangan
                     ]
                 );
@@ -66,7 +72,7 @@ class TenonganService implements TenonganServiceContract
                         'status' => 'Pending'
                     ],
                     [
-                        'jumlah' => $jumlah,
+                        'jumlah' => 0,
                         'keterangan' => $penjualan->keterangan
                     ]
                 );

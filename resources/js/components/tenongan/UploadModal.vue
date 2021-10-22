@@ -71,7 +71,7 @@ export default {
         .catch(function () {
           console.log("FAILURE!!");
         });
-
+this.showModal=false
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];

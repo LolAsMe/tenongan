@@ -16,9 +16,8 @@ class PenjualanController extends Controller
 
     public function titip(Request $request)
     {
-        return response()->json(json_decode($request->getContent(),true));
         $penjualans = $this->tenongan->createPenjualans(json_decode($request->getContent(),true));
-        dd($penjualans);
+        return response()->json(json_decode($request->getContent(),true));
     }
     /**
      * menghitung transaksi yang terjadi, status pendinng
@@ -61,7 +60,6 @@ class PenjualanController extends Controller
         //
         $penjualan = Penjualan::with(['produk:id,nama','pedagang:id,nama'])->latest()->get();
         return PenjualanResource::collection($penjualan);
-        return response()->json($penjualan);
     }
     /**
      * Show the form for creating a new resource.
@@ -91,7 +89,7 @@ class PenjualanController extends Controller
     public function show2(Transaksi $transaksi)
     {
         //
-        return response()->json($transaksi->load('penjualan'));
+        return new TransaksiResource($transaksi->load('penjualan.produk'));
     }
     /**
      * Display the specified resource.

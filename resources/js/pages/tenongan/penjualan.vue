@@ -19,7 +19,11 @@
             Import
           </button>
 
-          <upload-modal v-if="isRole('Admin')" ref="uploadModal" :url="'penjualan'"></upload-modal>
+          <upload-modal
+            v-if="isRole('Admin')"
+            ref="uploadModal"
+            :url="'penjualan'"
+          ></upload-modal>
         </div>
       </div>
     </div>
@@ -41,36 +45,36 @@
           <tbody v-if="isRole('Admin')">
             <tr v-for="penjualan in penjualans" :key="penjualan.id">
               <td>{{ penjualan.tanggal }}</td>
-              <td>{{ penjualan.produk.nama }}</td>
+              <td>{{ penjualan.produk }}</td>
               <td>{{ penjualan.titip }}</td>
               <td>{{ penjualan.laku }}</td>
               <td>{{ penjualan.harga_jual }}</td>
               <td>{{ penjualan.harga_beli }}</td>
-              <td>{{ penjualan.pedagang.nama }}</td>
+              <td>{{ penjualan.pedagang }}</td>
               <td>{{ penjualan.status }}</td>
             </tr>
           </tbody>
           <tbody v-if="isRole('Produsen')">
             <tr v-for="penjualan in penjualans" :key="penjualan.id">
               <td>{{ penjualan.tanggal }}</td>
-              <td>{{ penjualan.produk.nama }}</td>
+              <td>{{ penjualan.produk }}</td>
               <td>{{ penjualan.titip }}</td>
               <td>{{ penjualan.laku }}</td>
               <td>{{ penjualan.harga_jual }}</td>
               <td>{{ penjualan.harga_beli }}</td>
-              <td>{{ penjualan.pedagang.nama }}</td>
+              <td>{{ penjualan.pedagang }}</td>
               <td>{{ penjualan.status }}</td>
             </tr>
           </tbody>
           <tbody v-if="isRole('Pedagang')">
             <tr v-for="penjualan in penjualans" :key="penjualan.id">
               <td>{{ penjualan.tanggal }}</td>
-              <td>{{ penjualan.produk.nama }}</td>
+              <td>{{ penjualan.produk }}</td>
               <td>{{ penjualan.titip }}</td>
               <td>{{ penjualan.laku }}</td>
               <td>{{ penjualan.harga_jual }}</td>
               <td>{{ penjualan.harga_beli }}</td>
-              <td>{{ penjualan.pedagang.nama }}</td>
+              <td>{{ penjualan.pedagang }}</td>
               <td>{{ penjualan.status }}</td>
             </tr>
           </tbody>

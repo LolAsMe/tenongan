@@ -16,6 +16,7 @@
               <th scope="col">Nama</th>
               <th scope="col">Jumlah</th>
               <th scope="col">Status</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody v-if="!loading">
@@ -25,27 +26,54 @@
               <td>{{ transaksi.owner }}</td>
               <td>{{ transaksi.jumlah }}</td>
               <td>{{ transaksi.status }}</td>
+              <td>
+                <fa
+                  @click="selectedTransaksi=transaksi,$store.dispatch('transaksi/fetchTransaksi', transaksi.id)"
+                  data-bs-toggle="modal" data-bs-target="#transaksiDetailModal"
+                  :icon="['fa', 'info-circle']"
+                />
+                <fa @click="$refs.transaksiEditModal.$data.showModal = true, selectedTransaksi=transaksi" :icon="['fa', 'edit']" />
+                <fa :icon="['fa', 'trash']" />
+              </td>
             </tr>
           </tbody>
         </table>
       </card>
+      <transaksi-detail-modal
+        :name="'transaksiDetailModal'"
+        :transaksi="selectedTransaksi"
+      ></transaksi-detail-modal>
+      <transaksi-edit-modal
+        ref="transaksiEditModal"
+        :transaksi="selectedTransaksi"
+      ></transaksi-edit-modal>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Dropdown from "~/components/Dropdown";
+import TransaksiDetailModal from "~/components/tenongan/TransaksiDetailModal";
+import TransaksiEditModal from "~/components/tenongan/TransaksiEditModal";
 import axios from "axios";
 
 export default {
   middleware: "auth",
-  components: {},
-  computed: mapGetters({
-    transaksis: "transaksi/transaksis",
-  }),
+  components: {
+    Dropdown,
+    TransaksiEditModal,
+    TransaksiDetailModal,
+  },
+  computed: {
+    ...mapGetters({
+      transaksis: "transaksi/transaksis",
+    })
+  },
   data() {
     return {
       loading: true,
+      selectedTransaksi:{}
     };
   },
   methods: {
