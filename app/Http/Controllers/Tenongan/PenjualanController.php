@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Tenongan;
+
 use App\Http\Controllers\Controller;
 use App\Models\tenongan\Penjualan;
 use Illuminate\Http\Request;
@@ -7,17 +9,19 @@ use App\Contracts\Tenongan\TenonganService;
 use App\Http\Resources\PenjualanResource;
 use App\Http\Resources\TransaksiResource;
 use App\Models\Tenongan\Transaksi;
+
 class PenjualanController extends Controller
 {
     protected $tenongan;
-    public function __construct(TenonganService $tenongan) {
+    public function __construct(TenonganService $tenongan)
+    {
         $this->tenongan = $tenongan;
     }
 
     public function titip(Request $request)
     {
-        $penjualans = $this->tenongan->createPenjualans(json_decode($request->getContent(),true));
-        return response()->json(json_decode($request->getContent(),true));
+        $penjualans = $this->tenongan->createPenjualans(json_decode($request->getContent(), true));
+        return response()->json(json_decode($request->getContent(), true));
     }
     /**
      * menghitung transaksi yang terjadi, status pendinng
@@ -50,7 +54,7 @@ class PenjualanController extends Controller
         $transaksi = Transaksi::with('owner:id,nama')->latest()->get();
         return TransaksiResource::collection($transaksi);
     }
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -58,7 +62,7 @@ class PenjualanController extends Controller
     public function index2()
     {
         //
-        $penjualan = Penjualan::with(['produk:id,nama','pedagang:id,nama'])->latest()->get();
+        $penjualan = Penjualan::with(['produk:id,nama', 'pedagang:id,nama'])->latest()->get();
         return PenjualanResource::collection($penjualan);
     }
     /**
@@ -73,6 +77,17 @@ class PenjualanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @return \Illuminate\Http\Response
+     */
+    public function store2(Request $request, Transaksi $transaksi)
+    {
+        //
+        $transaksi->increment('jumlah',$request->jumlah);
+        $transaksi->detail()->create($request->all());
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -80,7 +95,7 @@ class PenjualanController extends Controller
     {
         //
     }
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\tenongan\penjualan  $penjualan
@@ -89,7 +104,7 @@ class PenjualanController extends Controller
     public function show2(Transaksi $transaksi)
     {
         //
-        return new TransaksiResource($transaksi->load('penjualan.produk'));
+        return new TransaksiResource($transaksi->load(['penjualan.produk','detail']));
     }
     /**
      * Display the specified resource.

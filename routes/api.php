@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('penjualan/', [PenjualanController::class, 'index2'])->name('transaksi');
     Route::get('transaksi', [PenjualanController::class, 'index'])->name('transaksi');
+    Route::post('transaksi/{transaksi}/detail', [PenjualanController::class, 'store2'])->name('transaksi.detail.create');
     Route::get('transaksi/penjualan/{transaksi}', [PenjualanController::class, 'show2'])->name('penjualan');
     Route::post('transaksi/penjualan/titip', [PenjualanController::class, 'titip'])->name('penjualan.titip');
     Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');

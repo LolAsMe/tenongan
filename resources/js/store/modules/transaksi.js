@@ -26,6 +26,17 @@ export const state = {
         "produk": "Nyess"
       },
     ],
+    "detail": [
+      {
+        "id": 1,
+        "transaksi_id": 39,
+        "keterangan": "COba2",
+        "jumlah": "10000.00",
+        "deleted_at": null,
+        "created_at": "2021-10-22T14:40:24.000000Z",
+        "updated_at": "2021-10-22T14:40:24.000000Z"
+      }
+    ],
     "keterangan": null
   }
 

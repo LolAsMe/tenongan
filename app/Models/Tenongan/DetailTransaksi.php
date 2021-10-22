@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Models\Tenongan;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
 /**
  * App\Models\Tenongan\Transaksi
  *
@@ -45,37 +48,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Query\Builder|Transaksi withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Transaksi withoutTrashed()
  */
-class Transaksi extends Model
+class DetailTransaksi extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'transaksi';
+    protected $table = 'detail_transaksi';
     protected $guarded = [];
-    protected $appends = array('tipe');
-    protected $hidden = [
-        'owner_type',
-    ];
-    /**
-     * Get all of the penjualan for the Transaksi
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function penjualan(): BelongsToMany
+    public function transaksi()
     {
-        return $this->belongsToMany(Penjualan::class);
-    }
-
-    public function owner()
-    {
-        return $this->morphTo();
-    }
-    public function getTipeAttribute()
-    {
-        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
-        return $value;
-    }
-    public function detail()
-    {
-        return $this->hasMany(DetailTransaksi::class);
+        return $this->belongsTo(Transaksi::class);
     }
 }

@@ -69,36 +69,81 @@
           </tr>
         </tbody>
       </table>
-      <div style="width:50%">
+      <h6>
         Detail Transaksi Lain
+        <fa @click="showAddDetail = true" :icon="['fa', 'plus']" />
+      </h6>
+      <div v-show="showAddDetail">
+        <div class="form-floating mb-3">
+          <input
+            v-model="form.keterangan"
+            type="text"
+            class="form-control"
+            placeholder="keterangan"
+          />
+          <label for="floatingInput">keterangan</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            v-model="form.jumlah"
+            type="text"
+            class="form-control"
+            placeholder="jumlah"
+          />
+          <label for="floatingInput">jumlah</label>
+        </div>
+        <input
+          @click="addDetail"
+          type="submit"
+          class="btn btn-primary btn-sm"
+          value="Add"
+        />
+      </div>
+      <div class="d-flex">
         <table class="table table-sm">
           <thead>
             <tr>
               <th scope="col">No</th>
               <th scope="col">Keterangan</th>
               <th scope="col">Jumlah</th>
+              <th scope="col">Total</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(penjualan, index) in penjualans" :key="penjualan.id">
+            <tr v-for="(detail, index) in details" :key="detail.id">
               <td>{{ index + 1 }}</td>
-              <td>keteranan</td>
-              <td>Jumlah</td>
+              <td>{{ detail.keterangan }}</td>
+              <td>{{ toCurrency(detail.jumlah) }}</td>
+              <td>{{ toCurrency(totalDetail[index]) }}</td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <div style="width:30%">
-        <div>Julah</div>
-        <div>Lain</div>
-        <div>Kemarin</div>
-        <div>Total</div>
+
+        <div style="width: 44%" class="d-inline-block p-4">
+          <div>
+            Jumlah
+            <span style="float: right">{{
+              total[this.penjualans.length - 1]
+            }}</span>
+          </div>
+          <div v-show="this.totalDetail">
+            Lain
+            <span style="float: right">{{
+              totalDetail[this.details.length - 1] -
+              total[this.penjualans.length - 1]
+            }}</span>
+          </div>
+          <div>Kemarin</div>
+          <div>Total</div>
+          <div>Jadi</div>
+        </div>
       </div>
     </div>
   </big-modal>
 </template>
 
 <script>
+import Form from "vform";
 import BigModal from "~/components/tenongan/BigModal";
 
 export default {
@@ -109,14 +154,19 @@ export default {
   data() {
     return {
       showModal: false,
+      showAddDetail: false,
+      form: new Form(),
     };
   },
   computed: {
     penjualans: function () {
-      let penjualan = this.$store.getters["transaksi/transaksi"].penjualan
-      // console.log(penjualan.sort())
-      penjualan.sort((a, b) => a.produk.localeCompare(b.produk))
+      let penjualan = this.$store.getters["transaksi/transaksi"].penjualan;
+      penjualan.sort((a, b) => a.produk.localeCompare(b.produk));
       return penjualan;
+    },
+    details: function () {
+      let detail = this.$store.getters["transaksi/transaksi"].detail;
+      return detail;
     },
     total: function () {
       if (this.transaksi) {
@@ -141,12 +191,38 @@ export default {
         return totals;
       }
     },
+    totalDetail: function () {
+      if (this.transaksi && this.total) {
+        let totalDetails = [];
+        let total = this.total[this.penjualans.length - 1];
+        let detailsLength = this.details.length;
+        if (detailsLength == 0) {
+          console.log(detailsLength);
+          return 0;
+        } else {
+          for (let index = 0; index < detailsLength; index++) {
+            let detail = this.details[index];
+            total = parseInt(total) + parseInt(detail.jumlah);
+            totalDetails.push(total);
+          }
+          return totalDetails;
+        }
+      }
+      return 0;
+    },
   },
   props: {
     transaksi: { type: Object, default: null },
     name: { type: String, default: null },
   },
-  methods: {},
+  methods: {
+    async addDetail() {
+      let  data  = await this.form.post("api/transaksi/" + this.transaksi.id + "/detail");
+      this.$store.dispatch('transaksi/fetchTransaksi', this.transaksi.id)
+      this.form.reset();
+      this.showAddDetail = false;
+    },
+  },
 };
 </script>
 

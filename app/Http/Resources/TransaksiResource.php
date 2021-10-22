@@ -24,6 +24,7 @@ class TransaksiResource extends JsonResource
             'jumlah' => Tenongan::toCurrency($this->jumlah),
             'status' => $this->status,
             'penjualan' => PenjualanResource::collection($this->whenLoaded('penjualan')),
+            'detail' => DetailTransaksiResource::collection($this->whenLoaded('detail')),
             'keterangan' => $this->keterangan,
         ];
     }
