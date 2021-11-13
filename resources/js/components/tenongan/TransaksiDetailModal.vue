@@ -123,19 +123,28 @@
           <div>
             Jumlah
             <span style="float: right">{{
-              total[this.penjualans.length - 1]
+              toCurrency(total[this.penjualans.length - 1])
             }}</span>
           </div>
           <div v-show="this.totalDetail">
             Lain
             <span style="float: right">{{
-              totalDetail[this.details.length - 1] -
-              total[this.penjualans.length - 1]
+              toCurrency(
+                (totalDetail[this.totalDetail.length - 1] -
+                  total[this.total.length - 1])
+              )
             }}</span>
           </div>
           <div>Kemarin</div>
-          <div>Total</div>
-          <div>Jadi</div>
+          <div>
+            Kas<span style="float: right">{{ toCurrency(kas.jumlah) }}</span>
+          </div>
+          <div>Bulat</div>
+          <div>
+            Total<span style="float: right">{{
+              toCurrency(totalTransaksi)
+            }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -168,6 +177,17 @@ export default {
       let detail = this.$store.getters["transaksi/transaksi"].detail;
       return detail;
     },
+    kas: function () {
+      let kasHarian = this.$store.getters["transaksi/transaksi"].kasHarian;
+      return kasHarian;
+    },
+    totalTransaksi: function () {
+      console.log(this.totalDetail)
+      return (
+        parseInt(this.totalDetail[this.totalDetail.length - 1]) +
+        parseInt(this.kas.jumlah)
+      );
+    },
     total: function () {
       if (this.transaksi) {
         let totals = [];
@@ -197,8 +217,7 @@ export default {
         let total = this.total[this.penjualans.length - 1];
         let detailsLength = this.details.length;
         if (detailsLength == 0) {
-          console.log(detailsLength);
-          return 0;
+          totalDetails.push(total);;
         } else {
           for (let index = 0; index < detailsLength; index++) {
             let detail = this.details[index];
@@ -208,7 +227,7 @@ export default {
           return totalDetails;
         }
       }
-      return 0;
+      return [this.total[this.penjualans.length - 1]];
     },
   },
   props: {
@@ -217,8 +236,10 @@ export default {
   },
   methods: {
     async addDetail() {
-      let  data  = await this.form.post("api/transaksi/" + this.transaksi.id + "/detail");
-      this.$store.dispatch('transaksi/fetchTransaksi', this.transaksi.id)
+      let data = await this.form.post(
+        "api/transaksi/" + this.transaksi.id + "/detail"
+      );
+      this.$store.dispatch("transaksi/fetchTransaksi", this.transaksi.id);
       this.form.reset();
       this.showAddDetail = false;
     },

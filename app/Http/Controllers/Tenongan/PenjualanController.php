@@ -104,7 +104,8 @@ class PenjualanController extends Controller
     public function show2(Transaksi $transaksi)
     {
         //
-        return new TransaksiResource($transaksi->load(['penjualan.produk','detail']));
+        // dd($transaksi->kasHarian);
+        return new TransaksiResource($transaksi->load(['penjualan.produk','detail','kasHarian']));
     }
     /**
      * Display the specified resource.

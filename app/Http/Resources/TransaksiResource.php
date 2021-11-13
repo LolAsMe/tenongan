@@ -25,6 +25,7 @@ class TransaksiResource extends JsonResource
             'status' => $this->status,
             'penjualan' => PenjualanResource::collection($this->whenLoaded('penjualan')),
             'detail' => DetailTransaksiResource::collection($this->whenLoaded('detail')),
+            'kasHarian' => new KasHarianResource($this->whenLoaded('kasHarian')),
             'keterangan' => $this->keterangan,
         ];
     }

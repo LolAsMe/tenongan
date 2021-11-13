@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\Tenongan\RutinitasController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\SpreadsheetController;
@@ -96,6 +97,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('transaksi/penjualan/transact', [PenjualanController::class, 'transact'])->name('penjualan.transact');
     Route::post('transaksi/penjualan/transact/pay', [PenjualanController::class, 'pay'])->name('penjualan.pay');
 
+    Route::resource('rutinitas',RutinitasController::class);
 
     Route::post('excel/make', [SpreadsheetController::class, 'make']);
     Route::post('excel/read', [SpreadsheetController::class, 'read']);

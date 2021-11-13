@@ -17,7 +17,12 @@
             Import
           </button>
 
-          <upload-modal v-if="isRole('Admin')" ref="uploadModal" :url="'produk'"></upload-modal>>
+          <upload-modal
+            v-if="isRole('Admin')"
+            ref="uploadModal"
+            :url="'produk'"
+          ></upload-modal
+          >
         </div>
       </div>
     </div>

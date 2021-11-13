@@ -174,7 +174,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 
     public function getTipeAttribute()
     {
-        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\") + 2);
-        return $value;
+        // $value =  substr($this->owner_type, strpos($this->owner_type, "n\\") + 2);
+        return $this->owner_type;
     }
 }

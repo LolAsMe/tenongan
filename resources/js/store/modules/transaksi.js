@@ -37,6 +37,15 @@ export const state = {
         "updated_at": "2021-10-22T14:40:24.000000Z"
       }
     ],
+
+    "kasHarian": {
+      "id": 29,
+      "tanggal": "2021-11-13 11:45:24",
+      "tipe": null,
+      "jumlah": "1000.00",
+      "status": "Pending",
+      "keterangan": null
+    },
     "keterangan": null
   }
 

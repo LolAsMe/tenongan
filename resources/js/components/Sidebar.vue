@@ -121,6 +121,17 @@
         </li>
         <li>
           <router-link
+            :to="{ name: 'rutinitas' }"
+            v-role="'Admin'"
+            href="#"
+            class="nav-link px-0 align-middle"
+          >
+            <i class="fs-4 bi-people"></i>
+            <span class="ms-1 d-none d-sm-inline">Rutinitas</span>
+          </router-link>
+        </li>
+        <li>
+          <router-link
             :to="{ name: 'user' }"
             v-role="'Admin'"
             href="#"

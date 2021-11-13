@@ -99,12 +99,16 @@ class Produsen extends Model
     // {
     //     return $this->hasManyThrough(KasHarian::class, Produk::class);
     // }
-    public function kasHarian()
+    // public function kasHarian()
+    // {
+    //     return $this->hasManyThrough(KasHarian::class, Produk::class, 'produsen_id', 'payer_id', 'id', 'id')
+    //         ->where(
+    //             'payer_type',
+    //             'App\Models\Tenongan\Produk'
+    //         );
+    // }
+    public function rutinitas()
     {
-        return $this->hasManyThrough(KasHarian::class, Produk::class, 'produsen_id', 'payer_id', 'id', 'id')
-            ->where(
-                'payer_type',
-                'App\Models\Tenongan\Produk'
-            );
+        return $this->morphMany(Rutinitas::class,'owner');
     }
 }

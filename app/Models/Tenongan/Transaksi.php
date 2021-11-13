@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Models\Tenongan;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 /**
  * App\Models\Tenongan\Transaksi
  *
@@ -71,11 +75,16 @@ class Transaksi extends Model
     }
     public function getTipeAttribute()
     {
-        $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
-        return $value;
+        // $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
+        return $this->owner_type;
     }
     public function detail()
     {
         return $this->hasMany(DetailTransaksi::class);
+    }
+
+    public function kasHarian()
+    {
+        return $this->HasOne(KasHarian::class);
     }
 }

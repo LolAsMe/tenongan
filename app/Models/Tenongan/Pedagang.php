@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Tenongan\Pedagang
- * 
+ *
  * @@ -41,7 +40,7 @@
  *
  * @property int $id
@@ -59,10 +59,10 @@ class Pedagang extends Model
     {
         return $this->morphMany(LogKas::class,'payer');
     }
-    public function kasHarian()
-    {
-        return $this->morphMany(KasHarian::class,'payer');
-    }
+    // public function kasHarian()
+    // {
+    //     return $this->morphMany(KasHarian::class,'payer');
+    // }
     /**
      * Get the saldo associated with the Pedagang
      *
@@ -75,6 +75,10 @@ class Pedagang extends Model
     public function transaksi()
     {
         return $this->morphMany(Transaksi::class,'owner');
+    }
+    public function rutinitas()
+    {
+        return $this->morphMany(Rutinitas::class,'owner');
     }
 
     public function owner()

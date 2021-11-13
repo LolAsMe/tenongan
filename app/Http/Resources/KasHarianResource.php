@@ -21,7 +21,7 @@ class KasHarianResource extends JsonResource
             'tanggal'=>$this->tanggal,
             'tipe'=>$this->tipe,
             'payer'=>!($this->whenLoaded('payer') instanceof MissingValue) ? $this->whenLoaded('payer')->nama : new MissingValue,
-            'jumlah'=>Tenongan::toCurrency($this->jumlah),
+            'jumlah'=>$this->jumlah,
             'status'=>$this->status,
             'keterangan'=>$this->keterangan,
         ];

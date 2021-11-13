@@ -46,13 +46,8 @@ class KasHarian extends Model
     use SoftDeletes;
     protected $table = 'kas_harian';
     protected $guarded = [];
-    protected $appends = array('tipe');
-    protected $hidden = ['payer_type'];
 
-    public function payer()
-    {
-        return $this->morphTo();
-    }
+
     /**
      * Get the logKas that owns the KasHarian
      *
@@ -62,14 +57,15 @@ class KasHarian extends Model
     {
         return $this->belongsTo(LogKas::class);
     }
+
     /**
-     * Get Tipe
+     * Get the logKas that owns the KasHarian
      *
-     * @return $value
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getTipeAttribute()
+    public function transaksi(): BelongsTo
     {
-        $value =  substr($this->payer_type, strpos($this->payer_type, "n\\")+2);
-        return $value;
+        return $this->belongsTo(Transaksi::class);
     }
+
 }

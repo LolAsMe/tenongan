@@ -17,7 +17,7 @@ class SaldoSeeder extends Seeder
         //
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Pedagang',
+            'owner_type'=>'Pedagang',
             'owner_id'=>1,
             'created_at'=>now(),
             'updated_at'=>now(),
@@ -25,49 +25,49 @@ class SaldoSeeder extends Seeder
 
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Pedagang',
+            'owner_type'=>'Pedagang',
             'owner_id'=>2,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Pedagang',
+            'owner_type'=>'Pedagang',
             'owner_id'=>3,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Pedagang',
+            'owner_type'=>'Pedagang',
             'owner_id'=>4,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Produsen',
+            'owner_type'=>'Produsen',
             'owner_id'=>1,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Produsen',
+            'owner_type'=>'Produsen',
             'owner_id'=>2,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Produsen',
+            'owner_type'=>'Produsen',
             'owner_id'=>3,
             'created_at'=>now(),
             'updated_at'=>now(),
         ]);
         DB::table('saldo')->insert([
             'jumlah'=>0,
-            'owner_type'=>'App\Models\Tenongan\Produsen',
+            'owner_type'=>'Produsen',
             'owner_id'=>4,
             'created_at'=>now(),
             'updated_at'=>now(),
