@@ -182,9 +182,8 @@ export default {
       return kasHarian;
     },
     totalTransaksi: function () {
-      console.log(this.totalDetail)
       return (
-        parseInt(this.totalDetail[this.totalDetail.length - 1]) +
+        parseInt(this.totalDetail[this.totalDetail.length - 1]) -
         parseInt(this.kas.jumlah)
       );
     },

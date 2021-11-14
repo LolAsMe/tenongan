@@ -92,7 +92,7 @@ class TenonganService implements TenonganServiceContract
             $kas = $transaksi->kasHarian()->whereStatus('pending')->first();
             if (!$kas) {
                 $kas = $transaksi->kasHarian()->create(['status' => 'Pending', 'jumlah' => 1000]);
-                $transaksi->increment('jumlah', $kas->jumlah);
+                $transaksi->decrement('jumlah', $kas->jumlah);
             }
         });
     }

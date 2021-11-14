@@ -6,10 +6,10 @@
         <div class="p-2 flex-grow-1 bd-highlight"><h2>Rutinitas</h2></div>
         <div class="p-2 bd-highlight" v-role="'Admin'">
           <button class="btn btn-primary" @click="toggleAddModal">Add</button>
-          <!-- <add-rutinitas-modal
+          <add-rutinitas-modal
             :showModal="showAddModal"
             @toggle="toggleAddModal"
-          ></add-rutinitas-modal> -->
+          ></add-rutinitas-modal>
           <button
             class="btn btn-primary"
             @click="$refs.uploadModal.$data.showModal = true"
@@ -88,7 +88,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Modal from "~/components/Modal";
-// import AddRutinitasModal from "~/components/tenongan/AddRutinitasModal";
+import AddRutinitasModal from "~/components/tenongan/AddRutinitasModal";
 // import LihatRutinitasModal from "~/components/tenongan/LihatRutinitasModal";
 // import EditRutinitasModal from "~/components/tenongan/EditRutinitasModal";
 import UploadModal from "~/components/tenongan/UploadModal";
@@ -102,7 +102,7 @@ export default {
   middleware: "auth",
   components: {
     Modal,
-    // AddRutinitasModal,
+    AddRutinitasModal,
     // LihatRutinitasModal,
     // EditRutinitasModal,
     VTable,
@@ -115,13 +115,13 @@ export default {
     }),
     items: function () {
       if (!this.loading && this.rutinitass) {
-        return this.rutinitass.map(({ id, nama, harga_jual, harga_beli }) => {
-          return { id, nama, harga_jual, harga_beli };
+        return this.rutinitass.map(({ id, keterangan, jumlah, frekuensi, sender }) => {
+          return { id, keterangan, jumlah, frekuensi, sender };
         });
       }
     },
     itemsTitle: function () {
-      return ["ID", "Nama", "harga_jual", "harga_jual"];
+      return ["ID", "Keterangan", "Jumlah", "Frekuensi","Sender"];
     },
   },
   data() {

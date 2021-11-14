@@ -77,7 +77,7 @@ class Saldo extends Model
     public function getTipeAttribute()
     {
         $value =  substr($this->owner_type, strpos($this->owner_type, "n\\")+2);
-        return $value;
+        return $this->owner_type;
     }
 
     /**
