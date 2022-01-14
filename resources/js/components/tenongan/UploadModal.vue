@@ -51,8 +51,8 @@ export default {
       file: "",
     };
   },
-  props:{
-    url:{type:String, default:''}
+  props: {
+    url: { type: String, default: "" },
   },
   methods: {
     async upload() {
@@ -60,7 +60,7 @@ export default {
       formData.append("file", this.file);
 
       axios
-        .post("/api/import/"+this.url, formData, {
+        .post("/api/import/" + this.url, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -71,7 +71,7 @@ export default {
         .catch(function () {
           console.log("FAILURE!!");
         });
-this.showModal=false
+      this.showModal = false;
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];

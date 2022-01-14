@@ -87,4 +87,23 @@ class Transaksi extends Model
     {
         return $this->HasOne(KasHarian::class);
     }
+
+    public function validateAttribute(array $attribute)
+    {
+        // $allowed  = ['keterangan', 'jumlah'];
+        // $newAttribute = array_filter(
+        //     $attribute,
+        //     fn ($key) => in_array($key, $allowed),
+        //     ARRAY_FILTER_USE_KEY
+        // );
+        $newAttribute['keterangan'] = $attribute['keterangan'] ?? "transaksi";
+        return $newAttribute;
+    }
+
+    public function tambah($jumlah, array $attribute)
+    {
+        $validatedAttribute = $this->validateAttribute($attribute);
+        $this->increment('jumlah', $jumlah);
+        $this->detail()->create($validatedAttribute + ['jumlah'=>$jumlah]);
+    }
 }

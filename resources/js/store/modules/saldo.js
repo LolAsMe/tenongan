@@ -72,7 +72,6 @@ export const mutations = {
 export const actions = {
   async fetchSaldos({ commit }){
     const { data } = await axios.get('/api/saldo')
-    console.log(data)
     commit('setSaldos',data.data)
   },
   async fetchSaldo({ commit }, id){

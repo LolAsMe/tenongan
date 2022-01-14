@@ -15,6 +15,7 @@ class CreateRutinitasTable extends Migration
     {
         Schema::create('rutinitas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('kode')->default(0);
             $table->decimal('jumlah')->default(0);
             $table->string('keterangan')->nullable();
             $table->integer('frekuensi')->default(0);

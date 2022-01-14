@@ -120,6 +120,7 @@ export default {
     async transact() {
       const { data } = await axios.post("api/transaksi/penjualan/transact");
       this.$store.dispatch("penjualan/fetchPenjualan");
+      console.log(data)
     },
     async pay() {
       const { data } = await axios.post("api/transaksi/penjualan/transact/pay");

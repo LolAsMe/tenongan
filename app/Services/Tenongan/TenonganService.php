@@ -6,9 +6,8 @@ use App\Contracts\Tenongan\TenonganService as TenonganServiceContract;
 use App\Traits\Tenongan\KasServiceTrait;
 
 use App\Models\Tenongan\Kas;
-use App\Models\Tenongan\KasHarian;
 use App\Models\tenongan\Penjualan;
-use App\Models\Tenongan\Saldo;
+use App\Models\Tenongan\TempFile;
 use App\Models\Tenongan\Transaksi;
 use App\Traits\Tenongan\PedagangServiceTrait;
 use App\Traits\Tenongan\PenjualanServiceTrait;
@@ -24,10 +23,12 @@ class TenonganService implements TenonganServiceContract
     use ProdusenServiceTrait;
     use PenjualanServiceTrait;
 
-    public $transaksi;
+    public $rutinitas;
+    public $transaksis;
 
-    public function __construct()
+    public function __construct(Rutinitas $rutinitas)
     {
+        $this->rutinitas = $rutinitas;
         $this->kas = new Kas();
         $this->transaksis = new Collection();
     }
@@ -88,13 +89,27 @@ class TenonganService implements TenonganServiceContract
                 $this->transaksis->push($transaksi);
             }
         });
+
         $this->transaksis->each(function ($transaksi) {
             $kas = $transaksi->kasHarian()->whereStatus('pending')->first();
             if (!$kas) {
                 $kas = $transaksi->kasHarian()->create(['status' => 'Pending', 'jumlah' => 1000]);
                 $transaksi->decrement('jumlah', $kas->jumlah);
             }
+            // if ($this->checkRutinitas($transaksi->owner)) {
+            //     foreach ($transaksi->owner->rutinitas as $key => $oneRutinitas) {
+            //         $attribute = $oneRutinitas->attributesToArray();
+            //         $transaksi->tambah($attribute['jumlah'], $attribute);
+            //     }
+            // }
+            // debugbar()->info($this->checkRutinitas($transaksi->owner));
         });
+        return "berhasil";
+    }
+
+    public function checkRutinitas($owner): bool
+    {
+        return !$owner->rutinitas->isEmpty();
     }
 
     public function pay()
@@ -105,6 +120,14 @@ class TenonganService implements TenonganServiceContract
                 $transaksi->owner->saldo->increase($transaksi->jumlah, compact('keterangan'));
                 $transaksi->status = 'Ok';
                 $transaksi->save();
+
+                if ($this->checkRutinitas($transaksi->owner)) {
+                    foreach ($transaksi->owner->rutinitas as $key => $oneRutinitas) {
+                        $attribute = $oneRutinitas->attributesToArray();
+                        $transaksi->tambah($attribute['jumlah'], $attribute);
+                    }
+                }
+                debugbar()->info($this->checkRutinitas($transaksi->owner));
             }
         });
 
@@ -114,31 +137,18 @@ class TenonganService implements TenonganServiceContract
                 $penjualan->save();
             }
         });
-
-        // $this->setKas();
-        // $this->kas->createLog(['keterangan' => 'Penambahan dari Penjualan Harian']);
-        // KasHarian::whereStatus('Pending')->chunkById(100, function ($kasHarians) {
-        //     foreach ($kasHarians as $kasHarian) {
-        //         $this->kas->increment('jumlah', $kasHarian->jumlah);
-        //         $this->kas->getLastLog()->increment('jumlah', $kasHarian->jumlah);
-        //         $this->kas->getLastLog()->save();
-        //         $this->kas->getLastLog()->kasHarian()->save($kasHarian);
-
-        //         $saldo = new Saldo();
-        //         if ($kasHarian->tipe == 'Pedagang') {
-        //             $saldo = $kasHarian->payer->saldo;
-        //         } else {
-        //             $saldo = $kasHarian->payer->produsen->saldo;
-        //         }
-        //         $saldo->decrease($kasHarian->jumlah, ['keterangan' => 'Kurang dari potongan harian']);
-
-        //         $kasHarian->status = 'Ok';
-        //         $kasHarian->save();
-        //     }
-        // });
     }
     public static function toCurrency($value)
     {
         return "Rp " . number_format($value, 2, ',', '.');
+    }
+
+    public static function getTempFile()
+    {
+        $penjualan = TempFile::all();
+        $penjualan->each(function($penjualan){
+            $penjualan['data'] = json_decode($penjualan['data'],true);
+        });
+        return $penjualan;
     }
 }

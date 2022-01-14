@@ -67,16 +67,16 @@ class SpreadsheetService
         Storage::disk('local')->put("public/" . $name, $file);
     }
 
-    public function setSpreadsheet($name)
+    public function setSpreadsheet($path)
     {
-        $inputFileName = 'storage/' . $name;
-        $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
+        $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($path);
         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
-        $spreadsheet = $reader->load($inputFileName);
+        $spreadsheet = $reader->load($path);
         $this->spreadsheet = $spreadsheet;
 
         return $this;
     }
+
 
     public function toArray(?Spreadsheet $spreadsheet = null)
     {

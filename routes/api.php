@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('import/produsen', [ImportController::class, 'produsen'])->name('import.produsen');
     Route::post('import/pedagang', [ImportController::class, 'pedagang'])->name('import.pedagang');
     Route::post('import/penjualan', [ImportController::class, 'penjualan'])->name('import.penjualan');
+    Route::post('import/dashboard/penjualan', [ImportController::class, 'penjualan2'])->name('import.penjualan');
     Route::post('import/produk', [ImportController::class, 'produk'])->name('import.produk');
 
     Route::get('produk', [ProdukController::class, 'index'])->name('produk');
@@ -90,6 +91,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('kas/dec', [KasController::class, 'decrease'])->name('kas.decrease');
 
     Route::get('penjualan/', [PenjualanController::class, 'index2'])->name('transaksi');
+    Route::get('penjualan/temp', [PenjualanController::class, 'index3'])->name('transaksi');
+    Route::post('penjualan/temp/conclude', [PenjualanController::class, 'tempConclude'])->name('transaksi');
     Route::get('transaksi', [PenjualanController::class, 'index'])->name('transaksi');
     Route::post('transaksi/{transaksi}/detail', [PenjualanController::class, 'store2'])->name('transaksi.detail.create');
     Route::get('transaksi/penjualan/{transaksi}', [PenjualanController::class, 'show2'])->name('penjualan');

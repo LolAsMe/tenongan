@@ -78,7 +78,7 @@ class Pedagang extends Model
     }
     public function rutinitas()
     {
-        return $this->morphMany(Rutinitas::class,'owner');
+        return $this->morphMany(Rutinitas::class,'sender');
     }
 
     public function owner()

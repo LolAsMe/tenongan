@@ -1,5 +1,8 @@
 <?php
 namespace App\Contracts\Tenongan;
+
+use App\Models\Tenongan\TempFile;
+
 /**
  * TenonganService
  */
@@ -29,4 +32,6 @@ interface TenonganService
     public function createProdusen(array $attribute);
 
     public function createPenjualans(array $attribute);
+
+    public static function getTempFile();
 }

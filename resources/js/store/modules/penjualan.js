@@ -7,12 +7,13 @@ export const state = {
   penjualans: [
   ],
   dataPenjualans: [
-  ]
+  ], tempPenjualans: ['test']
 
 }
 
 // getters
 export const getters = {
+  tempPenjualans: state => state.tempPenjualans,
   penjualans: state => state.penjualans,
   dataPenjualans: state => state.dataPenjualans,
   check: state => state.id !== null
@@ -20,12 +21,13 @@ export const getters = {
 
 // mutations
 export const mutations = {
+  setTempPenjualans: (state, tempPenjualans) => (state.tempPenjualans = tempPenjualans),
   setPenjualans: (state, penjualans) => (state.penjualans = penjualans),
   addDataPenjualan: (state, penjualan) => state.dataPenjualans.push(penjualan),
-  resetDataPenjualan: (state) => state.dataPenjualans=[],
+  resetDataPenjualan: (state) => state.dataPenjualans = [],
   addPenjualan: (state, penjualan) => state.penjualans.push(penjualan),
-  editPenjualan(state, nPenjualan){
-    const oldPenjualan = state.penjualans.find( penjualan => penjualan.id === nPenjualan.id );
+  editPenjualan(state, nPenjualan) {
+    const oldPenjualan = state.penjualans.find(penjualan => penjualan.id === nPenjualan.id);
     if (oldPenjualan) {
       // not creating a new object but modifying old object here
       Object.assign(oldPenjualan, nPenjualan)
@@ -36,22 +38,26 @@ export const mutations = {
 
 // actions
 export const actions = {
-  async fetchPenjualan({ commit }){
+  async fetchPenjualan({ commit }) {
     let id = store.getters['auth/user'].owner_id
     let role = store.getters['auth/user'].tipe
     let data = []
-    if(role == 'Admin'){
-      data =  (await axios.get('/api/penjualan')).data
+    if (role == 'Admin') {
+      data = (await axios.get('/api/penjualan')).data
     }
-    if(role == 'Produsen'){
-      data =  (await axios.get('/api/produsen/penjualan/'+id)).data
+    if (role == 'Produsen') {
+      data = (await axios.get('/api/produsen/penjualan/' + id)).data
     }
-    if(role == 'Pedagang'){
-      data =  (await axios.get('/api/pedagang/penjualan/'+id)).data
+    if (role == 'Pedagang') {
+      data = (await axios.get('/api/pedagang/penjualan/' + id)).data
     }
-    commit('setPenjualans',data.data)
+    commit('setPenjualans', data.data)
   },
-  async titip({ commit, state }){
+  async fetchPenjualanTemp({ commit, state }) {
+      const {data} = (await axios.get('/api/penjualan/temp'))
+      commit('setTempPenjualans', data)
+  },
+  async titip({ commit, state }) {
     const { data } = await axios.post('/api/transaksi/penjualan/titip', state.dataPenjualans)
   }
 }

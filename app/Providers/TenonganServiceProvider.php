@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Contracts\Tenongan\TenonganService as TenonganServiceContract;
+use App\Services\SpreadsheetService;
+use App\Services\Tenongan\FileService;
+use App\Services\Tenongan\Rutinitas;
+use App\Services\Tenongan\TempService;
 use App\Services\Tenongan\TenonganService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -16,8 +20,21 @@ class TenonganServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-        $this->app->bind(TenonganServiceContract::class, TenonganService::class);
+
+        $this->app->bind(TenonganServiceContract::class, function($app){
+            return new TenonganService(new Rutinitas());
+        });
+        $this->app->bind(FileService::class, function($app){
+            return new FileService();
+        });
+
+        $this->app->bind(SpreadsheetService::class, function($app){
+            return new SpreadsheetService();
+        });
+        $this->app->bind(TempService::class, function($app){
+            return new TempService(new SpreadsheetService());
+        });
+
     }
 
     /**

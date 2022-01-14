@@ -9,6 +9,7 @@ use App\Models\Tenongan\Produk;
 use App\Models\Tenongan\Transaksi;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\tenongan\Penjualan
@@ -83,5 +84,27 @@ class Penjualan extends Model
     public function transaksi(): BelongsToMany
     {
         return $this->belongsToMany(Penjualan::class);
+    }
+
+    public static function createPenjualans($dataPenjualan)
+    {
+        $produkIds = array_column($dataPenjualan,'produk_id');
+        $produk = Produk::findMany($produkIds);
+        $penjualans = new Collection;
+        try {
+            foreach ($dataPenjualan as $key => $data) {
+                $data['harga_beli'] = $produk->find($data['produk_id'])->harga_beli;
+                $data['harga_jual'] = $produk->find($data['produk_id'])->harga_jual;
+                $penjualan = Penjualan::create($data);
+                $penjualans->push($penjualan);
+            }
+        } catch (\Throwable $th) {
+
+            $penjualans->each(function($penjualan){
+                $penjualan->forceDelete();
+            });
+            throw $th;
+        }
+        return $penjualans;
     }
 }
