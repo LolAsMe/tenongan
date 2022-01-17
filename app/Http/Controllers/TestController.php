@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Tenongan\TenonganService;
 use App\Exports\PenjualanExport;
+use App\Models\Tenongan\Transaksi;
+use App\Services\Tenongan\PembulatanService;
 use Illuminate\Http\Request;
 use Excel;
 
@@ -22,6 +24,8 @@ class TestController extends Controller
     }
     public function test(Request $request)
     {
-        return Excel::download(new PenjualanExport,'coba.xlsx');
+        $pembulatan = new PembulatanService();
+        $pembulatan->HandlePembulatanTransaksi(Transaksi::find(357));
+        return 'test';
     }
 }

@@ -33,5 +33,7 @@ interface TenonganService
 
     public function createPenjualans(array $attribute);
 
+    public function resetPenjualan();
+
     public static function getTempFile();
 }

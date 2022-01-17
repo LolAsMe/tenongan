@@ -2,8 +2,13 @@
   <div class="row">
     <div class="col">
       <card :title="'Dashboard'">
-        {{ "ini halaman Dashboard" }}
-        <button class="btn" v-on:click="finish">Finish</button>
+        <div>
+          {{ "ini halaman Dashboard" }}
+        </div>
+        <button class="btn btn-primary" v-on:click="finish">Set</button>
+        <button class="btn btn-primary" @click="transact">Transact</button>
+        <button class="btn btn-primary" @click="pay">Pay</button>
+        <button class="btn btn-primary" @click="reset">Reset</button>
         <form
           id="importForm"
           @submit.prevent="upload"
@@ -28,8 +33,17 @@
           form="importForm"
           value="Import"
         />
+        <button class="btn btn-primary" v-on:click="tempClear()">Clear</button>
         <div class="mb-2" v-for="(value, key) in tempPenjualans" :key="key">
-          {{ value }}
+          <div>
+            ID : {{ value.id }}, FileName:
+            {{ value.filename }}
+          </div>
+          <div>Data : {{ value.data }}</div>
+          <div>Path: {{ value.path }}</div>
+          <button class="btn btn-primary" v-on:click="tempDelete(value.id)">
+            delete
+          </button>
         </div>
       </card>
     </div>
@@ -65,9 +79,18 @@ export default {
   methods: {
     async finish() {
       await axios.post("/api/penjualan/temp/conclude");
+      this.$store.dispatch("penjualan/fetchPenjualanTemp");
+    },
+    async tempDelete(id) {
+      await axios.post("/api/penjualan/temp/delete/" + id);
+      this.$store.dispatch("penjualan/fetchPenjualanTemp");
+    },
+    async tempClear() {
+      await axios.post("/api/penjualan/temp/clear");
+      this.$store.dispatch("penjualan/fetchPenjualanTemp");
     },
     async upload() {
-      axios
+      await axios
         .post("/api/import/dashboard/penjualan", this.formData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -92,6 +115,19 @@ export default {
         this.files.push(this.$refs.file.files[index]);
         console.log(this.formData);
       }
+    },
+    async transact() {
+      const { data } = await axios.post("api/transaksi/penjualan/transact");
+      this.$store.dispatch("penjualan/fetchPenjualan");
+      console.log(data)
+    },
+    async pay() {
+      const { data } = await axios.post("api/transaksi/penjualan/transact/pay");
+      this.$store.dispatch("penjualan/fetchPenjualan");
+    },
+    async reset() {
+      const { data } = await axios.post("api/penjualan/reset");
+      this.$store.dispatch("penjualan/fetchPenjualan");
     },
   },
   // directives: {

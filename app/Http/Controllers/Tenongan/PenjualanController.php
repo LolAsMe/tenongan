@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
 use App\Http\Resources\PenjualanResource;
 use App\Http\Resources\TransaksiResource;
-use App\Models\Tenongan\TempPenjualan;
+use App\Models\Tenongan\TempFile;
 use App\Models\Tenongan\Transaksi;
 use App\Services\Tenongan\TempService;
 use DebugBar\DebugBar;
@@ -167,5 +167,29 @@ class PenjualanController extends Controller
     public function destroy(penjualan $penjualan)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\tenongan\penjualan  $penjualan
+     * @return \Illuminate\Http\Response
+     */
+    public function tempDelete(TempFile $tempFile)
+    {
+        //
+
+        debugbar()->info($tempFile->delete());
+        return 'berhasil';
+    }
+    public function tempClear()
+    {
+        //
+        TempFile::truncate();
+        return 'berhasil';
+    }
+    public function reset()
+    {
+        $this->tenongan->resetPenjualan();
     }
 }

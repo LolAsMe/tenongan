@@ -23,6 +23,8 @@ class TransaksiResource extends JsonResource
             'owner' => !($this->whenLoaded('owner') instanceof MissingValue) ? $this->whenLoaded('owner')->nama : new MissingValue,
             'jumlah' => Tenongan::toCurrency($this->jumlah),
             'status' => $this->status,
+            'kemarin' => $this->kemarin,
+            'pembulatan' => $this->pembulatan,
             'penjualan' => PenjualanResource::collection($this->whenLoaded('penjualan')),
             'detail' => DetailTransaksiResource::collection($this->whenLoaded('detail')),
             'kasHarian' => new KasHarianResource($this->whenLoaded('kasHarian')),

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+
 /**
  * App\Models\Tenongan\Kas
  *
@@ -46,7 +48,6 @@ class Kas extends Model
     use HasLog;
     protected $table = 'kas';
     protected $guarded = [];
-    protected $lastLog;
 
     /**
      * Get all of the logKas for the Kas
@@ -55,7 +56,7 @@ class Kas extends Model
      */
     public function log(): HasMany
     {
-        return $this->hasMany(LogKas::class);
+        return $this->hasMany(DetailKas::class);
     }
 
     /**
@@ -85,5 +86,19 @@ class Kas extends Model
         $this->decrement('jumlah',$jumlah);
         $this->lastLog = $this->log()->create($attributes);
         return $this;
+    }
+    public function detail()
+    {
+        return $this->hasMany(DetailKas::class);
+    }
+
+    public function addDetail($datas)
+    {
+        // dd($datas);
+        foreach ($datas as $key => $data) {
+            $this->jumlah += $data['jumlah'];
+            $this->detail()->create($data);
+        }
+        $this->save();
     }
 }

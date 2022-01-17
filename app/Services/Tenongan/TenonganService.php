@@ -25,11 +25,13 @@ class TenonganService implements TenonganServiceContract
 
     public $rutinitas;
     public $transaksis;
+    public $pembulatanService;
 
     public function __construct(Rutinitas $rutinitas)
     {
         $this->rutinitas = $rutinitas;
         $this->kas = new Kas();
+        $this->pembulatanService = new PembulatanService();
         $this->transaksis = new Collection();
     }
 
@@ -127,7 +129,7 @@ class TenonganService implements TenonganServiceContract
                         $transaksi->tambah($attribute['jumlah'], $attribute);
                     }
                 }
-                debugbar()->info($this->checkRutinitas($transaksi->owner));
+                $this->pembulatanService->handlePembulatanTransaksi($transaksi);
             }
         });
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Tenongan;
 
 use App\Http\Controllers\Controller;
@@ -15,7 +16,8 @@ class KasController extends Controller
 
     protected $tenonganService;
 
-    public function __construct(TenonganService $tenonganService) {
+    public function __construct(TenonganService $tenonganService)
+    {
         $this->tenonganService = $tenonganService;
     }
 
@@ -27,8 +29,10 @@ class KasController extends Controller
     public function index()
     {
         //
-        $kas = Kas::whereId(1)->with('log')->first();
-        return new KasResource($kas);
+        $kas = Kas::all();
+
+        dd($kas);
+        // return new KasResource($kas);
     }
 
     public function harian()
@@ -45,9 +49,20 @@ class KasController extends Controller
     public function store(Request $request)
     {
         //
-        $kas = $request->all();
-        $kas = Kas::create($kas);
-        return response()->json($kas);
+        // $kas = $request->all();
+        // $kas = Kas::create($kas);
+        // return response()->json($kas);
+        $datas = [
+            ['transaksi_id' => '357', 'jumlah' => 10000],
+            ['transaksi_id' => '357', 'jumlah' => 20000],
+            ['transaksi_id' => '357', 'jumlah' => 30000],
+            ['transaksi_id' => '357', 'jumlah' => 15000],
+            ['transaksi_id' => '357', 'jumlah' => 10000],
+            ['transaksi_id' => '357', 'jumlah' => 40000],
+        ];
+        $kas = Kas::create();
+        // dd($datas);
+        $kas->addDetail($datas);
     }
     /**
      * Menambahkan jumlah kas(detail sudah termaasu)

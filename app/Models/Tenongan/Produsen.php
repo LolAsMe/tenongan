@@ -73,6 +73,12 @@ class Produsen extends Model
     {
         return $this->hasMany(Produk::class);
     }
+
+    public function bulatan()
+    {
+        return $this->hasOne(Pembulatan::class);
+    }
+
     public function logKas()
     {
         return $this->morphMany(LogKas::class, 'payer');

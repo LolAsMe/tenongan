@@ -18,6 +18,7 @@ use App\Http\Controllers\Tenongan\PenjualanController;
 use App\Http\Controllers\Tenongan\ProdukController;
 use App\Http\Controllers\Tenongan\ProdusenController;
 use App\Http\Controllers\Tenongan\SaldoController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', [LoginController::class, 'logout']);
 
     Route::get('user', [UserController::class, 'current']);
+
+    Route::post('test', [TestController::class, 'test']);
 
     Route::patch('settings/profile', [ProfileController::class, 'update']);
     Route::patch('settings/password', [PasswordController::class, 'update']);
@@ -86,6 +89,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
     Route::get('kas', [KasController::class, 'index'])->name('kas');
+    Route::post('kas', [KasController::class, 'store'])->name('store');
     Route::get('kas/harian', [KasController::class, 'harian'])->name('kas');
     Route::post('kas/inc', [KasController::class, 'increase'])->name('kas.increase');
     Route::post('kas/dec', [KasController::class, 'decrease'])->name('kas.decrease');
@@ -93,6 +97,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('penjualan/', [PenjualanController::class, 'index2'])->name('transaksi');
     Route::get('penjualan/temp', [PenjualanController::class, 'index3'])->name('transaksi');
     Route::post('penjualan/temp/conclude', [PenjualanController::class, 'tempConclude'])->name('transaksi');
+    Route::post('penjualan/reset', [PenjualanController::class, 'reset'])->name('reset');
+    Route::post('penjualan/temp/delete/{tempFile}', [PenjualanController::class, 'tempDelete'])->name('tempDelete');
+    Route::post('penjualan/temp/clear', [PenjualanController::class, 'tempClear'])->name('tempClear');
     Route::get('transaksi', [PenjualanController::class, 'index'])->name('transaksi');
     Route::post('transaksi/{transaksi}/detail', [PenjualanController::class, 'store2'])->name('transaksi.detail.create');
     Route::get('transaksi/penjualan/{transaksi}', [PenjualanController::class, 'show2'])->name('penjualan');

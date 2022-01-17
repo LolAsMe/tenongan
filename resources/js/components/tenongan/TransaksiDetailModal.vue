@@ -130,16 +130,22 @@
             Lain
             <span style="float: right">{{
               toCurrency(
-                (totalDetail[this.totalDetail.length - 1] -
-                  total[this.total.length - 1])
+                totalDetail[this.totalDetail.length - 1] -
+                  total[this.total.length - 1]
               )
             }}</span>
           </div>
-          <div>Kemarin</div>
+          <div>
+            Kemarin<span style="float: right">{{
+              toCurrency(-transaksi.kemarin)
+            }}</span>
+          </div>
           <div>
             Kas<span style="float: right">{{ toCurrency(kas.jumlah) }}</span>
           </div>
-          <div>Bulat</div>
+          <div>Bulat<span style="float: right">{{
+              toCurrency(transaksi.pembulatan)
+            }}</span></div>
           <div>
             Total<span style="float: right">{{
               toCurrency(totalTransaksi)
@@ -184,7 +190,7 @@ export default {
     totalTransaksi: function () {
       return (
         parseInt(this.totalDetail[this.totalDetail.length - 1]) -
-        parseInt(this.kas.jumlah)
+        parseInt(this.kas.jumlah) - parseInt(this.transaksi.kemarin) +parseInt(this.transaksi.pembulatan)
       );
     },
     total: function () {
@@ -216,7 +222,7 @@ export default {
         let total = this.total[this.penjualans.length - 1];
         let detailsLength = this.details.length;
         if (detailsLength == 0) {
-          totalDetails.push(total);;
+          totalDetails.push(total);
         } else {
           for (let index = 0; index < detailsLength; index++) {
             let detail = this.details[index];

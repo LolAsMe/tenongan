@@ -4,6 +4,7 @@ namespace App\Traits\Tenongan;
 
 use App\Models\Tenongan\Penjualan;
 use App\Models\Tenongan\Produk;
+use App\Models\Tenongan\Transaksi;
 use Illuminate\Support\Collection;
 
 trait PenjualanServiceTrait
@@ -43,4 +44,11 @@ trait PenjualanServiceTrait
         }
         return $this->penjualans;
 	}
+
+    public function resetPenjualan()
+    {
+        Penjualan::whereStatus('draft')->orWhere('status','pending')->delete();
+        Transaksi::whereStatus('draft')->orWhere('status','pending')->delete();
+        return 'berhasil';
+    }
 }
