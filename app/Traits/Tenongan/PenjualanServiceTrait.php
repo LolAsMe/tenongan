@@ -2,29 +2,31 @@
 
 namespace App\Traits\Tenongan;
 
+use App\Models\Tenongan\Kas;
 use App\Models\Tenongan\Penjualan;
 use App\Models\Tenongan\Produk;
 use App\Models\Tenongan\Transaksi;
+use DebugBar\DebugBar;
 use Illuminate\Support\Collection;
 
 trait PenjualanServiceTrait
 {
     protected Penjualan $penjualan;
-    protected array $penjualans=[];
+    protected array $penjualans = [];
 
     public function getPenjualan()
     {
         return $this->penjualan;
     }
 
-    public function createPenjualan($attribute):Penjualan
+    public function createPenjualan($attribute): Penjualan
     {
         return $this->penjualan = Penjualan::create($attribute);
     }
 
     public function createPenjualans(array $dataPenjualan)
-	{
-        $produkIds = array_column($dataPenjualan,'produk_id');
+    {
+        $produkIds = array_column($dataPenjualan, 'produk_id');
         $produk = Produk::findMany($produkIds);
         $penjualans = new Collection;
         try {
@@ -37,18 +39,24 @@ trait PenjualanServiceTrait
             }
         } catch (\Throwable $th) {
 
-            $penjualans->each(function($penjualan){
+            $penjualans->each(function ($penjualan) {
                 $penjualan->forceDelete();
             });
             throw $th;
         }
         return $this->penjualans;
-	}
+    }
 
     public function resetPenjualan()
     {
-        Penjualan::whereStatus('draft')->orWhere('status','pending')->delete();
-        Transaksi::whereStatus('draft')->orWhere('status','pending')->delete();
+        Penjualan::whereStatus('draft')->orWhere('status', 'pending')->delete();
+        Transaksi::whereStatus('draft')->orWhere('status', 'pending')->delete();
+        if($kas = Kas::whereStatus('Draft')->orWhere('status', 'Pending')->first()){
+            $kas->detail()->delete();
+            $kas->delete();
+        }
+        // $kas = Kas::all();
+        // debugbar()->info($kas);
         return 'berhasil';
     }
 }

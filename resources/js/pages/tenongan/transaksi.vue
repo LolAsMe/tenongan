@@ -11,6 +11,7 @@
         <table class="table">
           <thead>
             <tr>
+              <th scope="col">No</th>
               <th scope="col">Tanggal</th>
               <th scope="col">Tipe</th>
               <th scope="col">Nama</th>
@@ -20,7 +21,8 @@
             </tr>
           </thead>
           <tbody v-if="!loading">
-            <tr v-for="transaksi in transaksis" :key="transaksi.id">
+            <tr v-for="(transaksi,index) in transaksis" :key="transaksi.id">
+              <td>{{ index+1 }}</td>
               <td>{{ transaksi.tanggal }}</td>
               <td>{{ transaksi.tipe }}</td>
               <td>{{ transaksi.owner }}</td>

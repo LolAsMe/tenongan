@@ -83,9 +83,9 @@ class Transaksi extends Model
         return $this->hasMany(DetailTransaksi::class);
     }
 
-    public function kasHarian()
+    public function kas()
     {
-        return $this->HasOne(KasHarian::class);
+        return $this->HasOne(DetailKas::class);
     }
 
     public function validateAttribute(array $attribute)

@@ -141,9 +141,9 @@
             }}</span>
           </div>
           <div>
-            Kas<span style="float: right">{{ toCurrency(kas.jumlah) }}</span>
+            Kas<span style="float: right">{{ toCurrency(-kas) }}</span>
           </div>
-          <div>Bulat<span style="float: right">{{
+          <div class="border-bottom">Bulat<span style="float: right">{{
               toCurrency(transaksi.pembulatan)
             }}</span></div>
           <div>
@@ -184,13 +184,14 @@ export default {
       return detail;
     },
     kas: function () {
-      let kasHarian = this.$store.getters["transaksi/transaksi"].kasHarian;
-      return kasHarian;
+      let kas = this.$store.getters["transaksi/transaksi"].kas;
+      return kas;
     },
     totalTransaksi: function () {
       return (
-        parseInt(this.totalDetail[this.totalDetail.length - 1]) -
-        parseInt(this.kas.jumlah) - parseInt(this.transaksi.kemarin) +parseInt(this.transaksi.pembulatan)
+        parseInt(this.totalDetail[this.totalDetail.length - 1])
+        - parseInt(this.kas)
+        - parseInt(this.transaksi.kemarin) +parseInt(this.transaksi.pembulatan)
       );
     },
     total: function () {

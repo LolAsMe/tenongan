@@ -26,6 +26,7 @@ class TenonganService implements TenonganServiceContract
     public $rutinitas;
     public $transaksis;
     public $pembulatanService;
+    public $kasService;
 
     public function __construct(Rutinitas $rutinitas)
     {
@@ -33,6 +34,7 @@ class TenonganService implements TenonganServiceContract
         $this->kas = new Kas();
         $this->pembulatanService = new PembulatanService();
         $this->transaksis = new Collection();
+        $this->kasService = new KasService();
     }
 
     public function increaseSaldo(array $attribute)
@@ -92,21 +94,41 @@ class TenonganService implements TenonganServiceContract
             }
         });
 
-        $this->transaksis->each(function ($transaksi) {
-            $kas = $transaksi->kasHarian()->whereStatus('pending')->first();
-            if (!$kas) {
-                $kas = $transaksi->kasHarian()->create(['status' => 'Pending', 'jumlah' => 1000]);
-                $transaksi->decrement('jumlah', $kas->jumlah);
-            }
-            // if ($this->checkRutinitas($transaksi->owner)) {
-            //     foreach ($transaksi->owner->rutinitas as $key => $oneRutinitas) {
-            //         $attribute = $oneRutinitas->attributesToArray();
-            //         $transaksi->tambah($attribute['jumlah'], $attribute);
-            //     }
-            // }
-            // debugbar()->info($this->checkRutinitas($transaksi->owner));
-        });
-        return "berhasil";
+
+        $this->kasService->handleTransaksis($this->transaksis);
+
+        // $newTransaksis = $this->transaksis->unique('id');
+        // $newTransaksis->each(function ($transaksi) {
+        // $kas = Kas::firstOrCreate(
+        //     [
+        //         'status' => 'Pending'
+        //     ],
+        //     [
+        //         'jumlah' => 0,
+        //         'keterangan' => ''
+        //     ]
+        // );
+        // $detail = $kas->detail()->whereStatus('Pending')->get();
+        // debugbar()->info($transaksi->toArray());
+        // $kas->addDetail($transaksi);
+        // debugbar()->info($kas);
+        // $kas = $transaksi->kasHarian()->whereStatus('pending')->first();
+        // if (!$kas) {
+        //     $kas = $transaksi->kasHarian()->create(['status' => 'Pending', 'jumlah' => 1000]);
+        //     $transaksi->decrement('jumlah', $kas->jumlah);
+        // }
+        // if ($this->checkRutinitas($transaksi->owner)) {
+        //     foreach ($transaksi->owner->rutinitas as $key => $oneRutinitas) {
+        //         $attribute = $oneRutinitas->attributesToArray();
+        //         $transaksi->tambah($attribute['jumlah'], $attribute);
+        //     }
+        // }
+        // debugbar()->info($this->checkRutinitas($transaksi->owner));
+
+
+
+        // });
+        // return "berhasil";
     }
 
     public function checkRutinitas($owner): bool
@@ -139,6 +161,8 @@ class TenonganService implements TenonganServiceContract
                 $penjualan->save();
             }
         });
+
+        $this->kasService->finalizeData();
     }
     public static function toCurrency($value)
     {
@@ -148,8 +172,8 @@ class TenonganService implements TenonganServiceContract
     public static function getTempFile()
     {
         $penjualan = TempFile::all();
-        $penjualan->each(function($penjualan){
-            $penjualan['data'] = json_decode($penjualan['data'],true);
+        $penjualan->each(function ($penjualan) {
+            $penjualan['data'] = json_decode($penjualan['data'], true);
         });
         return $penjualan;
     }

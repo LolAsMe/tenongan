@@ -54,7 +54,7 @@ class PenjualanController extends Controller
     public function index()
     {
         //
-        $transaksi = Transaksi::with('owner:id,nama')->latest()->get();
+        $transaksi = Transaksi::with('owner:id,nama')->latest()->take(30)->get();
         return TransaksiResource::collection($transaksi);
     }
     /**
@@ -125,7 +125,7 @@ class PenjualanController extends Controller
     {
         //
         // dd($transaksi->kasHarian);
-        return new TransaksiResource($transaksi->load(['penjualan.produk', 'detail', 'kasHarian']));
+        return new TransaksiResource($transaksi->load(['penjualan.produk', 'detail', 'kas']));
     }
     /**
      * Display the specified resource.

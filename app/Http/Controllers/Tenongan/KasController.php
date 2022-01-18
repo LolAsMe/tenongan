@@ -53,8 +53,8 @@ class KasController extends Controller
         // $kas = Kas::create($kas);
         // return response()->json($kas);
         $datas = [
-            ['transaksi_id' => '357', 'jumlah' => 10000],
-            ['transaksi_id' => '357', 'jumlah' => 20000],
+            ['transaksi_id' => '357', 'jumlah' => 14000],
+            ['transaksi_id' => '357', 'jumlah' => 12000],
             ['transaksi_id' => '357', 'jumlah' => 30000],
             ['transaksi_id' => '357', 'jumlah' => 15000],
             ['transaksi_id' => '357', 'jumlah' => 10000],

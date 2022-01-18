@@ -44,10 +44,10 @@ use Illuminate\Support\Collection;
 class Kas extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     use HasLog;
     protected $table = 'kas';
     protected $guarded = [];
+
 
     /**
      * Get all of the logKas for the Kas
@@ -66,10 +66,10 @@ class Kas extends Model
      * @param array $extra
      * @return void
      */
-    public function increase(int $jumlah , array $extra = [])
+    public function increase(int $jumlah, array $extra = [])
     {
-        $attributes = array_merge(['jumlah'=>$jumlah,'tanggal'=>now()], $extra);
-        $this->increment('jumlah',$jumlah);
+        $attributes = array_merge(['jumlah' => $jumlah, 'tanggal' => now()], $extra);
+        $this->increment('jumlah', $jumlah);
         $this->lastLog = $this->log()->create($attributes);
         return $this;
     }
@@ -80,10 +80,10 @@ class Kas extends Model
      * @param array $extra
      * @return void
      */
-    public function decrease(int $jumlah , array $extra = [])
+    public function decrease(int $jumlah, array $extra = [])
     {
-        $attributes = array_merge(['jumlah'=>$jumlah,'tanggal'=>now()], $extra);
-        $this->decrement('jumlah',$jumlah);
+        $attributes = array_merge(['jumlah' => $jumlah, 'tanggal' => now()], $extra);
+        $this->decrement('jumlah', $jumlah);
         $this->lastLog = $this->log()->create($attributes);
         return $this;
     }
@@ -100,5 +100,11 @@ class Kas extends Model
             $this->detail()->create($data);
         }
         $this->save();
+    }
+    public function addTempDetail($data)
+    {
+        # code...
+        $this->jumlah += $data['jumlah'];
+        $this->detail()->create($data);
     }
 }

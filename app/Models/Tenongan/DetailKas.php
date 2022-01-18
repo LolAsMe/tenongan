@@ -50,7 +50,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class DetailKas extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     protected $table = 'detail_kas';
     protected $guarded = [];
 
@@ -62,6 +61,16 @@ class DetailKas extends Model
     public function kas(): BelongsTo
     {
         return $this->belongsTo(Kas::class);
+    }
+
+    /**
+     * Get the kas that owns the LogKas
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function transaksi(): BelongsTo
+    {
+        return $this->belongsTo(Transaksi::class);
     }
 
     public function payer()
