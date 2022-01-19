@@ -69,7 +69,7 @@
           </tr>
         </tbody>
       </table>
-      <h6>
+      <h6 v-show="transaksi.status!='Ok'">
         Detail Transaksi Lain
         <fa @click="showAddDetail = true" :icon="['fa', 'plus']" />
       </h6>
@@ -246,6 +246,7 @@ export default {
         "api/transaksi/" + this.transaksi.id + "/detail"
       );
       this.$store.dispatch("transaksi/fetchTransaksi", this.transaksi.id);
+      this.$store.dispatch("transaksi/fetchTransaksis");
       this.form.reset();
       this.showAddDetail = false;
     },

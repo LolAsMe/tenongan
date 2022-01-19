@@ -101,6 +101,9 @@ class PenjualanController extends Controller
     public function store2(Request $request, Transaksi $transaksi)
     {
         //
+        if($transaksi->status == "Ok"){
+            return 'gagal tambah';
+        }
         $transaksi->tambah($request->jumlah, $request->all());
         // $transaksi->increment('jumlah', $request->jumlah);
         // $transaksi->detail()->create($request->all());
