@@ -18,21 +18,24 @@ class PembulatanService
 
     public function HandlePembulatanTransaksi(Transaksi $transaksi)
     {
-        if($transaksi->owner_type == "Produsen"){
+        if ($transaksi->owner_type == "Produsen") {
 
             // dd($transaksi);
             // dd($transaksi->owner->bulatan);
-        $this->transaksi = $transaksi->load('owner');
+            $this->transaksi = $transaksi->load('owner');
 
-        // cek kemarin
-        $this->handleKemarin();
-        $this->handleBulatan();
-        // debugbar()->info(Pembulatan::find(0));
-        // apply database + kemarin
-        // Dibulakan
-        // create Database
-        // dd(Pembulatan::all());
-    }
+            // cek kemarin
+            $this->handleKemarin();
+            $this->handleBulatan();
+            $this->handleNegative();
+            $this->saveRecord();
+            debugbar()->info('test2');
+            // debugbar()->info(Pembulatan::find(0));
+            // apply database + kemarin
+            // Dibulakan
+            // create Database
+            // dd(Pembulatan::all());
+        }
         return 'berhasil';
     }
 
@@ -42,17 +45,15 @@ class PembulatanService
         $this->transaksi->jumlah += $pembulatan;
         $this->transaksi->pembulatan = $pembulatan;
         $this->bulatan->jumlah = $pembulatan;
-        $this->transaksi->save();
-        $this->bulatan->save();
     }
 
     public function bulat($jumlah)
     {
-        if($jumlah<1000){
+        if ($jumlah < $this->bulatan->pembulatan_ke) {
             return 0;
         }
-        if($jumlah%1000 != 0){
-            $bulatan = 1000 - $jumlah%1000;
+        if ($jumlah % $this->bulatan->pembulatan_ke != 0) {
+            $bulatan = $this->bulatan->pembulatan_ke - $jumlah % $this->bulatan->pembulatan_ke;
             $jumlah = $jumlah + $bulatan;
             return $bulatan;
         }
@@ -61,19 +62,35 @@ class PembulatanService
 
     public function getKemarin()
     {
-        $this->bulatan = $this->transaksi->owner->bulatan ?? Pembulatan::create(['produsen_id'=>$this->transaksi->owner->id]);
+        $this->bulatan = $this->transaksi->owner->bulatan ?? Pembulatan::create(['produsen_id' => $this->transaksi->owner->id]);
     }
 
     public function handleKemarin()
     {
         $this->getKemarin();
         $kemarin = 0;
-        if($this->bulatan){
+        if ($this->bulatan) {
             $kemarin = $this->bulatan->jumlah;
-        }else{
+        } else {
             $kemarin = 0;
         }
         $this->transaksi->jumlah -= $kemarin;
         $this->transaksi->kemarin = $kemarin;
+        return "ok";
+    }
+
+    public function handleNegative()
+    {
+        if ($this->transaksi->jumlah < 0) {
+            $this->transaksi->pembulatan = -$this->transaksi->jumlah;
+            $this->bulatan->jumlah = -$this->transaksi->jumlah;
+            $this->transaksi->jumlah = 0;
+        }
+    }
+
+    public function saveRecord()
+    {
+        $this->transaksi->save();
+        $this->bulatan->save();
     }
 }
