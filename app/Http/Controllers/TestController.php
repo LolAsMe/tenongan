@@ -24,8 +24,6 @@ class TestController extends Controller
     }
     public function test(Request $request)
     {
-        $pembulatan = new PembulatanService();
-        $pembulatan->HandlePembulatanTransaksi(Transaksi::find(357));
-        return 'test';
+        return view('print');
     }
 }

@@ -50,7 +50,7 @@ class PembulatanService
     public function bulat($jumlah)
     {
         if ($jumlah < $this->bulatan->pembulatan_ke) {
-            return 0;
+            return 1000 - $jumlah% $this->bulatan->pembulatan_ke;
         }
         if ($jumlah % $this->bulatan->pembulatan_ke != 0) {
             $bulatan = $this->bulatan->pembulatan_ke - $jumlah % $this->bulatan->pembulatan_ke;

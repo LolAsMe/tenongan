@@ -18821,6 +18821,10 @@ svg:not(:root).svg-inline--fa {
 }
 
 
+@media print {
+}
+
+
 .settings-card .card-body {
   padding: 0;
 }
