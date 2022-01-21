@@ -169,6 +169,11 @@ class TenonganService implements TenonganServiceContract
         return "Rp " . number_format($value, 2, ',', '.');
     }
 
+    public static function numerize($value)
+    {
+        return number_format($value, 0, ',', '.');
+    }
+
     public static function getTempFile()
     {
         $penjualan = TempFile::all();

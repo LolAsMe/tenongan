@@ -9,6 +9,7 @@ use App\Services\Tenongan\FileService;
 use App\Services\Tenongan\Rutinitas;
 use App\Services\Tenongan\TempService;
 use App\Services\Tenongan\TenonganService;
+use Blade;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class TenonganServiceProvider extends ServiceProvider
@@ -45,6 +46,10 @@ class TenonganServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Blade::directive('hello', function ($expression) {
+            // dd($expression);
+            // return TenonganService::toCurrency();
+        });
         Relation::morphMap([
             'Admin' => 'App\Models\Tenongan\Admin',
             'DetailTransaksi' => 'App\Models\Tenongan\DetailTransaksi',

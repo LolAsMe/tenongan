@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tenongan\PenjualanController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,5 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('test3', [TestController::class, 'test'])->name('qwe');
+Route::get('test3', [PenjualanController::class, 'print'])->name('qwe');
 

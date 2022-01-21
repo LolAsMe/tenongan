@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Contracts\Tenongan\TenonganService;
 use App\Http\Resources\PenjualanResource;
 use App\Http\Resources\TransaksiResource;
+use App\Http\Resources\TransaksiWebResource;
 use App\Models\Tenongan\TempFile;
 use App\Models\Tenongan\Transaksi;
 use App\Services\Tenongan\TempService;
@@ -194,5 +195,20 @@ class PenjualanController extends Controller
     public function reset()
     {
         $this->tenongan->resetPenjualan();
+    }
+
+    public function print()
+    {
+        // $transaksi = Transaksi::whereOwnerType('Produsen')->with(['penjualan.pedagang','kas'])->first();
+        $transaksis = Transaksi::whereOwnerType('Produsen')->with(['detail','owner.produk.penjualan','kas'])->get();
+        $transaksis->each(function($transaksi){
+            $bayar = $transaksi->owner->produk->sum(function ($prod) {
+                return $prod->penjualan->sum('laku') * $prod->harga_beli;
+            });
+            $lain = $transaksi->detail->sum('jumlah');
+            $transaksi->penjualan->put('lain',$lain);
+            $transaksi->penjualan->put('bayar',$bayar);
+        });
+        return view('print',compact('transaksis'));
     }
 }

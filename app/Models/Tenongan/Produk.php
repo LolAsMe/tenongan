@@ -58,6 +58,16 @@ class Produk extends Model
         return $this->belongsTo(Produsen::class);
     }
 
+    /**
+     * Get the produsen that owns the Produk
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class);
+    }
+
     public function logKas()
     {
         return $this->morphMany(LogKas::class,'payer');
