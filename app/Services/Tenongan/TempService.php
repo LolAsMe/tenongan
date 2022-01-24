@@ -2,9 +2,11 @@
 
 namespace App\Services\Tenongan;
 
+use App\Models\Tenongan\Pedagang;
 use App\Models\Tenongan\Penjualan;
 use App\Models\Tenongan\TempFile;
 use App\Services\SpreadsheetService;
+use Storage;
 
 class TempService
 {
@@ -32,14 +34,21 @@ class TempService
     {
         $this->files = $files;
         foreach ($files as $key => $file) {
-            $content = $this->spreadsheetService->setSpreadsheet($file['path'])->getData();
+            $content = $this->spreadsheetService->setSpreadsheet($file['path'].'/'.$file['name'])->getData();
             foreach ($content['data'] as $key => $value) {
                 $content['data'][$key]['laku'] = isset($content['data'][$key]['sisa']) ? $content['data'][$key]['titip'] - $content['data'][$key]['sisa'] : $content['data'][$key]['titip'];
                 $content['data'][$key]['pedagang_id'] = $content['pedagang_id'];
                 unset($content['data'][$key]['sisa']);
             }
+            $pedagang = Pedagang::find($content['pedagang_id']);
+            $newName = $pedagang->nama.'.xlsx';
+            $dir = "temp/" . now()->toDateString().'/';
+            if (Storage::exists($dir.$newName)) {
+                Storage::delete($dir.$newName);
+            }
+            Storage::move($dir.$file['name'], $dir.$newName);
             $data = [
-                'filename' => $file['name'],
+                'filename' => $newName,
                 'data' => json_encode($content['data']),
                 'path' => $file['path'],
             ];

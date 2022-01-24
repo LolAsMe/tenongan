@@ -18,7 +18,7 @@ class FileService
         Storage::makeDirectory($path);
         foreach ($files as $key => $file) {
             $data = Storage::putFileAs($path, $file, $file->getClientOriginalName());
-            $filePath = storage_path("app/" . $path . "/" . $file->getClientOriginalName());
+            $filePath = storage_path("app/" . $path);
             array_push($this->files, ['name' => $file->getClientOriginalName(), 'path' => $filePath, 'content' => Storage::get($path . "/" . $file->getClientOriginalName())]);
         }
         return $this;

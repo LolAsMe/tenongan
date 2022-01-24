@@ -80,11 +80,9 @@ class ImportController extends Controller
     public function penjualan2(Request $request, TempService $tempService, FileService $fileService)
     {
         $files = $fileService->handleUploadedFiles($request->file('files'))->getFiles();
-        $data = [];
-        foreach ($files as $key => $file) {
-            array_push($data, $this->spreadsheetService->setSpreadsheet($file['path'])->getData());
-        }
         $tempService->setFiles($files)->createTemp();
+        // Storage::move('myfile3.xlsx', 'myfile4.xlsx');
+
 
         // $tempService->setData($data)->createTemp();
         // $this->tenonganService->setDataPenjualan($data)->createPenjualans();
