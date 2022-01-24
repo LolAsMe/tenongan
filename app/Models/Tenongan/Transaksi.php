@@ -66,6 +66,16 @@ class Transaksi extends Model
      */
     public function penjualan(): BelongsToMany
     {
+        return $this->belongsToMany(Penjualan::class)->using(PenjualanTransaksi::class)->withPivot('batch');
+    }
+
+    /**
+     * Get all of the penjualan for the Transaksi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function penjualanTransaksi(): BelongsToMany
+    {
         return $this->belongsToMany(Penjualan::class);
     }
 
@@ -106,4 +116,12 @@ class Transaksi extends Model
         $this->increment('jumlah', $jumlah);
         $this->detail()->create($validatedAttribute + ['jumlah'=>$jumlah]);
     }
+
+    public function scopeTanggalNow($query)
+    {
+        // dd(now()->format('Y-m-d'));
+        $now = now()->format('Y-m-d');
+        return $query->whereBetween('tanggal',[$now.' 00:00:00', $now.' 23:59:59']);
+    }
+
 }

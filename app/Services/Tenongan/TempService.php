@@ -44,6 +44,7 @@ class TempService
                 'path' => $file['path'],
             ];
             array_push($this->data, $data);
+            debugbar()->info($file);
         }
         return $this;
     }

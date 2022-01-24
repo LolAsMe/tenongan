@@ -9,6 +9,8 @@ use App\Contracts\Tenongan\TenonganService;
 use App\Http\Resources\PenjualanResource;
 use App\Http\Resources\TransaksiResource;
 use App\Http\Resources\TransaksiWebResource;
+use App\Models\Tenongan\Penjualan as TenonganPenjualan;
+use App\Models\Tenongan\PenjualanTransaksi;
 use App\Models\Tenongan\TempFile;
 use App\Models\Tenongan\Transaksi;
 use App\Services\Tenongan\TempService;
@@ -102,7 +104,7 @@ class PenjualanController extends Controller
     public function store2(Request $request, Transaksi $transaksi)
     {
         //
-        if($transaksi->status == "Ok"){
+        if ($transaksi->status == "Ok") {
             return 'gagal tambah';
         }
         $transaksi->tambah($request->jumlah, $request->all());
@@ -197,18 +199,40 @@ class PenjualanController extends Controller
         $this->tenongan->resetPenjualan();
     }
 
-    public function print()
+    public function print(TenonganService $tenonganService)
     {
+        // dd(Penjualan::select('transaksi_id')->distinct()->get());
+        $lastBatch = $tenonganService->getLastBatch();
+        $transaksis = Transaksi::whereOwnerType('Produsen')->whereHas('penjualan', function ($query) use ($lastBatch) {
+            return $query->where('batch', $lastBatch);
+        })->get();
+        // $test = PenjualanTransaksi::whereBatch(2)->select('transaksi_id')->distinct()->get('transaksi_id');
+        // dd(Transaksi::latest()->first()->penjualan()->latest()->first()->pivot);
+        // dd($transaksis);
         // $transaksi = Transaksi::whereOwnerType('Produsen')->with(['penjualan.pedagang','kas'])->first();
-        $transaksis = Transaksi::whereOwnerType('Produsen')->with(['detail','owner.produk.penjualan','kas'])->get();
-        $transaksis->each(function($transaksi){
+        // $transaksis = Transaksi::where('pivot.  batch', $tenonganService->getLastBatch())->whereOwnerType('Produsen')->with('penjualan')->get();
+        $transaksis->load([
+            'detail', 'kas', 'owner.produk.penjualan'=>
+             function ($query) use ($lastBatch) {
+                return $query->with('pedagang')->whereHas('transaksi', function ($query) use ($lastBatch) {
+                    return $query->where('batch', $lastBatch);
+                });
+            }
+        ]);
+        // ->with(['detail','owner.produk.penjualan'=>function($query){
+        //     return $query->tanggalNow();
+        // },'kas'])->get();
+        // dd($transaksis[0]->owner->produk[0]);
+        // dd($transaksis[0]->owner->produk);
+        $transaksis->each(function ($transaksi) {
             $bayar = $transaksi->owner->produk->sum(function ($prod) {
                 return $prod->penjualan->sum('laku') * $prod->harga_beli;
             });
             $lain = $transaksi->detail->sum('jumlah');
-            $transaksi->penjualan->put('lain',$lain);
-            $transaksi->penjualan->put('bayar',$bayar);
+            $transaksi->penjualan->put('lain', $lain);
+            $transaksi->penjualan->put('bayar', $bayar);
         });
-        return view('print',compact('transaksis'));
+        // dd($transaksis[0]->owner->produk);
+        return view('print', compact('transaksis'));
     }
 }

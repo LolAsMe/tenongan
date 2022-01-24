@@ -55,6 +55,11 @@
             padding: 0mm;
         }
 
+        .pagebreak {
+            clear: both;
+            page-break-after: always;
+        }
+
         .row {
             /* display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -62,6 +67,10 @@
       grid-gap: 20px;
       */
             /* height: 210mm; */
+            /* page-break-after: always; */
+        }
+
+        .page-break {
             page-break-after: always;
         }
 
@@ -71,9 +80,10 @@
         }
 
         .col-3 {
-            height: 206.3mm;
-            background-color: #F0F0F0;
-            page-break-after: always;
+            height: 100%;
+            background-color: #ffffff;
+            margin-bottom: 20mm
+                /* page-break-after: always; */
         }
 
 
@@ -90,7 +100,7 @@
 
             .container-fluid {
                 padding: 1.5mm;
-                background-color: #F0F0F0;
+                background-color: #ffffff;
                 width: 330mm;
             }
 
@@ -116,17 +126,27 @@
 
             .row {
                 /* height: 210mm; */
-                page-break-after: always;
+                /* page-break-after: always; */
             }
 
             .col-3 {
-                /* height: 210mm; */
-                page-break-after: always;
+                height: 186.3mm;
+                /* page-break-after: always; */
+                /* background-color: #8f6767 */
             }
 
             @page {
                 width: 330mm;
                 height: 210mm;
+            }
+
+            .page-break {
+                page-break-after: always;
+            }
+
+            .pagebreak {
+                clear: both;
+                page-break-after: always;
             }
         }
 
@@ -136,8 +156,11 @@
 
 <body>
     <div class="container-fluid">
+        @php
+            $index = 0;
+        @endphp
         <div class="row g-2">
-            @foreach ($transaksis as $transaksi)
+            @foreach ($transaksis as $key => $transaksi)
                 @php
                     $totalBayar = 0;
                     $jadi = 0;
@@ -148,8 +171,9 @@
                         $jumlahTitip = 0;
                         $jumlahSisa = 0;
                         $jumlahLaku = 0;
+                        $index++;
                     @endphp
-                    <div class="col-3">
+                    <div class="col-3 page-break">
                         <table class="table table-sm table-bordered table-nota">
                             <colgroup>
                                 <col style="width: 30px;" />
@@ -160,7 +184,7 @@
                             <thead>
                             </thead>
                             <tbody>
-                                <tr>
+                                  <tr>
                                     <td>{{ $produk->id }}</td>
                                     <td colspan="2">{{ $produk->nama }}</td>
                                     <td rowspan="2">{{ now()->format('d/m/Y') }}</td>
@@ -210,10 +234,10 @@
                         </table>
                         <table class="table table-sm table-bordered table-nota">
                             <colgroup>
-                                <col style="width: 69px;" />
                                 <col style="width: 60px;" />
-                                <col style="width: 27px;" />
-                                <col style="width: 27px;" />
+                                <col style="width: 60px;" />
+                                <col style="width: 30px;" />
+                                <col style="width: 30px ;" />
                                 <col style="width: 30px;" />
                             </colgroup>
                             <thead>
@@ -233,34 +257,39 @@
                             </tbody>
                         </table>
                         <table class="table table-sm table-bordered table-nota table-hasil">
+                            <colgroup>
+                                <col style="width: 60px;" />
+                                <col style="width: 80px;" />
+                                <col style="width: 65px;" />
+                            </colgroup>
                             <thead>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="width: 35px;">bayar</td>
-                                    <td colspan="2">Rp.{{ Helper::numerize($transaksi->penjualan->get('bayar')) }}
+                                    <td>bayar</td>
+                                    <td>Rp.{{ Helper::numerize($transaksi->penjualan->get('bayar')) }}
                                     </td>
-                                    <td colspan="1">lain-lain</td>
-                                    <td colspan="2">Rp.{{ Helper::numerize($transaksi->penjualan->get('lain')) }}
+                                    <td>lain-lain</td>
+                                    <td>Rp.{{ Helper::numerize($transaksi->penjualan->get('lain')) }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Kas</td>
+                                    <td>Kas</td>
                                     <td>- {{ Helper::numerize($transaksi->kas->jumlah) }}</td>
-                                    <td style="width: 30px;">jadi</td>
-                                    <td colspan="2">
+                                    <td>jadi</td>
+                                    <td>
                                         Rp.{{ Helper::numerize($transaksi->penjualan->get('lain') + $transaksi->penjualan->get('bayar') - $transaksi->kas->jumlah) }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">Kemarin</td>
+                                    <td>Kemarin</td>
                                     <td>- {{ Helper::numerize($transaksi->kemarin) }}</td>
-                                    <td colspan="2">Dibulatkan</td>
+                                    <td>Dibulatkan</td>
                                     <td>+ {{ Helper::numerize($transaksi->pembulatan) }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3">Uang Hari Ini</td>
-                                    <td colspan="3">Rp. {{ Helper::numerize($transaksi->jumlah) }}</td>
+                                    <td colspan="2">Uang Hari Ini</td>
+                                    <td colspan="2">Rp. {{ Helper::numerize($transaksi->jumlah) }}</td>
                                 </tr>
                             </tbody>
                         </table>

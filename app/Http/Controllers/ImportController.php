@@ -89,11 +89,11 @@ class ImportController extends Controller
         // $tempService->setData($data)->createTemp();
         // $this->tenonganService->setDataPenjualan($data)->createPenjualans();
 
-        debugbar()->info(json_encode($data));
-        debugbar()->info(storage_path("app/temp/2022-01-11/penjualan - Copy.xlsx"));
-        debugbar()->info(now()->toDateString());
-        debugbar()->info($fileService);
-        debugbar()->info(Storage::directories());
+        // debugbar()->info(json_encode($data));
+        // debugbar()->info(storage_path("app/temp/2022-01-11/penjualan - Copy.xlsx"));
+        // debugbar()->info(now()->toDateString());
+        // debugbar()->info($fileService);
+        // debugbar()->info(Storage::directories());
 
         // $file = $request->file('files')->storeAs('public','penjualan.xlsx');
         // $data = $this->spreadsheetService->setSpreadsheet('penjualan.xlsx')->getData();

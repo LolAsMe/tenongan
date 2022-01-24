@@ -53,7 +53,8 @@ class TenonganService implements TenonganServiceContract
 
     public function transact()
     {
-        Penjualan::whereStatus('Draft')->with(['produk', 'pedagang'])->chunk(100, function ($penjualans) {
+        $batch = $this->getLastBatch()+1;
+        Penjualan::whereStatus('Draft')->with(['produk', 'pedagang'])->chunk(100, function ($penjualans) use ($batch) {
             foreach ($penjualans as $key => $penjualan) {
                 try {
                     $penjualan->pedagang->nama;
@@ -72,7 +73,7 @@ class TenonganService implements TenonganServiceContract
                     ]
                 );
                 $transaksi->increment('jumlah', $jumlah);
-                $transaksi->penjualan()->save($penjualan);
+                $transaksi->penjualan()->save($penjualan,['batch'=>$batch]);
                 $this->transaksis->push($transaksi);
 
                 $jumlah = $penjualan->laku * ($penjualan->harga_jual - $penjualan->harga_beli);
@@ -86,7 +87,7 @@ class TenonganService implements TenonganServiceContract
                     ]
                 );
                 $transaksi->increment('jumlah', $jumlah);
-                $transaksi->penjualan()->save($penjualan);
+                $transaksi->penjualan()->save($penjualan,['batch'=>$batch]);
 
                 $penjualan->status = 'Pending';
                 $penjualan->save();
@@ -129,6 +130,15 @@ class TenonganService implements TenonganServiceContract
 
         // });
         // return "berhasil";
+    }
+
+
+    public function getLastBatch()
+    {
+        $transaksi = Transaksi::latest()->first();
+        $lastBatch = $transaksi ? $transaksi->penjualan()->latest()->first()->pivot->batch : 0;
+        // debugbar()->info($lastBatch);
+        return $lastBatch;
     }
 
     public function checkRutinitas($owner): bool

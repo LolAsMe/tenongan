@@ -83,7 +83,7 @@ class Penjualan extends Model
 
     public function transaksi(): BelongsToMany
     {
-        return $this->belongsToMany(Penjualan::class);
+        return $this->belongsToMany(Transaksi::class)->withPivot('batch');
     }
 
     public static function createPenjualans($dataPenjualan)
@@ -106,5 +106,12 @@ class Penjualan extends Model
             throw $th;
         }
         return $penjualans;
+    }
+
+    public function scopeTanggalNow($query)
+    {
+        // dd(now()->format('Y-m-d'));
+        $now = now()->format('Y-m-d');
+        return $query->whereBetween('tanggal',[$now.' 00:00:00', $now.' 23:59:59']);
     }
 }
